@@ -66,8 +66,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
         val localeTag: String? = sSharedPreferences.getString(LANGUAGE, null)
         if (localeTag != null) {
             Locale.setDefault(Locale.forLanguageTag(localeTag))
-            val config =
-                Configuration(resources.configuration)
+            val config = Configuration(resources.configuration)
             config.setLocale(Locale.forLanguageTag(localeTag))
             context.getResources()
                 .updateConfiguration(config, context.getResources().getDisplayMetrics())

@@ -12,6 +12,7 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
     override fun getViewModel(): MainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
     override fun initView() {
+
     }
 
 }

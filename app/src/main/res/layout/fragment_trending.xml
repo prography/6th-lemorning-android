@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="org.prography.lemorning.src.viewmodel.TrendingViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_date_trending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#bfbfbf"
+            android:lineSpacingExtra="4sp"
+            android:text="30 Apr 2020"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="30dp" />
+
+        <TextView
+            android:id="@+id/tv_title_trending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textColor="#171717"
+            android:lineSpacingExtra="7sp"
+            android:text="For you"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_date_trending"
+            android:layout_marginStart="30dp" />
+
+        <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+            android:id="@+id/di_main_trending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title_trending"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            app:dotsSize="6dp"
+            app:dotsCornerRadius="3dp"
+            app:dotsColor="#efefef"
+            app:selectedDotColor="#fbc900"
+            app:dotsSpacing="3dp"
+            app:dotsWidthFactor="3" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_foryou_trending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/di_main_trending"
+            android:layout_marginTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_foryou"
+            android:orientation="horizontal"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
