@@ -19,8 +19,8 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
-            android:lineSpacingExtra="4sp"
             android:text="30 Apr 2020"
+            android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="30dp"
@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textColor="#171717"
-            android:lineSpacingExtra="7sp"
             android:text="For you"
+            android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_date_trending"
             android:layout_marginStart="30dp" />
@@ -64,6 +64,43 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_foryou"
             android:orientation="horizontal"/>
+
+        <TextView
+            android:id="@+id/tv_title_popular_trending"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textColor="#171717"
+            android:lineSpacingExtra="5sp"
+            android:text="Popular"
+            android:includeFontPadding="false"
+            app:layout_constraintTop_toBottomOf="@id/rv_foryou_trending"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="35dp"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tv_period_popular_trending"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:padding="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:textSize="12sp"
+            android:textColor="#bfbfbf"
+            android:text="Weekly"
+            android:textAllCaps="false"
+            android:includeFontPadding="false"
+            android:letterSpacing="0"
+            app:layout_constraintStart_toEndOf="@id/tv_title_popular_trending"
+            app:layout_constraintTop_toTopOf="@id/tv_title_popular_trending"
+            app:layout_constraintBottom_toBottomOf="@id/tv_title_popular_trending"
+            android:layout_marginStart="10dp"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
