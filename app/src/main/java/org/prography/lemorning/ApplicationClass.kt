@@ -16,7 +16,7 @@ class ApplicationClass : Application() {
 
     // 테스트 서버 주소
     companion object {
-        val BASE_URL = "https://template.prography.org/"
+        val BASE_URL = "http://192.168.35.101:8000/"
         // 실서버 주소
         //    public static String BASE_URL = "https://template.prography.org/";
 
