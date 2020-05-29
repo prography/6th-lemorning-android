@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
+import org.prography.lemorning.src.adapters.ForYouAdapter
+import org.prography.lemorning.src.adapters.PopularAdapter
 import org.prography.lemorning.src.models.ForYou
-import org.prography.lemorning.src.repository.TrendingApiService
-import org.prography.lemorning.src.view.ForYouAdapter
-import org.prography.lemorning.utils.BaseArrayResponse
-import org.prography.lemorning.utils.BaseResponse
+import org.prography.lemorning.src.repository.networks.TrendingApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -16,6 +15,7 @@ import retrofit2.Response
 class TrendingViewModel : BaseViewModel() {
 
     var forYouAdapter = ForYouAdapter(viewModel = this)
+    var popularAdapter = PopularAdapter()
 
     var forYous : LiveData<ArrayList<ForYou>> = getForYouList()
 

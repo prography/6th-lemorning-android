@@ -1,4 +1,4 @@
-package org.prography.lemorning.src.view
+package org.prography.lemorning.src.adapters
 
 import android.graphics.Rect
 import android.view.View

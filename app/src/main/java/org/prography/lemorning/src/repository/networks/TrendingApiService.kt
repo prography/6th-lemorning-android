@@ -1,4 +1,4 @@
-package org.prography.lemorning.src.repository
+package org.prography.lemorning.src.repository.networks
 
 import org.prography.lemorning.src.models.ForYou
 import org.prography.lemorning.utils.BaseArrayResponse
