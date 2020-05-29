@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/iv_thumbnail_item_popular"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/img_foryou_sample1"
+        android:scaleType="centerCrop"
+        android:background="@drawable/background_round_12_white"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
+
+    <TextView
+        android:id="@+id/tv_rank_item_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="10sp"
+        android:textColor="#171717"
+        android:text="#1"
+        app:layout_constraintStart_toEndOf="@id/iv_thumbnail_item_popular"
+        app:layout_constraintTop_toTopOf="@id/iv_thumbnail_item_popular"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="18dp"
+        android:background="@drawable/background_round_8_fcc800"
+        android:paddingStart="9dp"
+        android:paddingEnd="9dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="1dp"
+        android:includeFontPadding="false"
+        />
+
+    <TextView
+        android:id="@+id/tv_title_item_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#171717"
+        android:text="관짝밈"
+        android:includeFontPadding="false"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="@id/tv_rank_item_popular"
+        app:layout_constraintTop_toBottomOf="@id/tv_rank_item_popular"
+        />
+
+    <TextView
+        android:id="@+id/tv_category_item_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="#bfbfbf"
+        android:text="Morning Breaker"
+        android:includeFontPadding="false"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="@id/tv_rank_item_popular"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_item_popular"
+        />
+
+    <ImageView
+        android:id="@+id/iv_play_item_popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_play_small"
+        app:layout_constraintStart_toStartOf="@id/pb_item_popular"
+        app:layout_constraintEnd_toEndOf="@id/pb_item_popular"
+        app:layout_constraintTop_toTopOf="@id/pb_item_popular"
+        app:layout_constraintBottom_toBottomOf="@id/pb_item_popular"/>
+    
+    <ProgressBar
+        android:id="@+id/pb_item_popular"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="60dp"
+        android:layout_height="4dp"
+        android:max="100"
+        tools:progress="30"
+        android:progressTint="@color/colorPrimary"
+        android:secondaryProgressTint=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_category_item_popular"
+        app:layout_constraintBottom_toBottomOf="@id/tv_category_item_popular"
+        android:layout_marginEnd="30dp"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
