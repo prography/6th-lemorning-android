@@ -1,6 +1,7 @@
 package org.prography.lemorning.src.view
 
 import android.content.Intent
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseFragment
 import org.prography.lemorning.R
@@ -16,7 +17,8 @@ class TrendingFragment(override val layoutId: Int = R.layout.fragment_trending)
     }
 
     override fun initView() {
-        binding.rvForyouTrending.adapter
+        binding.rvForyouTrending.adapter = viewmodel.forYouAdapter
+        viewmodel.forYous.observe(this, Observer(viewmodel.forYouAdapter::submitList))
 
         binding.mbtnSearchTrending.setOnClickListener {
             startActivity(Intent(activity, AlarmActivity::class.java))
