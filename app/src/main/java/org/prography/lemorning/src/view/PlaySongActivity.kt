@@ -2,6 +2,7 @@ package org.prography.lemorning.src.view
 
 import android.media.AudioManager
 import android.media.MediaPlayer
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
@@ -22,8 +23,7 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
         /* 추천 RecyclerView */
         binding.rvRecommendPlaySong.adapter = viewmodel.playRecommendAdapter
 
-        /* Audio Visualizer */
-        binding.visualizerPlaySong.setPlayer(viewmodel.mediaPlayer.audioSessionId)
+
 
         /* Alarm Play & Stop */
         binding.ivPlayPlaySong.setOnClickListener {
@@ -36,6 +36,15 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
                 }
             }
         }
+
+        /* Data Observing */
+        viewmodel.prepareVisualizer.observe(this, Observer {t ->
+            var event = t.get()
+            if (event != null) {
+                /* Audio Visualizer */
+                //binding.visualizerPlaySong.setPlayer(viewmodel.mediaPlayer.audioSessionId)
+            }
+        })
     }
 
     class PlaySongViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
