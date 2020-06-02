@@ -8,6 +8,7 @@ import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.src.adapters.PlayRecommendAdapter
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.repository.networks.PlaySongApiService
+import org.prography.lemorning.utils.BaseEvent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +18,7 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
     val playRecommendAdapter = PlayRecommendAdapter(viewModel = this)
 
     var playSong: LiveData<PlaySong> = getSong(songNo)
+    var prepareVisualizer: MutableLiveData<BaseEvent<Boolean>> = MutableLiveData()
 
     lateinit var mediaPlayer: MediaPlayer
 
@@ -37,6 +39,7 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
                     setDataSource(playSong.musicUrl)
                     prepare() // might take long! (for buffering, etc)
                 }
+                prepareVisualizer.value = BaseEvent(true)
             }
 
         })
