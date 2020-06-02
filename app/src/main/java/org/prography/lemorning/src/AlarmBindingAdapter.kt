@@ -1,7 +1,8 @@
 package org.prography.lemorning.src
 
-import android.view.View
+import android.graphics.Color
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -24,11 +25,11 @@ fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmViewModel)
     }
 }
 
-@BindingAdapter(value = ["week"])
-fun setWeek(view: LinearLayout, week:String){
+@BindingAdapter(value = ["setWeek"])
+fun setWeek(view:LinearLayout, week:String){
     for(i in week.indices){
         if(week[i] == '0'){
-            view[i].visibility = View.GONE
+            (view[i] as TextView).setTextColor(Color.parseColor("#50666666"))
         }
     }
 }
