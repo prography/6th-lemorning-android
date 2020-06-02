@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.prography.lemorning.BindingViewHolder
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemAlarmBinding
 import org.prography.lemorning.src.model.Alarm

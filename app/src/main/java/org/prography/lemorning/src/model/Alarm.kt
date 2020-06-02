@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
 @Entity(tableName = "alarm")
 data class Alarm (
     @PrimaryKey(autoGenerate = true)
@@ -13,7 +14,9 @@ data class Alarm (
     @ColumnInfo(name = "on")
     var on: Boolean,
     @ColumnInfo(name = "week")
-    var week: String
+    var week: String,
+    @ColumnInfo(name = "date")
+    var date: String
 ) {
-    constructor(): this(null, "", false, "0000000")
+    constructor(): this(null, "", false, "0000000", "")
 }
