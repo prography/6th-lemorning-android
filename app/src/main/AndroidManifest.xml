@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.prography.lemorning">
 
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".ApplicationClass"
         android:allowBackup="false"
@@ -22,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.view.PlaySongActivity" />
     </application>
 
 </manifest>

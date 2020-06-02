@@ -2,7 +2,7 @@ package org.prography.lemorning.src.models
 
 import com.google.gson.annotations.SerializedName
 
-data class ForYou (
+data class Popular (
     @SerializedName("id") var no: Int,
     @SerializedName("image") var thumbnail : String?,
     @SerializedName("name") var title : String?,

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="java.util.Date"/>
         <variable
             name="viewmodel"
             type="org.prography.lemorning.src.viewmodel.TrendingViewModel" />
@@ -27,7 +28,9 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="#bfbfbf"
-                    android:text="30 Apr 2020"
+                    time="@{System.currentTimeMillis()}"
+                    tools:text="30 Apr 2020"
+                    android:fontFamily="@font/timeburnernormal"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -41,6 +44,7 @@
                     android:textSize="24sp"
                     android:textColor="#171717"
                     android:text="For you"
+                    android:fontFamily="@font/timeburnerbold"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_date_trending"
@@ -69,6 +73,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/di_main_trending"
                     android:layout_marginTop="20dp"
+                    tools:itemCount="4"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_foryou"
                     android:orientation="horizontal"/>
@@ -81,6 +86,7 @@
                     android:textColor="#171717"
                     android:lineSpacingExtra="5sp"
                     android:text="Popular"
+                    android:fontFamily="@font/timeburnerbold"
                     android:includeFontPadding="false"
                     app:layout_constraintTop_toBottomOf="@id/rv_foryou_trending"
                     app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +107,7 @@
                     android:textSize="12sp"
                     android:textColor="#bfbfbf"
                     android:text="Weekly"
+                    android:fontFamily="@font/timeburnernormal"
                     android:textAllCaps="false"
                     android:includeFontPadding="false"
                     android:letterSpacing="0"
@@ -139,6 +146,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_popular_trending"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    android:layout_marginTop="10dp"
                     tools:listitem="@layout/item_popular"
                     tools:itemCount="3" />
 
