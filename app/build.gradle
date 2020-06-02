@@ -102,6 +102,9 @@ dependencies {
     // https://github.com/wasabeef/glide-transformations
     implementation 'jp.wasabeef:glide-transformations:4.1.0'
 
+    // https://github.com/GautamChibde/android-audio-visualizer
+    implementation 'com.chibde:audiovisualizer:2.2.0'
+
     kapt 'com.android.databinding:compiler:3.6.3'
 
     kapt 'android.arch.persistence.room:compiler:1.1.1'

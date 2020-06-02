@@ -22,18 +22,18 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
         /* 추천 RecyclerView */
         binding.rvRecommendPlaySong.adapter = viewmodel.playRecommendAdapter
 
+        /* Audio Visualizer */
+        binding.visualizerPlaySong.setPlayer(viewmodel.mediaPlayer.audioSessionId)
+
         /* Alarm Play & Stop */
         binding.ivPlayPlaySong.setOnClickListener {
             viewmodel.mediaPlayer.let { mediaPlayer ->
-                {
+                run {
                     when {
-                        mediaPlayer.isPlaying -> mediaPlayer.stop()
+                        mediaPlayer.isPlaying -> mediaPlayer.pause()
                         else -> mediaPlayer.start()
                     }
                 }
-            }
-            if (!viewmodel.mediaPlayer.isPlaying) {
-                viewmodel.mediaPlayer.start()
             }
         }
     }
