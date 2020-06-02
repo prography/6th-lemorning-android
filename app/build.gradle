@@ -82,6 +82,9 @@ dependencies {
     // https://github.com/square/retrofit/tree/master/retrofit-converters/gson
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
 
+    // https://github.com/square/retrofit/tree/master/retrofit-adapters/rxjava2
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    
     // https://firebase.google.com/docs/android/setup?authuser=0#available-libraries
     implementation 'com.google.firebase:firebase-analytics:17.4.2'
     implementation 'com.google.firebase:firebase-core:17.4.2'
@@ -95,6 +98,9 @@ dependencies {
 
     // https://github.com/tommybuonomo/dotsindicator
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:4.1.2'
+
+    // https://github.com/wasabeef/glide-transformations
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
 
     kapt 'com.android.databinding:compiler:3.6.3'
 

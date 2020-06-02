@@ -7,6 +7,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.prography.lemorning.config.XAccessTokenInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.*
@@ -16,7 +17,7 @@ class ApplicationClass : Application() {
 
     // 테스트 서버 주소
     companion object {
-        val BASE_URL = "http://192.168.35.101:8000/"
+        val BASE_URL = "http://172.16.100.100:8000/"
         // 실서버 주소
         //    public static String BASE_URL = "https://template.prography.org/";
 
@@ -54,6 +55,7 @@ class ApplicationClass : Application() {
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
     }
 }
