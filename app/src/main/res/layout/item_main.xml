@@ -4,7 +4,7 @@
     <data>
         <variable
             name="item"
-            type="org.prography.lemorning.utils.BaseResponse" />
+            type="org.prography.lemorning.utils.BasePagingResponse" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

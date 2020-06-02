@@ -10,16 +10,25 @@ import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityAlarmBinding
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
+
 class AlarmActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityAlarmBinding>(this, R.layout.activity_alarm)
-        binding.alarmViewModel = ViewModelProvider(this).get(AlarmViewModel::class.java)
+        val binding =
+            DataBindingUtil.setContentView<ActivityAlarmBinding>(
+                this,
+                R.layout.activity_alarm
+            )
+        binding.alarmViewModel = ViewModelProvider(this)
+            .get(AlarmViewModel::class.java)
         binding.lifecycleOwner = this
 
         alarm_image.setOnClickListener {
-            val intent = Intent(this, AlarmSettingActivity::class.java)
+            val intent = Intent(
+                this,
+                AlarmSettingActivity::class.java
+            )
             startActivity(intent)
         }
     }
