@@ -23,7 +23,17 @@
             android:foreground="#61000000"
             android:scaleType="centerCrop"
             />
-        
+
+        <com.chibde.visualizer.CircleBarVisualizer
+            android:id="@+id/visualizer_play_song"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_thumbnail_play_song"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_thumbnail_play_song" />
+
+
         <ImageView
             android:id="@+id/iv_thumbnail_play_song"
             android:layout_width="0dp"
@@ -172,7 +182,7 @@
             android:textSize="12sp"
             android:textColor="#bfbfbf"
             android:includeFontPadding="false"
-            tools:text="How about this?"
+            android:text="How about this?"
             android:fontFamily="@font/timeburnernormal"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="54dp"

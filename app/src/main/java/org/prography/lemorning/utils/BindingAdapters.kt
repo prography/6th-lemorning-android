@@ -49,7 +49,7 @@ object BindingAdapters {
         Glide.with(view.context)
             .load(url)
             .thumbnail(0.1f)
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(30, 3)))
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(100, 3)))
             .transition(DrawableTransitionOptions.withCrossFade())
             .error(R.drawable.backgroud_black)
             .centerCrop()
