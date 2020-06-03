@@ -29,12 +29,13 @@
             android:id="@+id/bnv_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:menu="@menu/menu_bottom_nav"
             android:background="#ffffff"
-            />
+            app:itemIconTint="@color/color_bottomnav_icon"
+            app:itemTextColor="@color/color_bottomnav_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:menu="@menu/menu_bottom_nav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

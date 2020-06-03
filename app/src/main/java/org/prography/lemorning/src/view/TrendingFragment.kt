@@ -3,7 +3,8 @@ package org.prography.lemorning.src.view
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import androidx.navigation.fragment.FragmentNavigatorExtras
+import androidx.navigation.fragment.NavHostFragment
 import org.prography.lemorning.BaseFragment
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentTrendingBinding
@@ -27,8 +28,12 @@ class TrendingFragment(override val layoutId: Int = R.layout.fragment_trending)
         binding.rvPopularTrending.adapter = viewmodel.popularAdapter
         viewmodel.popularList.observe(this, Observer { viewmodel.popularAdapter.setItem(it) })
 
-        binding.mbtnSearchTrending.setOnClickListener {
-            startActivity(Intent(activity, AlarmActivity::class.java))
+        binding.clSearchContainer.setOnClickListener {
+            val extras = FragmentNavigatorExtras(
+                binding.clSearchContainer to "search_box",
+                binding.ivSearchIcon to "search_icon"
+            )
+            NavHostFragment.findNavController(this).navigate(R.id.action_to_search, null, null, extras)
         }
 
         /* Move To Song */

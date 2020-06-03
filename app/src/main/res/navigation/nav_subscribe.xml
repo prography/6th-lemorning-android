@@ -6,6 +6,6 @@
     app:startDestination="@id/fg_subscribe">
     <fragment
         android:id="@+id/fg_subscribe"
-        android:name="org.prography.lemorning.src.view.TrendingFragment"
-        tools:layout="@layout/fragment_trending"/>
+        android:name="org.prography.lemorning.src.view.SubscribeFragment"
+        tools:layout="@layout/fragment_subscribe"/>
 </navigation>
