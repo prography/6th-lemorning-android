@@ -12,9 +12,9 @@
         <action
             android:id="@+id/action_to_search"
             app:destination="@id/fg_search"
-            app:enterAnim="@anim/anim_fade_in_200delay300"
+            app:enterAnim="@anim/anim_fade_in_100delay300"
             app:exitAnim="@anim/anim_fade_out_0delay300"
-            app:popEnterAnim="@anim/anim_fade_in_200delay300"
+            app:popEnterAnim="@anim/anim_fade_in_100delay300"
             app:popExitAnim="@anim/anim_fade_out_0delay300"/>
     </fragment>
 
