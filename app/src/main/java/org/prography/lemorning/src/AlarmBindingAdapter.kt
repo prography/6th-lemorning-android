@@ -7,10 +7,10 @@ import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.src.model.Alarm
-import org.prography.lemorning.src.viewmodel.AlarmViewModel
+import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 
 @BindingAdapter(value = ["alarms", "viewModel"])
-fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmViewModel) {
+fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewModel) {
     view.adapter?.run {
         if (this is AlarmRecyclerAdapter) {
             if (alarms != null) {

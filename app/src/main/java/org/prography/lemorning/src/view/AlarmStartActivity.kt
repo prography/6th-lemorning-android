@@ -1,30 +1,31 @@
 package org.prography.lemorning.src.view
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_alarm_start.*
+import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityAlarmStartBinding
+import org.prography.lemorning.src.AlarmContextContent
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
-class AlarmStartActivity : AppCompatActivity() {
+class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, AlarmViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityAlarmStartBinding>(this, R.layout.activity_alarm_start)
-        binding.vm = ViewModelProvider(this).get(AlarmViewModel::class.java)
-        binding.lifecycleOwner = this
-        val viewModel = binding.vm
+        initView()
+    }
 
-        if(viewModel != null){
-            val mediaPlayer = viewModel.playAlarm(R.raw.ouu)
-            alarm_off_button.setOnClickListener {
-                viewModel.stopAlarm(mediaPlayer)
-                startActivity(Intent(this, AlarmActivity::class.java))
-                finish()
-            }
+    override fun getViewModel(): AlarmViewModel {
+        return ViewModelProvider(this).get(AlarmViewModel::class.java)
+    }
+
+    override fun initView() {
+        val contextContent = AlarmContextContent(this)
+        val mediaPlayer = contextContent.getMediaPlayer(R.raw.ouu)
+        viewmodel.playAlarm(mediaPlayer)
+        alarm_off_button.setOnClickListener {
+            viewmodel.stopAlarm(mediaPlayer)
+            finish()
         }
     }
 }

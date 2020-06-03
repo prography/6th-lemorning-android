@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemAlarmBinding
 import org.prography.lemorning.src.model.Alarm
-import org.prography.lemorning.src.viewmodel.AlarmViewModel
+import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 
-class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: AlarmViewModel): RecyclerView.Adapter<AlarmRecyclerAdapter.AlarmViewHolder>() {
+class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: AlarmDBViewModel): RecyclerView.Adapter<AlarmRecyclerAdapter.AlarmViewHolder>() {
 
     class AlarmViewHolder(itemView: View) : BindingViewHolder<ItemAlarmBinding>(itemView)
 

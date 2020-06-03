@@ -1,7 +1,5 @@
 package org.prography.lemorning.src.view
 
-import android.media.AudioManager
-import android.media.MediaPlayer
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

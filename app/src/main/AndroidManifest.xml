@@ -17,8 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".src.view.AlarmActivity">
-        </activity>
+
         <activity android:name=".src.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,6 +26,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.view.AlarmStartActivity"/>
+        <activity android:name=".src.view.PlaySongActivity"/>
+
+        <receiver android:name=".src.AlarmReceiver"/>
+        <receiver android:name=".src.DeviceBootReceiver"/>
     </application>
 
 </manifest>

@@ -6,13 +6,13 @@
     <data>
         <variable
             name="alarmViewModel"
-            type="org.prography.lemorning.src.viewmodel.AlarmViewModel" />
+            type="org.prography.lemorning.src.viewmodel.AlarmDBViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".src.view.AlarmActivity">
+        tools:context=".src.view.AlarmFragment">
         <TextView
             android:id="@+id/alarm_date"
             android:layout_width="wrap_content"
