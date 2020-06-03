@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.prography.lemorning.BaseActivity
@@ -20,7 +21,14 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
 
     override fun getViewModel(): MainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            setupBottomNavigationBar()
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigationBar()
     }
 
@@ -38,7 +46,8 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
 
         // Whenever the selected controller changes, setup the action bar.
         controller.observe(this, Observer { navController ->
-            setupActionBarWithNavController(this, navController)
+            //setupActionBarWithNavController(this, navController)
+            //NavigationUI.setupWithNavController(binding.bnvMain, navController)
         })
         currentNavController = controller
     }

@@ -32,7 +32,7 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
         binding.lifecycleOwner = this
 
         initLocale(baseContext)
-        initView()
+        initView(savedInstanceState)
     }
 
     open fun showToast(message: String?) {
@@ -108,7 +108,7 @@ interface BaseActivityView<VM : BaseViewModel> {
 
     fun getViewModel() : VM
 
-    fun initView()
+    fun initView(savedInstanceState: Bundle?)
 
     fun initLocale(context : Context)
 }
