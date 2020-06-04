@@ -86,7 +86,7 @@
                     android:layout_marginEnd="30dp"
                     android:layout_marginTop="12dp"
                     android:padding="10dp"
-                    android:background="@drawable/background_round_12_white"
+                    android:background="@drawable/shape_round_12_white"
                     android:elevation="6dp">
 
                     <ImageView

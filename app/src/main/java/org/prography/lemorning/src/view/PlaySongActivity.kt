@@ -55,11 +55,13 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
             }
         })
         //viewmodel.mediaPlayer.value?.listener
+        binding.ivClosePlaySong.setOnClickListener { finish() }
 
     }
 
 
     override fun onDestroy() {
+        viewmodel.mediaPlayer.value?.release()
         super.onDestroy()
     }
 
