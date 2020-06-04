@@ -35,13 +35,11 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
 
         initLocale(context)
 
-        if(Build.VERSION.SDK_INT >= 19) {
-            sharedElementEnterTransition = ChangeBounds().apply {
-                duration = 300
-            }
-            sharedElementReturnTransition = ChangeBounds().apply {
-                duration = 300
-            }
+        sharedElementEnterTransition = ChangeBounds().apply {
+            duration = 300
+        }
+        sharedElementReturnTransition = ChangeBounds().apply {
+            duration = 300
         }
 
         initView()

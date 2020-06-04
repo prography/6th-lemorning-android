@@ -49,7 +49,7 @@ object BindingAdapters {
         Glide.with(view.context)
             .load(url)
             .thumbnail(0.1f)
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(100, 3)))
+            .apply(RequestOptions.bitmapTransform(BlurTransformation(100, 50)))
             .transition(DrawableTransitionOptions.withCrossFade())
             .error(R.drawable.backgroud_black)
             .centerCrop()
@@ -62,5 +62,12 @@ object BindingAdapters {
     fun timeToDay(view : TextView, time : Long) {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.US)
         view.text = sdf.format(Date(time))
+    }
+
+    @BindingAdapter("m_ss")
+    @JvmStatic
+    fun intToM_ss(view : TextView, time : Int) {
+        val sdf = SimpleDateFormat("mm:ss", Locale.US)
+        view.text = sdf.format(Date(time.toLong()))
     }
 }
