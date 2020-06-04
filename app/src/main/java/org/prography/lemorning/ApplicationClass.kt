@@ -3,6 +3,10 @@ package org.prography.lemorning
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
+import com.google.firebase.FirebaseApp
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.prography.lemorning.config.XAccessTokenInterceptor
@@ -17,7 +21,13 @@ class ApplicationClass : Application() {
 
     // 테스트 서버 주소
     companion object {
-        val BASE_URL = "http://192.168.0.213:8000/"
+
+        val SERVER_URL_KEY = "server_host_url"
+
+        // Firebase RemoteConfig 인스턴스
+        lateinit var remoteConfig: FirebaseRemoteConfig
+
+        lateinit var BASE_URL: String
         // 실서버 주소
         //    public static String BASE_URL = "https://template.prography.org/";
 
@@ -43,6 +53,9 @@ class ApplicationClass : Application() {
         super.onCreate()
         sSharedPreferences = applicationContext.getSharedPreferences(TAG, Context.MODE_PRIVATE)
 
+        FirebaseApp.initializeApp(this)
+        activateFirebaseRemoteConfig()
+
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
         val client: OkHttpClient = OkHttpClient.Builder()
@@ -57,5 +70,30 @@ class ApplicationClass : Application() {
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
+    }
+
+    fun activateFirebaseRemoteConfig() {
+        remoteConfig = FirebaseRemoteConfig.getInstance().apply {
+            setConfigSettingsAsync(
+                FirebaseRemoteConfigSettings.Builder()
+                    .setMinimumFetchIntervalInSeconds(
+                        when (BuildConfig.DEBUG) {
+                            true -> 600
+                            else -> 3600
+                        }
+                    )
+                    .build()
+            )
+            setDefaultsAsync(R.xml.firebase_remote_config)
+        }
+        BASE_URL = remoteConfig.getString(SERVER_URL_KEY)
+        remoteConfig.fetchAndActivate().addOnCompleteListener {
+            run {
+                if (it.isSuccessful) {
+                    BASE_URL = remoteConfig.getString(SERVER_URL_KEY)
+                    Log.i("BASE_URL", BASE_URL)
+                }
+            }
+        }
     }
 }

@@ -10,6 +10,14 @@
         <item name="android:windowTranslucentStatus">false</item>
         <item name="android:statusBarColor">#ffffff</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowContentTransitions">true</item>
+    </style>
+
+    <style name="TransparentStatusBar" parent="AppTheme">
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">?android:attr/windowLightStatusBar</item>
     </style>
 
 </resources>

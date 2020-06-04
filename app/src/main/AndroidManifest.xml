@@ -27,6 +27,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.view.PlaySongActivity"
+            android:theme="@style/TransparentStatusBar"/>
     </application>
 
 </manifest>
