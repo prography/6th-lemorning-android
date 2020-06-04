@@ -32,6 +32,9 @@
 
         <receiver android:name=".src.AlarmReceiver"/>
         <receiver android:name=".src.DeviceBootReceiver"/>
+        <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.view.PlaySongActivity"
+            android:theme="@style/TransparentStatusBar"/>
     </application>
 
 </manifest>

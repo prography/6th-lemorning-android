@@ -7,5 +7,19 @@
     <fragment
         android:id="@+id/fg_trending"
         android:name="org.prography.lemorning.src.view.TrendingFragment"
-        tools:layout="@layout/fragment_trending"/>
+        tools:layout="@layout/fragment_trending">
+
+        <action
+            android:id="@+id/action_to_search"
+            app:destination="@id/fg_search"
+            app:enterAnim="@anim/anim_fade_in_100delay300"
+            app:exitAnim="@anim/anim_fade_out_0delay300"
+            app:popEnterAnim="@anim/anim_fade_in_100delay300"
+            app:popExitAnim="@anim/anim_fade_out_0delay300"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_search"
+        android:name="org.prography.lemorning.src.view.SearchFragment"
+        tools:layout="@layout/fragment_search" />
 </navigation>

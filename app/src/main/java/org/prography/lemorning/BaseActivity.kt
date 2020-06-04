@@ -1,5 +1,6 @@
 package org.prography.lemorning
 
+import android.app.ActivityOptions
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.Configuration
@@ -13,6 +14,8 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.navigation.ActivityNavigator
+import androidx.transition.ChangeBounds
 import org.prography.lemorning.ApplicationClass.Companion.LANGUAGE
 import org.prography.lemorning.ApplicationClass.Companion.sSharedPreferences
 import java.util.*
@@ -31,8 +34,14 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
         binding.setVariable(BR.viewmodel, viewmodel)
         binding.lifecycleOwner = this
 
+
         initLocale(baseContext)
-        initView()
+        initView(savedInstanceState)
+    }
+
+    override fun finish() {
+        super.finish()
+        ActivityNavigator.applyPopAnimationsToPendingTransition(this)
     }
 
     open fun showToast(message: String?) {
@@ -108,7 +117,7 @@ interface BaseActivityView<VM : BaseViewModel> {
 
     fun getViewModel() : VM
 
-    fun initView()
+    fun initView(savedInstanceState: Bundle?)
 
     fun initLocale(context : Context)
 }
