@@ -3,6 +3,7 @@ package org.prography.lemorning.src.view
 import android.transition.Transition
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import org.prography.lemorning.BaseFragment
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentSearchBinding
@@ -13,6 +14,6 @@ class SearchFragment(override val layoutId: Int = R.layout.fragment_search) : Ba
 
     override fun initView() {
 
-        binding.mbtnCloseSearch.setOnClickListener { NavHostFragment.findNavController(this).popBackStack() }
-    }
+        binding.mbtnCloseSearch.setOnClickListener { findNavController().popBackStack() }
+}
 }

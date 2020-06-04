@@ -1,15 +1,10 @@
 package org.prography.lemorning.utils
 
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.prography.lemorning.R
 import java.text.SimpleDateFormat
@@ -22,7 +17,7 @@ object BindingAdapters {
     fun bindImgUrlCircle(view : ImageView, url : String?) {
         Glide.with(view.context)
             .load(url)
-            .error(R.drawable.backgroud_black)
+            .error(R.drawable.shape_black)
             .transition(DrawableTransitionOptions.withCrossFade())
             .circleCrop()
             .into(view)
@@ -38,7 +33,7 @@ object BindingAdapters {
             .transition(DrawableTransitionOptions.withCrossFade())
             .centerCrop()
             .into(view)
-        view.setBackgroundResource(R.drawable.background_round_12_white)
+        view.setBackgroundResource(R.drawable.shape_round_12_white)
         view.clipToOutline = true
     }
 
@@ -48,10 +43,9 @@ object BindingAdapters {
     fun bindImgUrlOpaque(view : ImageView, url : String?) {
         Glide.with(view.context)
             .load(url)
-            .thumbnail(0.1f)
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(100, 50)))
             .transition(DrawableTransitionOptions.withCrossFade())
-            .error(R.drawable.backgroud_black)
+            .transform(BlurTransformation(25, 3))
+            .error(R.drawable.shape_black)
             .centerCrop()
             .into(view)
         view.clipToOutline = true

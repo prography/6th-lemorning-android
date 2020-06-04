@@ -73,6 +73,9 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/di_main_trending"
                     android:layout_marginTop="20dp"
+                    android:clipToPadding="false"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
                     tools:itemCount="4"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_foryou"
@@ -91,7 +94,7 @@
                     app:layout_constraintTop_toBottomOf="@id/rv_foryou_trending"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="40dp"
                     />
 
                 <com.google.android.material.button.MaterialButton
@@ -126,7 +129,7 @@
                     app:layout_constraintBottom_toBottomOf="@id/tv_title_popular_trending"
                     android:layout_marginEnd="30dp"
                     android:transitionName="search_box"
-                    android:background="@drawable/background_round_12_white"
+                    android:background="@drawable/shape_round_12_white"
                     android:padding="10dp"
                     android:elevation="6dp">
 
@@ -151,6 +154,7 @@
                     android:id="@+id/rv_popular_trending"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_popular_trending"
