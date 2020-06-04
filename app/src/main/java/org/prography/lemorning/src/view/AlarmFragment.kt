@@ -32,7 +32,7 @@ class AlarmFragment: Fragment() {
             .get(AlarmViewModel::class.java)
         binding.lifecycleOwner = this
 
-        binding.alarmImage.setOnClickListener {
+        binding.alarmAdd.setOnClickListener {
             val intent = Intent(
                 container?.context,
                 AlarmSettingActivity::class.java

@@ -16,7 +16,7 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initView()
+        initView(savedInstanceState)
     }
 
     override fun getViewModel(): AlarmViewModel {
@@ -24,7 +24,7 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
             .get(AlarmViewModel::class.java)
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         val dbViewModel = ViewModelProvider(this).get(AlarmDBViewModel::class.java)
 
         alarm_setting_button.setOnClickListener {

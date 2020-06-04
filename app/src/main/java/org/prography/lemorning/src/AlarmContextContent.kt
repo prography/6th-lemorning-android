@@ -36,8 +36,4 @@ class AlarmContextContent(private val context: Context){
     fun getComponentName():ComponentName{
         return ComponentName(context, DeviceBootReceiver::class.java)
     }
-
-    fun getMediaPlayer(resId: Int): MediaPlayer{
-        return MediaPlayer.create(context, resId)
-    }
 }

@@ -28,13 +28,11 @@
         <activity android:name=".src.view.AlarmSettingActivity"
             android:theme="@style/popupTheme"/>
         <activity android:name=".src.view.AlarmStartActivity"/>
-        <activity android:name=".src.view.PlaySongActivity"/>
+        <activity android:name=".src.view.PlaySongActivity"
+            android:theme="@style/TransparentStatusBar"/>
 
         <receiver android:name=".src.AlarmReceiver"/>
         <receiver android:name=".src.DeviceBootReceiver"/>
-        <activity android:name=".src.view.AlarmSettingActivity" />
-        <activity android:name=".src.view.PlaySongActivity"
-            android:theme="@style/TransparentStatusBar"/>
     </application>
 
 </manifest>

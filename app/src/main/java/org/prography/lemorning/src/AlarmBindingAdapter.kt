@@ -28,8 +28,10 @@ fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewMode
 @BindingAdapter(value = ["setWeek"])
 fun setWeek(view:LinearLayout, week:String){
     for(i in week.indices){
-        if(week[i] == '0'){
-            (view[i] as TextView).setTextColor(Color.parseColor("#50666666"))
+        if(week[i] == '1'){
+            (view[i] as TextView).setTextColor(Color.parseColor("#000000"))
+        }else{
+            (view[i] as TextView).setTextColor(Color.parseColor("#bfbfbf"))
         }
     }
 }
