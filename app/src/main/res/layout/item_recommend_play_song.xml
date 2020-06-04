@@ -17,7 +17,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="20dp"
         android:elevation="1dp"
-        android:background="@drawable/background_round_8_ffffff">
+        android:background="@drawable/shape_round_8_ffffff">
 
         <ImageView
             android:id="@+id/iv_thumb_item_recommend_play_song"
