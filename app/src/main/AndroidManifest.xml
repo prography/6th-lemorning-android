@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.view.AlarmSettingActivity"
+            android:theme="@style/popupTheme"/>
         <activity android:name=".src.view.AlarmStartActivity"/>
         <activity android:name=".src.view.PlaySongActivity"/>
 

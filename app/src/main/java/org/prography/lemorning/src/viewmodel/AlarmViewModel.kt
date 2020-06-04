@@ -90,4 +90,12 @@ class AlarmViewModel: BaseViewModel() {
         mediaPlayer.reset()
         mediaPlayer.release()
     }
+
+    fun currentTime(): String {
+        val cur = SimpleDateFormat("hh:mm:ss", Locale.US).format(Date(System.currentTimeMillis()))
+        println(cur)
+        return if(cur < "19:00:00" && cur >= "11:00:00") "주간"
+        else if(cur < "11:00:00" && cur >= "06:00:00") "아침"
+        else "야간"
+    }
 }

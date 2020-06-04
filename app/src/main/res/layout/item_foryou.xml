@@ -41,8 +41,7 @@
             app:layout_constraintBottom_toTopOf="@id/tv_title_item_foryou"
             app:layout_constraintStart_toStartOf="@id/iv_item_foryou"
             android:layout_marginStart="8dp"
-            android:elevation="2dp"
-            />
+            android:elevation="2dp" />
 
         <TextView
             android:id="@+id/tv_title_item_foryou"
