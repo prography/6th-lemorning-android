@@ -1,5 +1,7 @@
 package org.prography.lemorning.src.viewmodel
 
+import android.media.AudioAttributes
+import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,6 +25,7 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
     val playRecommendAdapter = PlayRecommendAdapter(viewModel = this)
 
     var playSong: LiveData<PlaySong> = getSong(songNo)
+    var nextSongList: LiveData<ArrayList<PlaySong?>> = getNextSongs()
 
     var mediaPlayer: MutableLiveData<MediaPlayer?> = MutableLiveData()
 
@@ -42,6 +45,7 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
                 mediaPlayer.value = MediaPlayer().apply {
                     setDataSource(playSong.musicUrl)
                     setScreenOnWhilePlaying(true)
+                    isLooping = true
                     prepareAsync() // might take long! (for buffering, etc)
                 }
             }
@@ -56,6 +60,21 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
+    }
+
+    fun getNextSongs() : LiveData<ArrayList<PlaySong?>> {
+        var result: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
+        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object : Callback<ArrayList<PlaySong?>> {
+            override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
+                t.printStackTrace()
+            }
+
+            override fun onResponse(call: Call<ArrayList<PlaySong?>>, response: Response<ArrayList<PlaySong?>>) {
+                response.body()?.let { result.value = it }
+            }
+
+        })
+        return result
     }
 
     override fun onCleared() {

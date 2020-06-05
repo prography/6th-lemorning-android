@@ -2,7 +2,13 @@ package org.prography.lemorning.src.adapters
 
 import android.content.Context
 import android.graphics.Rect
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.R
@@ -11,6 +17,7 @@ import org.prography.lemorning.databinding.ItemForyouPlaceholderBinding
 import org.prography.lemorning.src.models.ForYou
 import org.prography.lemorning.src.viewmodel.TrendingViewModel
 import org.prography.lemorning.utils.BaseRecyclerPlaceholderAdapter
+import org.prography.lemorning.utils.BaseViewPlaceHolder
 
 class ForYouAdapter(
     override val layoutId: Int = R.layout.item_foryou,
@@ -18,26 +25,30 @@ class ForYouAdapter(
     viewModel: TrendingViewModel
 ) : BaseRecyclerPlaceholderAdapter<ForYou, TrendingViewModel, ItemForyouBinding, ItemForyouPlaceholderBinding>(viewModel) {
 
-
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseViewPlaceHolder<ForYou, ItemForyouBinding, ItemForyouPlaceholderBinding> {
+        return when (viewType) {
+            TYPE_REALVIEW -> object : BaseViewPlaceHolder<ForYou, ItemForyouBinding, ItemForyouPlaceholderBinding>(
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false),
+                viewType = viewType
+            ) {
+                override fun initItem(item: ForYou?) {
+                    super.initItem(item)
+                    binding?.root?.setOnClickListener { item?.let { viewmodel.onClickSong(it.no, null) } }
+                }
+            }
+            else -> object : BaseViewPlaceHolder<ForYou, ItemForyouBinding, ItemForyouPlaceholderBinding>(
+                placeholder = DataBindingUtil.inflate(LayoutInflater.from(parent.context), placeholderLayoutId, parent, false),
+                viewType = viewType
+            ) {}
+        }
+    }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        recyclerView.addItemDecoration(ForYouDecoration())
-        val forYouManager = ForYouLayoutManager(recyclerView.context)
-        recyclerView.layoutManager = forYouManager
-        //LinearSnapHelper().attachToRecyclerView(recyclerView)
-    }
-
-    class ForYouDecoration : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-            //outRect.right = (parent.paddingStart * 0.2).toInt()
-        }
+        recyclerView.layoutManager = ForYouLayoutManager(recyclerView.context)
     }
 
     class ForYouLayoutManager(context : Context)
@@ -54,14 +65,32 @@ class ForYouAdapter(
                 val child : View = getChildAt(i)!!
                 val childMidpoint = child.let { (getDecoratedLeft(it) + getDecoratedRight(it)) / 2f}
                 val d = Math.min(d1, Math.abs(startCenterPoint - childMidpoint))
-                val scale = 1 - 0.2f * (d - 0.8f) / (d1 - 0.8f)
-
-                child.scaleX = scale
-                child.scaleY = scale
-                child.setPadding((paddingStart * 0.4 * scale).toInt(), 0, (paddingStart * 0.4 * scale).toInt(), 0)
+                val scaleFactor =  (d - 0.8f) / (d1 - 0.8f)
+                child.apply {
+                    pivotX =
+                        if (childMidpoint / startCenterPoint > 1f)
+                            child.width.toFloat()
+                        else if (childMidpoint / startCenterPoint < -1f)
+                            0f
+                        else
+                            0.5f * (childMidpoint / startCenterPoint) * child.width
+                    pivotY = height / 2f
+                    scaleX = 1 - 0.2f * scaleFactor
+                    scaleY = 1 - 0.2f * scaleFactor
+                }
             }
             return scrolled
         }
+
+        override fun onLayoutChildren(
+            recycler: RecyclerView.Recycler?,
+            state: RecyclerView.State?
+        ) {
+            super.onLayoutChildren(recycler, state)
+            scrollHorizontallyBy(0, recycler, state)
+        }
+
+
     }
 }
 

@@ -4,9 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable
-            name="item"
-            type="org.prography.lemorning.src.models.PlaySong" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,15 +12,15 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:elevation="1dp"
-        android:background="@drawable/shape_round_8_ffffff">
+        android:background="@drawable/shape_round_8_ffffff"
+        android:foreground="@drawable/shape_8_round_gradient_top0000_bottom1000">
 
-        <ImageView
+        <View
             android:id="@+id/iv_thumb_item_recommend_play_song"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1"
-            android:adjustViewBounds="true"
-            tools:src="@drawable/img_recommend_thumb_sample1"
+            android:background="@drawable/shape_8_round_gradient_right1000_left2000"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -31,34 +28,29 @@
             android:layout_marginBottom="8dp"
             android:layout_marginStart="10dp" />
 
-        <TextView
+        <View
             android:id="@+id/tv_category_item_recommend_play_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:textColor="#bfbfbf"
-            android:fontFamily="@font/timeburnernormal"
-            android:includeFontPadding="false"
-            android:text="Morning Breaker"
-            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_width="0dp"
+            android:layout_height="10dp"
+            app:layout_constraintWidth_percent="0.1"
+            app:layout_constraintVertical_chainStyle="spread"
             app:layout_constraintStart_toEndOf="@id/iv_thumb_item_recommend_play_song"
-            app:layout_constraintTop_toTopOf="@id/iv_thumb_item_recommend_play_song"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tv_title_item_recommend_play_song"
+            android:background="@drawable/shape_8_round_gradient_right1000_left2000"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="2dp" />
+            android:layout_marginTop="8dp" />
 
-        <TextView
+        <View
             android:id="@+id/tv_title_item_recommend_play_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:textColor="#171717"
-            android:includeFontPadding="false"
+            android:layout_width="0dp"
+            android:layout_height="16dp"
+            app:layout_constraintWidth_percent="0.5"
             app:layout_constraintStart_toEndOf="@id/iv_thumb_item_recommend_play_song"
             app:layout_constraintBottom_toBottomOf="@id/iv_thumb_item_recommend_play_song"
             app:layout_constraintTop_toBottomOf="@id/tv_category_item_recommend_play_song"
-            android:layout_marginTop="2dp"
-            android:text="관짝밈"
+            android:background="@drawable/shape_8_round_gradient_right1000_left2000"
+            android:layout_marginTop="4dp"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="2dp" />
 
