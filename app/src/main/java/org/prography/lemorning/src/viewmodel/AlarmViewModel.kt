@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.os.Build
 import android.widget.CheckBox
 import android.widget.LinearLayout
@@ -46,7 +45,7 @@ class AlarmViewModel: BaseViewModel() {
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.toString())
+        return Alarm(null, timeText, true, week, currentTime.toString(), 5)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
@@ -60,13 +59,13 @@ class AlarmViewModel: BaseViewModel() {
 //            AlarmManager.INTERVAL_DAY, pendingIntent
 //        )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
                 pendingIntent
             )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         } else {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
@@ -81,19 +80,8 @@ class AlarmViewModel: BaseViewModel() {
         )
     }
 
-    fun playAlarm(mediaPlayer: MediaPlayer){
-        mediaPlayer.start()
-    }
-
-    fun stopAlarm(mediaPlayer: MediaPlayer){
-        mediaPlayer.stop()
-        mediaPlayer.reset()
-        mediaPlayer.release()
-    }
-
     fun currentTime(): String {
         val cur = SimpleDateFormat("hh:mm:ss", Locale.US).format(Date(System.currentTimeMillis()))
-        println(cur)
         return if(cur < "19:00:00" && cur >= "11:00:00") "주간"
         else if(cur < "11:00:00" && cur >= "06:00:00") "아침"
         else "야간"

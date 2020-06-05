@@ -8,9 +8,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.src.model.Alarm
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
+import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
-@BindingAdapter(value = ["alarms", "viewModel"])
-fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewModel) {
+@BindingAdapter(value = ["alarms", "viewModel", "setVM"])
+fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewModel, setVM: AlarmViewModel) {
     view.adapter?.run {
         if (this is AlarmRecyclerAdapter) {
             if (alarms != null) {
@@ -20,7 +21,7 @@ fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewMode
         }
     } ?: run {
         if (alarms != null) {
-            AlarmRecyclerAdapter(alarms, vm).apply { view.adapter = this }
+            AlarmRecyclerAdapter(alarms, vm, setVM).apply { view.adapter = this }
         }
     }
 }
