@@ -43,6 +43,10 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="S"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="M"/>
             <CheckBox
                 android:layout_width="wrap_content"
@@ -64,17 +68,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="S"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S"/>
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/alarm_setting_song_button"
+        <Spinner
+            android:id="@+id/alarm_setting_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="노래 선택"
             app:layout_constraintTop_toBottomOf="@+id/alarm_setting_week"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
@@ -84,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Ok"
-            app:layout_constraintTop_toBottomOf="@+id/alarm_setting_song_button"
+            app:layout_constraintTop_toBottomOf="@+id/alarm_setting_spinner"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 

@@ -16,7 +16,7 @@ import java.util.*
 
 class AlarmViewModel: BaseViewModel() {
 
-    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout): Alarm {
+    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int): Alarm {
         var hour = 0
         var minute = 0
 
@@ -38,14 +38,14 @@ class AlarmViewModel: BaseViewModel() {
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.before(Calendar.getInstance())) calendar.add(Calendar.DATE, 1)
+
         val currentTime = calendar.time
         val timeText = SimpleDateFormat(
             "a hh : mm",
             Locale.getDefault()
         ).format(currentTime)
 
-
-        return Alarm(null, timeText, true, week, currentTime.time, 5)
+        return Alarm(null, timeText, true, week, currentTime.time, songNo)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
@@ -54,10 +54,10 @@ class AlarmViewModel: BaseViewModel() {
         val date = Date(alarm.date)
         calendar.time = date
 
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY, pendingIntent
-//        )
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY, pendingIntent
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(

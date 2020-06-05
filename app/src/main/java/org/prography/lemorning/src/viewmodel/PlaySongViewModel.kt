@@ -1,12 +1,9 @@
 package org.prography.lemorning.src.viewmodel
 
-import android.media.AudioAttributes
-import android.media.AudioManager
 import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.Flowable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.prography.lemorning.ApplicationClass
@@ -14,7 +11,6 @@ import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.src.adapters.PlayRecommendAdapter
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.repository.networks.PlaySongApiService
-import org.prography.lemorning.utils.BaseEvent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

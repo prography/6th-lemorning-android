@@ -7,11 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.src.view.AlarmSettingActivity
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
-import java.util.*
 
 class DeviceBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        if (Objects.equals(intent?.action, "android.intent.action.BOOT_COMPLETED")) {
+        if (intent?.action == "android.intent.action.BOOT_COMPLETED") {
             val viewModel =
                 ViewModelProvider(context as AlarmSettingActivity).get(AlarmViewModel::class.java)
             val dbViewModel = ViewModelProvider(context).get(AlarmDBViewModel::class.java)

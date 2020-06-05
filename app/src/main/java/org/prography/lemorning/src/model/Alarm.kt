@@ -19,6 +19,4 @@ data class Alarm (
     var date: Long,
     @ColumnInfo(name = "songNo")
     var songNo: Int
-) {
-    //constructor(): this(null, "", false, "0000000", , -1)
-}
+)

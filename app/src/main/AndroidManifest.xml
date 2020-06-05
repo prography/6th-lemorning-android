@@ -27,11 +27,19 @@
         </activity>
         <activity android:name=".src.view.AlarmSettingActivity"
             android:theme="@style/popupTheme"/>
-        <activity android:name=".src.view.AlarmStartActivity"/>
+        <activity android:name=".src.view.AlarmStartActivity">
+            <intent-filter>
+                <action android:name="alarm.lemorning"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".src.view.PlaySongActivity"
             android:theme="@style/TransparentStatusBar"/>
 
-        <receiver android:name=".src.AlarmReceiver"/>
+        <receiver android:name=".src.AlarmReceiver">
+            <intent-filter>
+                <action android:name="alarm.lemorning"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".src.DeviceBootReceiver"/>
     </application>
 
