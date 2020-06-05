@@ -4,6 +4,9 @@ import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.navigation.ActivityNavigatorExtras
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemPopularBinding
@@ -14,6 +17,7 @@ import org.prography.lemorning.utils.BaseRecyclerAdapter
 import org.prography.lemorning.utils.BaseRecyclerPlaceholderAdapter
 import org.prography.lemorning.utils.BaseViewHolder
 import org.prography.lemorning.utils.BaseViewPlaceHolder
+import android.util.Pair as UtilPair
 
 class PopularAdapter(
     override val layoutId: Int = R.layout.item_popular,
@@ -30,7 +34,16 @@ class PopularAdapter(
             ) {
                 override fun initItem(item: Popular?) {
                     super.initItem(item)
-                    binding?.root?.setOnClickListener { item?.let { viewmodel.onClickSong(it.no) } }
+                    binding?.let {
+                        it.root.setOnClickListener { it1 ->
+                            item?.let { it2 ->
+                                viewmodel.onClickSong(it2.no,
+                                    UtilPair.create(it.ivThumbnailItemPopular , "thumbnail_album"),
+                                    UtilPair.create(it.tvTitleItemPopular , "title_album"),
+                                    UtilPair.create(it.tvCategoryItemPopular , "category_album"))
+                            }
+                        }
+                    }
                 }
             }
             else -> object : BaseViewPlaceHolder<Popular, ItemPopularBinding, ItemPopularPlaceholderBinding>(

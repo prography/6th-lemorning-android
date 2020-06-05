@@ -1,5 +1,6 @@
 package org.prography.lemorning.src.viewmodel
 
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.prography.lemorning.ApplicationClass
@@ -13,6 +14,7 @@ import org.prography.lemorning.utils.BaseEvent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import android.util.Pair as UtilPair
 
 class TrendingViewModel : BaseViewModel() {
 
@@ -68,7 +70,7 @@ class TrendingViewModel : BaseViewModel() {
         return result
     }
 
-    fun onClickSong(songNo: Int) {
+    fun onClickSong(songNo: Int, vararg pairs: UtilPair<View, String>?) {
         moveToSong.value = BaseEvent(songNo)
     }
 }
