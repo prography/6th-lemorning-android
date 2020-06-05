@@ -80,7 +80,8 @@
                     android:layout_height="match_parent"
                     app:alarms="@{alarmViewModel.all}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:viewModel="@{alarmViewModel}" />
+                    app:viewModel="@{alarmViewModel}"
+                    app:setVM="@{dateVM}"/>
 
                 <ImageView
                     android:id="@+id/alarm_add"

@@ -14,11 +14,6 @@ import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
 class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_setting) : BaseActivity<ActivityAlarmSettingBinding, AlarmViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initView(savedInstanceState)
-    }
-
     override fun getViewModel(): AlarmViewModel {
         return ViewModelProvider(this)
             .get(AlarmViewModel::class.java)
@@ -28,7 +23,7 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
         val dbViewModel = ViewModelProvider(this).get(AlarmDBViewModel::class.java)
 
         alarm_setting_button.setOnClickListener {
-            val contextContent = AlarmContextContent(this)
+            val contextContent = AlarmContextContent(applicationContext)
             val alarm = viewmodel.setAlarm(alarm_setting_time_picker, alarm_setting_week)
             if (alarm.week == "0000000") {
                 showToast("요일을 선택해주세요")
@@ -47,6 +42,10 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
                 showToast(alarm.time + "으로 알람이 설정되었습니다")
                 finish()
             }
+        }
+
+        alarm_setting_song_button.setOnClickListener {
+
         }
     }
 }

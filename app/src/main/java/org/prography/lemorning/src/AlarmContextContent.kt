@@ -1,26 +1,25 @@
 package org.prography.lemorning.src
 
 import android.app.AlarmManager
-import android.app.Application
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import org.prography.lemorning.src.model.Alarm
 
 class AlarmContextContent(private val context: Context){
 
     fun getPendingIntent(alarm: Alarm): PendingIntent?{
-        val intent = Intent(context, AlarmReceiver::class.java)
-
+        val intent = Intent(context, AlarmReceiver::class.java).apply {
+            putExtra("songNo", alarm.songNo)
+        }
         return alarm.id?.let {
             PendingIntent.getBroadcast(
                 context,
                 it,
                 intent,
-                0
+                PendingIntent.FLAG_CANCEL_CURRENT
             )
         }
     }
