@@ -38,6 +38,17 @@ object BindingAdapters {
             .into(view)
     }
 
+    @BindingAdapter("bind_img_url")
+    @JvmStatic
+    fun bindImgUrl(view : ImageView, url : String?) {
+        Glide.with(view.context)
+            .load(url)
+            .error(R.drawable.ic_lemorning)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .centerCrop()
+            .into(view)
+    }
+
 
     @BindingAdapter("bind_img_url_opaque")
     @JvmStatic
