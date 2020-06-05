@@ -58,13 +58,7 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
                 vm.cancelAlarm(alarm)
             }
         }
-//        holder.binding.alarmRecyclerSwitch.setOnCheckedChangeListener{ _, checked ->
-//            if(checked){
-//
-//            }else{
-//
-//            }
-//        }
+
         holder.binding.alarmRecyclerCard.setOnLongClickListener{
             vm.cancelAlarm(alarm)
             vm.delete(alarm)

@@ -4,19 +4,29 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Build
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TimePicker
 import androidx.core.view.get
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.PlaySong
+import org.prography.lemorning.src.repository.networks.PlaySongApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
 
 class AlarmViewModel: BaseViewModel() {
 
-    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout): Alarm {
+
+    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int): Alarm {
         var hour = 0
         var minute = 0
 
@@ -45,7 +55,7 @@ class AlarmViewModel: BaseViewModel() {
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.time, 5)
+        return Alarm(null, timeText, true, week, currentTime.time, songNo)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
