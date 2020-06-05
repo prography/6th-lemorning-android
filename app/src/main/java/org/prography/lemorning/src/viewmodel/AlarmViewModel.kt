@@ -16,7 +16,7 @@ import java.util.*
 
 class AlarmViewModel: BaseViewModel() {
 
-    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout): Alarm {
+    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int): Alarm {
         var hour = 0
         var minute = 0
 
