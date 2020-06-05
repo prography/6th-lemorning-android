@@ -8,6 +8,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.prography.lemorning.BR
 import org.prography.lemorning.BaseViewModel
 
 abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDataBinding, P : ViewDataBinding>(protected var viewmodel : VM) :
@@ -26,8 +27,8 @@ abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDat
         notifyDataSetChanged()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewPlaceHolder<I, B, P> {
-        return when (viewType) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewPlaceHolder<I, B, P> =
+        when (viewType) {
             TYPE_REALVIEW -> object : BaseViewPlaceHolder<I, B, P>(
                 binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false),
                 viewType = viewType
@@ -37,7 +38,6 @@ abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDat
                 viewType = viewType
             ) {}
         }
-    }
 
 
     override fun onBindViewHolder(holder: BaseViewPlaceHolder<I, B, P>, position: Int) {

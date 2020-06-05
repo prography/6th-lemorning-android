@@ -9,4 +9,7 @@ import retrofit2.http.Path
 interface PlaySongApiService {
     @GET("/api/shop/{songNo}")
     fun getPlaySong(@Path("songNo") songNo: Int) : Call<PlaySong>
+
+    @GET("/api/shop")
+    fun getNextSongs() : Call<ArrayList<PlaySong?>>
 }

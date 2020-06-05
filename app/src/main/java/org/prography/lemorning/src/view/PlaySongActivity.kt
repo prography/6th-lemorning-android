@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
+import org.prography.lemorning.BuildConfig
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityPlaySongBinding
 import org.prography.lemorning.src.viewmodel.PlaySongViewModel
@@ -45,7 +46,7 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
             run {
                 /* Audio Visualizer */
                 it?.setOnPreparedListener {
-                    binding.visualizerPlaySong.setPlayer(it.audioSessionId)
+                    //binding.visualizerPlaySong.setPlayer(it.audioSessionId)
                     binding.sdSeekbarPlaySong.valueTo = it.duration.toFloat()
                     binding.sdSeekbarPlaySong.valueFrom = it.currentPosition.toFloat()
                     binding.tvStartPlaySong.text = it.currentPosition.toString()
@@ -59,9 +60,17 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
 
     }
 
+    override fun onPause() {
+        super.onPause()
+        if (!BuildConfig.DEBUG) {
+            viewmodel.mediaPlayer.value?.let { if (it.isPlaying) it.pause() }
+        }
+    }
+
 
     override fun onDestroy() {
         viewmodel.mediaPlayer.value?.release()
+        viewmodel.mediaPlayer.value = null
         super.onDestroy()
     }
 

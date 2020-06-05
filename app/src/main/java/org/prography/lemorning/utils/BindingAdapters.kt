@@ -4,6 +4,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.prography.lemorning.R
@@ -24,17 +25,17 @@ object BindingAdapters {
         view.clipToOutline = true
     }
 
-    @BindingAdapter("bind_img_url_round_4")
+    @BindingAdapter("bind_img_url_round_8")
     @JvmStatic
-    fun bindImgUrlRound4(view : ImageView, url : String?) {
+    fun bindImgUrlRound8(view : ImageView, url : String?) {
+        view.clipToOutline = true
+        view.setBackgroundResource(R.drawable.shape_8_round_gradient_top0000_bottom1000)
         Glide.with(view.context)
             .load(url)
             .error(R.drawable.img_foryou_sample1)
             .transition(DrawableTransitionOptions.withCrossFade())
             .centerCrop()
             .into(view)
-        view.setBackgroundResource(R.drawable.shape_round_12_white)
-        view.clipToOutline = true
     }
 
 
@@ -44,9 +45,8 @@ object BindingAdapters {
         Glide.with(view.context)
             .load(url)
             .transition(DrawableTransitionOptions.withCrossFade())
-            .transform(BlurTransformation(25, 3))
+            .transform(BlurTransformation(30, 3), CenterCrop())
             .error(R.drawable.shape_black)
-            .centerCrop()
             .into(view)
         view.clipToOutline = true
     }
