@@ -88,29 +88,5 @@
             android:layout_marginTop="30dp"
             android:layout_marginEnd="30dp" />
 
-        <ProgressBar
-            android:id="@+id/pb_item_popular"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="60dp"
-            android:layout_height="4dp"
-            android:max="100"
-            tools:progress="30"
-            android:progressTint="@color/colorPrimary"
-            android:secondaryProgressTint="#efefef"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_category_item_popular"
-            app:layout_constraintBottom_toBottomOf="@id/tv_category_item_popular"
-            android:layout_marginEnd="30dp" />
-
-        <ImageView
-            android:id="@+id/iv_play_item_popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_small"
-            app:layout_constraintStart_toStartOf="@id/pb_item_popular"
-            app:layout_constraintEnd_toEndOf="@id/pb_item_popular"
-            app:layout_constraintTop_toTopOf="@id/pb_item_popular"
-            app:layout_constraintBottom_toBottomOf="@id/pb_item_popular" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
