@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.BR
 import org.prography.lemorning.BaseViewModel
 
-abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDataBinding, P : ViewDataBinding>(protected var viewmodel : VM) :
+abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDataBinding, P : ViewDataBinding>(
+    protected var viewmodel : VM,
+    protected var placeholderSize : Int = DEFALT_PLACEHOLDER_SIZE) :
     RecyclerView.Adapter<BaseViewPlaceHolder<I, B, P>>(), BaseRecyclerPlaceholderAdapterInterface<I> {
 
     companion object {
@@ -48,7 +50,7 @@ abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDat
         return if (items == null) TYPE_PLACEHOLDER else TYPE_REALVIEW
     }
 
-    override fun getItemCount(): Int = if (items == null) DEFALT_PLACEHOLDER_SIZE else items!!.size
+    override fun getItemCount(): Int = if (items == null) placeholderSize else items!!.size
 
 }
 

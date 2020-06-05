@@ -16,9 +16,9 @@ data class Alarm (
     @ColumnInfo(name = "week")
     var week: String,
     @ColumnInfo(name = "date")
-    var date: String,
+    var date: Long,
     @ColumnInfo(name = "songNo")
     var songNo: Int
 ) {
-    constructor(): this(null, "", false, "0000000", "", -1)
+    //constructor(): this(null, "", false, "0000000", , -1)
 }

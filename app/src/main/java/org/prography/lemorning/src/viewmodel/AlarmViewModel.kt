@@ -38,20 +38,20 @@ class AlarmViewModel: BaseViewModel() {
         calendar.set(Calendar.SECOND, 0)
 
         if (calendar.before(Calendar.getInstance())) calendar.add(Calendar.DATE, 1)
-
         val currentTime = calendar.time
         val timeText = SimpleDateFormat(
             "a hh : mm",
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.toString(), 5)
+
+        return Alarm(null, timeText, true, week, currentTime.time, 5)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
         val calendar = Calendar.getInstance()
 
-        val date = SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy", Locale.getDefault()).parse(alarm.date)
+        val date = Date(alarm.date)
         calendar.time = date
 
 //        alarmManager.setRepeating(
