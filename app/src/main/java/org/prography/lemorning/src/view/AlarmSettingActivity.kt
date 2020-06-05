@@ -23,7 +23,7 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
         val dbViewModel = ViewModelProvider(this).get(AlarmDBViewModel::class.java)
 
         alarm_setting_button.setOnClickListener {
-            val contextContent = AlarmContextContent(applicationContext)
+            val contextContent = AlarmContextContent(this)
             val alarm = viewmodel.setAlarm(alarm_setting_time_picker, alarm_setting_week)
             if (alarm.week == "0000000") {
                 showToast("요일을 선택해주세요")

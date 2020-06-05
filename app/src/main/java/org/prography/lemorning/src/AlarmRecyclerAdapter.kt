@@ -1,7 +1,6 @@
 package org.prography.lemorning.src
 
 import android.app.AlarmManager
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -34,16 +33,16 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
         val alarm = alarms[position]
         holder.binding.alarm = alarm
         holder.binding.vm = vm
-        holder.binding.alarmRecyclerSwitch.setOnCheckedChangeListener{ _, checked ->
-            if(!checked){
+        val switch = holder.binding.alarmRecyclerSwitch
+        switch.setOnClickListener{
+            if((it as SwitchMaterial).isChecked){
                 alarm.on = true
-                vm.cancelAlarm(alarm)
-            }else{
-                alarm.on = false
                 val context = holder.binding.root.context.applicationContext
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java).apply {
                     putExtra("songNo", alarm.songNo)
+                    putExtra("week", alarm.week)
+                    action = "alarm.lemorning"
                 }
                 val pendingIntent =
                     alarm.id?.let {alarmId ->
@@ -54,8 +53,18 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
                     alarmViewModel.setAlarmManager(alarm,
                         it1, alarmManager)
                 }
+            }else{
+                alarm.on = false
+                vm.cancelAlarm(alarm)
             }
         }
+//        holder.binding.alarmRecyclerSwitch.setOnCheckedChangeListener{ _, checked ->
+//            if(checked){
+//
+//            }else{
+//
+//            }
+//        }
         holder.binding.alarmRecyclerCard.setOnLongClickListener{
             vm.cancelAlarm(alarm)
             vm.delete(alarm)

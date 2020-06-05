@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import org.prography.lemorning.src.model.Alarm
 
-@Database(entities = [Alarm::class], version = 2, exportSchema = false)
+@Database(entities = [Alarm::class], version = 1, exportSchema = false)
 abstract class AlarmDatabase: RoomDatabase() {
 
     abstract fun alarmDao(): AlarmDao

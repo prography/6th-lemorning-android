@@ -43,6 +43,10 @@
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="S"/>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="M"/>
             <CheckBox
                 android:layout_width="wrap_content"
@@ -60,10 +64,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="F"/>
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="S"/>
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

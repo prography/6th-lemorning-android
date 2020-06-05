@@ -32,6 +32,8 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
         val alarmManager = getApplication<Application>().getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(getApplication(), AlarmReceiver::class.java).apply {
             putExtra("songNo", alarm.songNo)
+            putExtra("week", alarm.week)
+            action = "alarm.lemorning"
         }
         val pendingIntent =
             alarm.id?.let {

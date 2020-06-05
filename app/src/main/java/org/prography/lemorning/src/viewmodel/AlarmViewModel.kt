@@ -45,19 +45,19 @@ class AlarmViewModel: BaseViewModel() {
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.toString(), 5)
+        return Alarm(null, timeText, true, week, currentTime.time, 5)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
         val calendar = Calendar.getInstance()
 
-        val date = SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy", Locale.getDefault()).parse(alarm.date)
+        val date = Date(alarm.date)
         calendar.time = date
 
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY, pendingIntent
-//        )
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
+            AlarmManager.INTERVAL_DAY, pendingIntent
+        )
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
