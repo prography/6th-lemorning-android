@@ -10,10 +10,12 @@ import org.prography.lemorning.src.viewmodel.SignInViewModel
 
 class SignInActivity(override val layoutId: Int = R.layout.activity_sign_in)
     : BaseActivity<ActivitySignInBinding, SignInViewModel>() {
+
     override fun getViewModel(): SignInViewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
 
     override fun initView(savedInstanceState: Bundle?) {
 
+        /* Set On Click Listener */
         binding.mbtnSigninSignIn.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
         binding.mbtnSigninSignIn.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
         binding.mbtnSignupSignIn.setOnClickListener { startActivity(Intent(this, SignUpActivity::class.java)) }

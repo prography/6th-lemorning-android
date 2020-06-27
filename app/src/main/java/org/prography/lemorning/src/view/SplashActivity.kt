@@ -16,6 +16,6 @@ class SplashActivity(override val layoutId: Int = R.layout.activity_splash)
         Thread {
             Thread.sleep(1000)
             startActivity(Intent(this, SignInActivity::class.java))
-        }
+        }.start()
     }
 }
