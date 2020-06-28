@@ -39,6 +39,14 @@ class ApplicationClass : Application() {
         // JWT Token 값
         val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
 
+        // login 형식
+        const val LOGIN_TYPE = "LOGIN-TYPE"
+        const val TYPE_NORMAL = "NORMAL"
+        const val TYPE_KAKAO = "KAKAO"
+        const val TYPE_NAVER = "NAVER"
+        const val TYPE_GOOGLE = "GOOGLE"
+
+
         // LANGUAGE 설정 값
         val LANGUAGE = "LANGUAGE"
 
