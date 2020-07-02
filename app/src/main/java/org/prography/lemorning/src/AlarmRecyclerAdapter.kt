@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemAlarmBinding
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<defaultsMap xmlns:android="http://schemas.android.com/apk/res/android">
+<defaultsMap>
     <entry>
         <key>server_host_url</key>
-        <value>http://localhost:8000/</value>
+        <value>http://lemorning.store/</value>
     </entry>
 </defaultsMap>

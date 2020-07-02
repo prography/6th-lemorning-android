@@ -3,7 +3,7 @@
     <data>
         <variable
             name="alarm"
-            type="org.prography.lemorning.src.model.Alarm" />
+            type="org.prography.lemorning.src.models.Alarm" />
         <variable
             name="vm"
             type="org.prography.lemorning.src.viewmodel.AlarmDBViewModel" />
@@ -11,8 +11,8 @@
             name="setVM"
             type="org.prography.lemorning.src.viewmodel.AlarmViewModel" />
     </data>
+
     <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/alarm_recycler_card"
         android:layout_width="match_parent"

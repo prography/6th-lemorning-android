@@ -2,9 +2,7 @@ package org.prography.lemorning.src.adapters
 
 import android.content.Context
 import android.graphics.Rect
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -13,9 +11,7 @@ import org.prography.lemorning.databinding.ItemRecommendPlaySongBinding
 import org.prography.lemorning.databinding.ItemRecommendPlaySongPlaceholderBinding
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.viewmodel.PlaySongViewModel
-import org.prography.lemorning.utils.BaseRecyclerAdapter
-import org.prography.lemorning.utils.BaseRecyclerPlaceholderAdapter
-import org.prography.lemorning.utils.BaseViewHolder
+import org.prography.lemorning.utils.base.BaseRecyclerPlaceholderAdapter
 
 class PlayRecommendAdapter(
     override val layoutId: Int = R.layout.item_recommend_play_song,

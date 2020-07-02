@@ -5,8 +5,7 @@ import org.prography.lemorning.databinding.ItemCategoryBinding
 import org.prography.lemorning.databinding.ItemCategoryPlaceholderBinding
 import org.prography.lemorning.src.models.Category
 import org.prography.lemorning.src.viewmodel.SearchViewModel
-import org.prography.lemorning.utils.BaseRecyclerPlaceholderAdapter
-import org.prography.lemorning.utils.BaseViewPlaceHolder
+import org.prography.lemorning.utils.base.BaseRecyclerPlaceholderAdapter
 
 class CategoryAdapter(
     override val layoutId: Int = R.layout.item_category,

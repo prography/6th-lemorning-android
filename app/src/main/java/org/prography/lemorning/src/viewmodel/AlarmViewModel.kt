@@ -10,7 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TimePicker
 import androidx.core.view.get
 import org.prography.lemorning.BaseViewModel
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -45,7 +45,14 @@ class AlarmViewModel: BaseViewModel() {
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.time, songNo)
+        return Alarm(
+            null,
+            timeText,
+            true,
+            week,
+            currentTime.time,
+            songNo
+        )
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {

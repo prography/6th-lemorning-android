@@ -2,10 +2,9 @@ package org.prography.lemorning.src.repository
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.repository.db.AlarmDao
-import org.prography.lemorning.src.model.Alarm
 import org.prography.lemorning.src.repository.db.AlarmDatabase
-import java.lang.Exception
 
 class AlarmRepository(application: Application){
     private val alarmDatabase = AlarmDatabase.getInstance(
