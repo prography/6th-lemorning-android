@@ -16,7 +16,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.navigation.ActivityNavigator
 import org.prography.lemorning.ApplicationClass.Companion.LANGUAGE
 import org.prography.lemorning.ApplicationClass.Companion.sSharedPreferences
-import org.prography.lemorning.utils.NetworkEvent
+import org.prography.lemorning.utils.components.NetworkEvent
 import java.util.*
 
 abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), BaseActivityView<VM> {

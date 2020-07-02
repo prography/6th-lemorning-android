@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.src.adapters.CategoryAdapter
+import org.prography.lemorning.src.apis.SearchApiService
 import org.prography.lemorning.src.models.Category
-import org.prography.lemorning.src.repository.networks.SearchApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

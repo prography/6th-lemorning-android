@@ -1,20 +1,19 @@
-package org.prography.lemorning.utils
+package org.prography.lemorning.utils.base
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import org.prography.lemorning.BR
 import org.prography.lemorning.BaseViewModel
 
 abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDataBinding, P : ViewDataBinding>(
     protected var viewmodel : VM,
-    protected var placeholderSize : Int = DEFALT_PLACEHOLDER_SIZE) :
-    RecyclerView.Adapter<BaseViewPlaceHolder<I, B, P>>(), BaseRecyclerPlaceholderAdapterInterface<I> {
+    protected var placeholderSize : Int = DEFALT_PLACEHOLDER_SIZE
+) :
+    RecyclerView.Adapter<BaseViewPlaceHolder<I, B, P>>(),
+    BaseRecyclerPlaceholderAdapterInterface<I> {
 
     companion object {
         const val TYPE_PLACEHOLDER : Int = 1

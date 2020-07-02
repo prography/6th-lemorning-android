@@ -8,6 +8,7 @@ import org.prography.lemorning.R
 object FirebaseUtils {
     const val BASE_URL_KEY = "server_host_url"
 
+    @JvmStatic
     fun initRemoteConfig(fetchAction: (FirebaseRemoteConfig) -> Unit, activeAction: ((FirebaseRemoteConfig) -> Unit)?) {
         var remoteConfig = FirebaseRemoteConfig.getInstance().apply {
             setConfigSettingsAsync(

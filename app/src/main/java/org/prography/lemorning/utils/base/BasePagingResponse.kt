@@ -1,4 +1,4 @@
-package org.prography.lemorning.utils
+package org.prography.lemorning.utils.base
 
 import com.google.gson.annotations.SerializedName
 

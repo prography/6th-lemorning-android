@@ -3,8 +3,8 @@ package org.prography.lemorning
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
-import org.prography.lemorning.utils.BaseEvent
-import org.prography.lemorning.utils.NetworkEvent
+import org.prography.lemorning.utils.base.BaseEvent
+import org.prography.lemorning.utils.components.NetworkEvent
 
 abstract class BaseViewModel : ViewModel() {
 

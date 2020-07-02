@@ -1,7 +1,6 @@
-package org.prography.lemorning.src.repository.networks
+package org.prography.lemorning.src.apis
 
 import org.prography.lemorning.src.models.PlaySong
-import org.prography.lemorning.src.models.Popular
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

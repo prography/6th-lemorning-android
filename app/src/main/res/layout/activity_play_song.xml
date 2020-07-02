@@ -30,7 +30,7 @@
             tools:scaleType="centerCrop"
             />
 
-        <org.prography.lemorning.utils.CircleVisualizerSmooth
+        <org.prography.lemorning.utils.components.CircleVisualizerSmooth
             android:id="@+id/visualizer_play_song"
             android:layout_width="0dp"
             android:layout_height="0dp"

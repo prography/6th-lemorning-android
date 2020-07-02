@@ -1,4 +1,4 @@
-package org.prography.lemorning.utils
+package org.prography.lemorning.utils.components
 
 import androidx.lifecycle.MutableLiveData
 
@@ -8,7 +8,8 @@ class NetworkEvent : MutableLiveData<NetworkEvent.NetworkState>() {
     }
 
     fun startLoading() {
-        value = NetworkState.LOADING
+        value =
+            NetworkState.LOADING
     }
 
     fun handleResponse(response : Any?) {

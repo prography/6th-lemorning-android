@@ -2,7 +2,7 @@ package org.prography.lemorning.src.repository.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 
 @Dao
 interface AlarmDao{

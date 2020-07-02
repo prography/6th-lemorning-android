@@ -8,9 +8,8 @@ import android.content.Intent
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import org.prography.lemorning.src.AlarmReceiver
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.repository.AlarmRepository
-import org.prography.lemorning.src.view.AlarmSettingActivity
 
 class AlarmDBViewModel(application: Application): AndroidViewModel(application) {
     private val repository = AlarmRepository(application)
@@ -28,7 +27,7 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
         repository.delete(Alarm)
     }
 
-    fun cancelAlarm(alarm:Alarm){
+    fun cancelAlarm(alarm: Alarm){
         val alarmManager = getApplication<Application>().getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(getApplication(), AlarmReceiver::class.java).apply {
             putExtra("songNo", alarm.songNo)

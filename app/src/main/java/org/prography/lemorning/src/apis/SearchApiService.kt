@@ -1,4 +1,4 @@
-package org.prography.lemorning.src.repository.networks
+package org.prography.lemorning.src.apis
 
 import org.prography.lemorning.src.models.Category
 import retrofit2.Call

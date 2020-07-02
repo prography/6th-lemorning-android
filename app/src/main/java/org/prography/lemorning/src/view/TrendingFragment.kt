@@ -9,7 +9,7 @@ import org.prography.lemorning.BaseFragment
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentTrendingBinding
 import org.prography.lemorning.src.viewmodel.TrendingViewModel
-import org.prography.lemorning.utils.SimpleMessageDialog
+import org.prography.lemorning.utils.components.SimpleMessageDialog
 
 class TrendingFragment(override val layoutId: Int = R.layout.fragment_trending)
     : BaseFragment<FragmentTrendingBinding, TrendingViewModel>() {
@@ -37,7 +37,10 @@ class TrendingFragment(override val layoutId: Int = R.layout.fragment_trending)
             )
             findNavController().navigate(R.id.action_to_search, null, null, extras)
         }
-        binding.mbtnPeriodPopularTrending.setOnClickListener { SimpleMessageDialog(context = requireContext(), message = getString(R.string.coming_soon)).show() }
+        binding.mbtnPeriodPopularTrending.setOnClickListener { SimpleMessageDialog(
+            context = requireContext(),
+            message = getString(R.string.coming_soon)
+        ).show() }
 
         /* Move To Song */
         viewmodel.moveToSong.observe(this, Observer { it.get()?.let {

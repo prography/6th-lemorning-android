@@ -11,9 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.R
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.apis.PlaySongApiService
+import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.models.PlaySong
-import org.prography.lemorning.src.repository.networks.PlaySongApiService
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 import retrofit2.Call

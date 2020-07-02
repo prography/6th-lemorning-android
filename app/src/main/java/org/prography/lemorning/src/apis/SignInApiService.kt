@@ -1,4 +1,4 @@
-package org.prography.lemorning.src.repository.networks
+package org.prography.lemorning.src.apis
 
 import io.reactivex.Single
 import org.prography.lemorning.src.models.Jwt

@@ -1,4 +1,4 @@
-package org.prography.lemorning.utils
+package org.prography.lemorning.utils.components
 
 import android.app.Dialog
 import android.content.Context

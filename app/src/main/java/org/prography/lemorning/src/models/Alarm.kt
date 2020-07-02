@@ -1,4 +1,4 @@
-package org.prography.lemorning.src.model
+package org.prography.lemorning.src.models
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,12 +1,11 @@
-package org.prography.lemorning.utils;
+package org.prography.lemorning.utils.components;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 
 import androidx.annotation.Nullable;
-
-import android.util.AttributeSet;
 
 import com.chibde.BaseVisualizer;
 
