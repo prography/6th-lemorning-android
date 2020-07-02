@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -54,6 +53,7 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:inputType="textPersonName"
+                    android:text="@={viewmodel.email}"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
@@ -79,6 +79,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
+                    android:text="@={viewmodel.password}"
                     android:hint="Enter your Password"
                     android:fontFamily="@font/timeburnerbold"
                     android:paddingTop="11dp"
@@ -98,6 +99,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_pw_sign_in"
                     app:layout_constraintBottom_toTopOf="@id/mbtn_signup_sign_in"
+                    android:onClick="@{() -> viewmodel.onClickSignIn()}"
                     android:padding="0dp"
                     app:cornerRadius="4dp"
                     android:insetTop="0dp"

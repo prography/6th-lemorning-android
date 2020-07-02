@@ -1,6 +1,5 @@
 package org.prography.lemorning
 
-import android.app.ActivityOptions
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.Configuration
@@ -15,9 +14,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.navigation.ActivityNavigator
-import androidx.transition.ChangeBounds
 import org.prography.lemorning.ApplicationClass.Companion.LANGUAGE
 import org.prography.lemorning.ApplicationClass.Companion.sSharedPreferences
+import org.prography.lemorning.utils.NetworkEvent
 import java.util.*
 
 abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompatActivity(), BaseActivityView<VM> {
@@ -37,6 +36,11 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
 
         initLocale(baseContext)
         initView(savedInstanceState)
+
+        /* Toast & Alert Observing */
+        viewmodel.toastEvent.observe(this, androidx.lifecycle.Observer { it.get()?.let { showToast(it) } })
+        //viewmodel.alertEvent.observe(this, androidx.lifecycle.Observer { it.get()?.let { showSim } })
+        viewmodel.networkEvent.observe(this, androidx.lifecycle.Observer { handleNetworkEvent(it) })
     }
 
     override fun finish() {
@@ -82,6 +86,22 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
         }
     }
 
+    override fun handleNetworkEvent(state: NetworkEvent.NetworkState) {
+        when(state) {
+            NetworkEvent.NetworkState.LOADING -> showProgressDialog()
+            NetworkEvent.NetworkState.SUCCESS -> {
+                hideProgressDialog()
+            }
+            NetworkEvent.NetworkState.FAILURE -> {
+                hideProgressDialog()
+            }
+            NetworkEvent.NetworkState.ERROR -> {
+                hideProgressDialog()
+                showToast(getString(R.string.network_error))
+            }
+        }
+    }
+
 
     /* 화면 터치시 키보드 레이아웃 감추기 코드 */
     private var firstPointX = 0f
@@ -120,4 +140,6 @@ interface BaseActivityView<VM : BaseViewModel> {
     fun initView(savedInstanceState: Bundle?)
 
     fun initLocale(context : Context)
+
+    fun handleNetworkEvent(state : NetworkEvent.NetworkState)
 }
