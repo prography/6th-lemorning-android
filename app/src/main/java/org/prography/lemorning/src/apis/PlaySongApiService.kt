@@ -9,6 +9,6 @@ interface PlaySongApiService {
     @GET("/api/shop/{songNo}")
     fun getPlaySong(@Path("songNo") songNo: Int) : Call<PlaySong>
 
-    @GET("/api/shop")
+    @GET("/api/shop/")
     fun getNextSongs() : Call<ArrayList<PlaySong?>>
 }

@@ -5,6 +5,6 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface SearchApiService {
-    @GET("/api/category")
+    @GET("/api/category/")
     fun getCategory() : Call<ArrayList<Category?>>
 }

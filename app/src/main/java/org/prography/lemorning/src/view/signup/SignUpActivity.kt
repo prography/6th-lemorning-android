@@ -1,12 +1,10 @@
-package org.prography.lemorning.src.view
+package org.prography.lemorning.src.view.signup
 
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
-import org.prography.lemorning.databinding.ActivitySignInBinding
 import org.prography.lemorning.databinding.ActivitySignUpBinding
-import org.prography.lemorning.src.viewmodel.SignInViewModel
 import org.prography.lemorning.src.viewmodel.SignUpViewModel
 
 class SignUpActivity(override val layoutId: Int = R.layout.activity_sign_up)

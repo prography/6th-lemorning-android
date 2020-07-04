@@ -39,7 +39,7 @@
 
         </activity>
         <activity android:name=".src.view.SignInActivity" />
-        <activity android:name=".src.view.SignUpActivity" />
+        <activity android:name=".src.view.signup.SignUpActivity" />
 
         <receiver android:name=".src.AlarmReceiver">
             <intent-filter>
