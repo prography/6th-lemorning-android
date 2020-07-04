@@ -9,8 +9,7 @@ import org.prography.lemorning.BuildConfig
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityPlaySongBinding
 import org.prography.lemorning.src.viewmodel.PlaySongViewModel
-import org.prography.lemorning.utils.BindingAdapters
-import org.prography.lemorning.utils.SimpleMessageDialog
+import org.prography.lemorning.utils.components.SimpleMessageDialog
 
 class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
     : BaseActivity<ActivityPlaySongBinding, PlaySongViewModel>() {
@@ -60,8 +59,14 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
 
         /* Set On Click Listener */
         binding.ivClosePlaySong.setOnClickListener { finish() }
-        binding.ivMorePlaySong.setOnClickListener { SimpleMessageDialog(context = this, message = getString(R.string.coming_soon)).show() }
-        binding.ivLikePlaySong.setOnClickListener { SimpleMessageDialog(context = this, message = getString(R.string.coming_soon)).show() }
+        binding.ivMorePlaySong.setOnClickListener { SimpleMessageDialog(
+            context = this,
+            message = getString(R.string.coming_soon)
+        ).show() }
+        binding.ivLikePlaySong.setOnClickListener { SimpleMessageDialog(
+            context = this,
+            message = getString(R.string.coming_soon)
+        ).show() }
 
     }
 

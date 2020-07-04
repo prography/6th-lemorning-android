@@ -9,7 +9,7 @@ import org.prography.lemorning.BaseFragment
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentSearchBinding
 import org.prography.lemorning.src.viewmodel.SearchViewModel
-import org.prography.lemorning.utils.SimpleMessageDialog
+import org.prography.lemorning.utils.components.SimpleMessageDialog
 
 class SearchFragment(override val layoutId: Int = R.layout.fragment_search) : BaseFragment<FragmentSearchBinding, SearchViewModel>() {
 
@@ -24,7 +24,10 @@ class SearchFragment(override val layoutId: Int = R.layout.fragment_search) : Ba
         binding.rvCategorySearch.addOnItemTouchListener(object : RecyclerView.OnItemTouchListener {
             override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) {
                 if (e.action == MotionEvent.ACTION_UP) {
-                    SimpleMessageDialog(context = context!!, message = getString(R.string.coming_soon)).show()
+                    SimpleMessageDialog(
+                        context = context!!,
+                        message = getString(R.string.coming_soon)
+                    ).show()
                 }
             }
 
@@ -38,6 +41,9 @@ class SearchFragment(override val layoutId: Int = R.layout.fragment_search) : Ba
 
         /* Set On Click Listener */
         binding.mbtnCloseSearch.setOnClickListener { findNavController().popBackStack() }
-        binding.clSearchContainer.setOnClickListener { SimpleMessageDialog(context = requireContext(), message = getString(R.string.coming_soon)).show() }
+        binding.clSearchContainer.setOnClickListener { SimpleMessageDialog(
+            context = requireContext(),
+            message = getString(R.string.coming_soon)
+        ).show() }
     }
 }

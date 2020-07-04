@@ -1,4 +1,4 @@
-package org.prography.lemorning.src.adapters
+package org.prography.lemorning.src
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.switchmaterial.SwitchMaterial
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemAlarmBinding
-import org.prography.lemorning.src.AlarmReceiver
-import org.prography.lemorning.src.BindingViewHolder
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
@@ -26,9 +24,7 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
         viewType: Int
     ): AlarmViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_alarm, parent, false)
-        return AlarmViewHolder(
-            view
-        )
+        return AlarmViewHolder(view)
     }
 
     override fun getItemCount(): Int = alarms.size

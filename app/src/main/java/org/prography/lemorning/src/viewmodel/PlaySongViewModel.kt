@@ -9,8 +9,8 @@ import io.reactivex.schedulers.Schedulers
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.src.adapters.PlayRecommendAdapter
+import org.prography.lemorning.src.apis.PlaySongApiService
 import org.prography.lemorning.src.models.PlaySong
-import org.prography.lemorning.src.repository.networks.PlaySongApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

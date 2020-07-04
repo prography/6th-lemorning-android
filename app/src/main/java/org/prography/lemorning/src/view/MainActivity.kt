@@ -5,14 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityMainBinding
 import org.prography.lemorning.src.viewmodel.MainViewModel
-import org.prography.lemorning.utils.setupWithNavController
+import org.prography.lemorning.utils.helpers.setupWithNavController
 
 class MainActivity(override val layoutId: Int = R.layout.activity_main)
     : BaseActivity<ActivityMainBinding, MainViewModel>() {

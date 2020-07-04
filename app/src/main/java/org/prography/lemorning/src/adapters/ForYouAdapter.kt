@@ -1,14 +1,10 @@
 package org.prography.lemorning.src.adapters
 
 import android.content.Context
-import android.graphics.Rect
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.R
@@ -16,8 +12,8 @@ import org.prography.lemorning.databinding.ItemForyouBinding
 import org.prography.lemorning.databinding.ItemForyouPlaceholderBinding
 import org.prography.lemorning.src.models.ForYou
 import org.prography.lemorning.src.viewmodel.TrendingViewModel
-import org.prography.lemorning.utils.BaseRecyclerPlaceholderAdapter
-import org.prography.lemorning.utils.BaseViewPlaceHolder
+import org.prography.lemorning.utils.base.BaseRecyclerPlaceholderAdapter
+import org.prography.lemorning.utils.base.BaseViewPlaceHolder
 
 class ForYouAdapter(
     override val layoutId: Int = R.layout.item_foryou,

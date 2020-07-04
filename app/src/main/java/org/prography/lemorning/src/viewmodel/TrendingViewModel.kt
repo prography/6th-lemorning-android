@@ -7,10 +7,10 @@ import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.src.adapters.ForYouAdapter
 import org.prography.lemorning.src.adapters.PopularAdapter
+import org.prography.lemorning.src.apis.TrendingApiService
 import org.prography.lemorning.src.models.ForYou
 import org.prography.lemorning.src.models.Popular
-import org.prography.lemorning.src.repository.networks.TrendingApiService
-import org.prography.lemorning.utils.BaseEvent
+import org.prography.lemorning.utils.base.BaseEvent
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

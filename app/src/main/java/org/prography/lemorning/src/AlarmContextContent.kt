@@ -6,7 +6,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 
 class AlarmContextContent(private val context: Context){
 

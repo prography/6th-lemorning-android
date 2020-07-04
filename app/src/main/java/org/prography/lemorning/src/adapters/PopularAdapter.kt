@@ -4,16 +4,15 @@ import android.graphics.Rect
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
-import androidx.navigation.ActivityNavigatorExtras
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemPopularBinding
 import org.prography.lemorning.databinding.ItemPopularPlaceholderBinding
 import org.prography.lemorning.src.models.Popular
 import org.prography.lemorning.src.viewmodel.TrendingViewModel
-import org.prography.lemorning.utils.*
+import org.prography.lemorning.utils.base.BaseRecyclerPlaceholderAdapter
+import org.prography.lemorning.utils.base.BaseViewPlaceHolder
+import org.prography.lemorning.utils.components.SimpleMessageDialog
 import android.util.Pair as UtilPair
 
 class PopularAdapter(
@@ -40,7 +39,10 @@ class PopularAdapter(
                                     UtilPair.create(it.tvCategoryItemPopular , "category_album"))
                             }
                         }
-                        it.ivLikeItemPopular.setOnClickListener { v -> SimpleMessageDialog(context = it.root.context, message = it.root.context.getString(R.string.coming_soon)).show() }
+                        it.ivLikeItemPopular.setOnClickListener { v -> SimpleMessageDialog(
+                            context = it.root.context,
+                            message = it.root.context.getString(R.string.coming_soon)
+                        ).show() }
                     }
                 }
             }

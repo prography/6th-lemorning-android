@@ -30,7 +30,7 @@
             tools:scaleType="centerCrop"
             />
 
-        <org.prography.lemorning.utils.CircleVisualizerSmooth
+        <org.prography.lemorning.utils.components.CircleVisualizerSmooth
             android:id="@+id/visualizer_play_song"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -209,7 +209,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_play_play_song"
             app:layout_constraintBottom_toBottomOf="@id/iv_play_play_song"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="30dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_more" />
 
         <com.google.android.material.button.MaterialButton
