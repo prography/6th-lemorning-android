@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_signup"
+    app:startDestination="@id/fg_step1_signup">
+
+    <fragment
+        android:id="@+id/fg_step1_signup"
+        android:name="org.prography.lemorning.src.view.signup.Step1Fragment">
+
+        <action
+            android:id="@+id/action_to_step2"
+            app:destination="@id/fg_step2_signup"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_step2_signup"
+        android:name="org.prography.lemorning.src.view.signup.Step2Fragment">
+        <action
+            android:id="@+id/action_to_step3"
+            app:destination="@id/fg_step3_signup"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_step3_signup"
+        android:name="org.prography.lemorning.src.view.signup.Step3Fragment">
+        <action
+            android:id="@+id/action_to_step4"
+            app:destination="@id/fg_step4_signup"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/fg_step4_signup"
+        android:name="org.prography.lemorning.src.view.signup.Step4Fragment">
+
+
+    </fragment>
+
+</navigation>

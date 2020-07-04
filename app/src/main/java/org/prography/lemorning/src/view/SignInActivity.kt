@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivitySignInBinding
+import org.prography.lemorning.src.view.signup.SignUpActivity
 import org.prography.lemorning.src.viewmodel.SignInViewModel
 
 class SignInActivity(override val layoutId: Int = R.layout.activity_sign_in)
@@ -17,7 +18,10 @@ class SignInActivity(override val layoutId: Int = R.layout.activity_sign_in)
     override fun initView(savedInstanceState: Bundle?) {
 
         /* Set On Click Listener */
-        binding.mbtnSkipSignIn.setOnClickListener { startActivity(Intent(this, MainActivity::class.java)) }
+        binding.mbtnSkipSignIn.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
         binding.mbtnSignupSignIn.setOnClickListener { startActivity(Intent(this, SignUpActivity::class.java)) }
 
         viewmodel.navTo.observe(this, Observer {
