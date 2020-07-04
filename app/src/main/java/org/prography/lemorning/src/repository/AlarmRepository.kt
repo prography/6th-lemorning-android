@@ -18,10 +18,10 @@ class AlarmRepository(application: Application){
         return alarms
     }
 
-    fun insert(Alarm: Alarm){
+    fun insert(alarm: Alarm){
         try{
             val thread = Thread(Runnable {
-                alarmDao.insert(Alarm)
+                alarmDao.insert(alarm)
             })
             thread.start()
         } catch (e: Exception){
@@ -29,14 +29,27 @@ class AlarmRepository(application: Application){
         }
     }
 
-    fun delete(Alarm: Alarm){
+    fun delete(alarm: Alarm){
         try{
             val thread = Thread(Runnable {
-                alarmDao.delete(Alarm)
+                alarmDao.delete(alarm)
             })
             thread.start()
         } catch (e: Exception){
             e.printStackTrace()
         }
+    }
+
+    fun getAlarm(id: Int): Alarm? {
+        var alarm: Alarm? = null
+        try{
+            val thread = Thread(Runnable {
+                alarm = alarmDao.getAlarm(id)
+            })
+            thread.start()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+        return alarm
     }
 }

@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.R
+import org.prography.lemorning.src.adapters.AlarmRecyclerAdapter
+import org.prography.lemorning.src.adapters.AlarmSettingRecyclerAdapter
 import org.prography.lemorning.src.model.Alarm
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.repository.networks.PlaySongApiService
@@ -31,7 +33,29 @@ fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewMode
         }
     } ?: run {
         if (alarms != null) {
-            AlarmRecyclerAdapter(alarms, vm, setVM).apply { view.adapter = this }
+            AlarmRecyclerAdapter(
+                alarms,
+                vm,
+                setVM
+            ).apply { view.adapter = this }
+        }
+    }
+}
+
+@BindingAdapter(value = ["songs"])
+fun settingAdapter(view: RecyclerView, songs: ArrayList<PlaySong?>?) {
+    view.adapter?.run {
+        if (this is AlarmSettingRecyclerAdapter) {
+            if (songs != null) {
+                this.songs = songs
+            }
+            this.notifyDataSetChanged()
+        }
+    } ?: run {
+        songs?.let {
+            AlarmSettingRecyclerAdapter(
+                it
+            ).apply { view.adapter = this }
         }
     }
 }
