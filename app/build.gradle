@@ -114,6 +114,16 @@ dependencies {
     // https://github.com/GautamChibde/android-audio-visualizer
     implementation 'com.chibde:audiovisualizer:2.2.0'
 
+    // https://github.com/Bigkoo/Android-PickerView
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    // https://github.com/ArthurHub/Android-Image-Cropper
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
+
+    // https://github.com/orhanobut/logger
+    implementation 'com.orhanobut:logger:2.2.0'
+
+
     kapt 'com.android.databinding:compiler:3.6.3'
 
     kapt 'android.arch.persistence.room:compiler:1.1.1'

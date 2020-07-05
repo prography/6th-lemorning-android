@@ -19,15 +19,15 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
     override fun getViewModel(): MainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
     override fun initView(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            setupBottomNavigationBar()
-        }
+        savedInstanceState?.let { setupBottomNavigationBar() }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         setupBottomNavigationBar()
     }
+
+    override fun initView() {}
 
     private fun setupBottomNavigationBar() {
 
@@ -49,7 +49,5 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
         currentNavController = controller
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return currentNavController?.value?.navigateUp() ?: false
-    }
+    override fun onSupportNavigateUp(): Boolean = currentNavController?.value?.navigateUp() ?: false
 }

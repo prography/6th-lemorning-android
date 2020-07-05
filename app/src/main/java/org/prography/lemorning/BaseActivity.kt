@@ -43,6 +43,13 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
         viewmodel.networkEvent.observe(this, androidx.lifecycle.Observer { handleNetworkEvent(it) })
     }
 
+    override fun onEnterAnimationComplete() {
+        super.onEnterAnimationComplete()
+        initView()
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {}
+
     override fun finish() {
         super.finish()
         ActivityNavigator.applyPopAnimationsToPendingTransition(this)
@@ -53,21 +60,17 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
     }
 
     open fun showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = ProgressDialog(this)
-            mProgressDialog!!.setMessage(getString(R.string.loading))
-            mProgressDialog!!.setCancelable(false)
-            mProgressDialog!!.setIndeterminate(true)
+        mProgressDialog?.let { mProgressDialog = ProgressDialog(this, android.R.style.Theme_DeviceDefault_Dialog) }
+        mProgressDialog!!.apply {
+            setMessage(getString(R.string.loading))
+            setCancelable(false)
+            setIndeterminate(true)
         }
-        if (!isFinishing) {
-            mProgressDialog!!.show()
-        }
+        if (!isFinishing) mProgressDialog!!.show()
     }
 
     open fun hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing()) {
-            mProgressDialog!!.dismiss()
-        }
+        mProgressDialog?.apply { if (isShowing) dismiss() }
     }
 
     override fun onStop() {
@@ -138,6 +141,8 @@ interface BaseActivityView<VM : BaseViewModel> {
     fun getViewModel() : VM
 
     fun initView(savedInstanceState: Bundle?)
+
+    fun initView()
 
     fun initLocale(context : Context)
 
