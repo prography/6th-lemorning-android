@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".ApplicationClass"
@@ -38,8 +40,11 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".src.view.SignInActivity" />
+        <activity android:name=".src.view.signin.SignInActivity" />
         <activity android:name=".src.view.signup.SignUpActivity" />
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat" />
 
         <receiver android:name=".src.AlarmReceiver">
             <intent-filter>

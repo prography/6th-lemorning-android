@@ -26,22 +26,18 @@ class SignInViewModel : BaseViewModel() {
 
     fun onClickSignIn() {
         if (!Validators.isValidEmail(email.value) || password.value?.length == 0) {
-            toastEvent.value =
-                BaseEvent("이메일 형식을 지켜주세요.")
+            toastEvent.value = BaseEvent("이메일 형식을 지켜주세요.")
             return
         }
         rxDisposable.add(trySignIn(email.value, password.value).subscribe({
             it.token?.let {
                 ApplicationClass.sSharedPreferences.edit().putString(ApplicationClass.X_ACCESS_TOKEN, it).apply()
-                toastEvent.value =
-                    BaseEvent("환영합니다.")
-                navTo.value =
-                    BaseEvent(SIGN_IN_SUCCESS)
+                toastEvent.value = BaseEvent("환영합니다.")
+                navTo.value = BaseEvent(SIGN_IN_SUCCESS)
             }
         }, {
             it.printStackTrace()
-            toastEvent.value =
-                BaseEvent("로그인에 실패하였습니다.")
+            toastEvent.value = BaseEvent("로그인에 실패하였습니다.")
         }))
     }
 

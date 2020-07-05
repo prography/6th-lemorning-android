@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="org.prography.lemorning.utils.Converters"/>
         <variable
             name="viewmodel"
             type="org.prography.lemorning.src.viewmodel.SignUpViewModel" />
@@ -74,9 +75,11 @@
 
                 <ImageView
                     android:id="@+id/iv_profile_step2_sign_up"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/ic_profile"
+                    bind_profile_uri="@{viewmodel.profileUri}"
+                    android:adjustViewBounds="true"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_profile_step2_sign_up"
@@ -129,6 +132,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
+                    android:text="@={viewmodel.nickname}"
                     android:hint="Enter your nickname (6~12 letters)"
                     android:fontFamily="@font/timeburnerbold"
                     android:paddingTop="11dp"
@@ -154,8 +158,8 @@
                     android:id="@+id/tv_gender_man_step2_sign_up"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:background="@drawable/background_round_4_left_yellow"
+                    android:textColor="@{Converters.txtColorFromGender(context, viewmodel.gender, 0)}"
+                    android:background="@{Converters.backDrawableFromGender(context, viewmodel.gender, 0)}"
                     android:text="Man"
                     android:textSize="14sp"
                     android:gravity="center"
@@ -166,8 +170,9 @@
                     android:letterSpacing="0"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="10dp"
+                    android:onClick="@{() -> viewmodel.onClickGender(0)}"
                     app:layout_constraintTop_toBottomOf="@id/tv_gender_step2_sign_up"
-                    app:layout_constraintBottom_toTopOf="@id/tv_birth_step2_sign_up"
+                    app:layout_constraintBottom_toTopOf="@id/tv_birth_desc_step2_sign_up"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/tv_gender_woman_step2_sign_up"/>
 
@@ -176,8 +181,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="Woman"
-                    android:textColor="#efefef"
-                    android:background="@drawable/background_round_4_right_border_efefef"
+                    android:textColor="@{Converters.txtColorFromGender(context, viewmodel.gender, 1)}"
+                    android:background="@{Converters.backDrawableFromGender(context, viewmodel.gender, 1)}"
                     android:gravity="center"
                     android:textSize="14sp"
                     android:layout_marginEnd="30dp"
@@ -186,13 +191,14 @@
                     android:fontFamily="@font/timeburnerbold"
                     android:includeFontPadding="false"
                     android:letterSpacing="0"
+                    android:onClick="@{() -> viewmodel.onClickGender(1)}"
                     app:layout_constraintStart_toEndOf="@id/tv_gender_man_step2_sign_up"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_gender_man_step2_sign_up"
                     app:layout_constraintBottom_toBottomOf="@id/tv_gender_man_step2_sign_up"/>
 
                 <TextView
-                    android:id="@+id/tv_birth_step2_sign_up"
+                    android:id="@+id/tv_birth_desc_step2_sign_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
@@ -202,13 +208,13 @@
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_gender_man_step2_sign_up"
-                    app:layout_constraintBottom_toTopOf="@id/et_password_step1_sign_up"
+                    app:layout_constraintBottom_toTopOf="@id/tv_birth_step2_sign_up"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="20dp"
                     />
 
-                <EditText
-                    android:id="@+id/et_password_step1_sign_up"
+                <TextView
+                    android:id="@+id/tv_birth_step2_sign_up"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="30dp"
@@ -217,10 +223,10 @@
                     android:background="@drawable/background_round_4_border_efefef"
                     android:fontFamily="@font/timeburnerbold"
                     android:gravity="center"
-                    android:hint="YYYY  /  MM  /  DD"
-                    android:imeOptions="actionNext"
+                    android:hint="YYYY-MM-DD"
+                    android:text="@{viewmodel.birth}"
+                    android:letterSpacing="0.2"
                     android:includeFontPadding="false"
-                    android:inputType="textPassword"
                     android:paddingStart="20dp"
                     android:paddingTop="11dp"
                     android:paddingEnd="20dp"
@@ -230,7 +236,7 @@
                     android:textSize="12sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_birth_step2_sign_up" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_birth_desc_step2_sign_up" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/mbtn_next_step2_sign_up"
@@ -245,12 +251,16 @@
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
                     android:letterSpacing="0"
+                    android:onClick="@{() -> viewmodel.onClickNext(1)}"
                     android:text="Next Step"
                     android:textAllCaps="false"
                     app:cornerRadius="4dp"
+                    android:layout_marginTop="40dp"
+                    app:layout_constraintVertical_bias="1.0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_birth_step2_sign_up" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
