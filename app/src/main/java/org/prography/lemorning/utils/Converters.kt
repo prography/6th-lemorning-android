@@ -11,15 +11,15 @@ object Converters {
     @JvmStatic
     fun backDrawableFromGender(context: Context, gender : String, idx: Int) : Drawable? =
         context.getDrawable(when(idx) {
-            0 -> if (gender == "male") R.drawable.background_round_4_left_yellow else R.drawable.background_round_4_left_border_efefef
-            else -> if (gender == "male") R.drawable.background_round_4_right_border_efefef else R.drawable.background_round_4_right_yellow
+            0 -> if (gender == Constants.MALE) R.drawable.background_round_4_left_yellow else R.drawable.background_round_4_left_border_efefef
+            else -> if (gender == Constants.MALE) R.drawable.background_round_4_right_border_efefef else R.drawable.background_round_4_right_yellow
         })
 
     @JvmStatic
     @ColorInt fun txtColorFromGender(context: Context, gender : String, idx: Int) : Int =
         context.getColor(when(idx) {
-            0 -> if (gender == "male") R.color.white else R.color.colorPrimary
-            else -> if (gender == "male") R.color.colorPrimary else R.color.white
+            0 -> if (gender == Constants.MALE) R.color.white else R.color.colorPrimary
+            else -> if (gender == Constants.MALE) R.color.colorPrimary else R.color.white
         })
 
     @JvmStatic

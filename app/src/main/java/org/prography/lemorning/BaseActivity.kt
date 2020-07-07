@@ -43,13 +43,6 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
         viewmodel.networkEvent.observe(this, androidx.lifecycle.Observer { handleNetworkEvent(it) })
     }
 
-    override fun onEnterAnimationComplete() {
-        super.onEnterAnimationComplete()
-        initView()
-    }
-
-    override fun initView(savedInstanceState: Bundle?) {}
-
     override fun finish() {
         super.finish()
         ActivityNavigator.applyPopAnimationsToPendingTransition(this)
@@ -60,7 +53,9 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
     }
 
     open fun showProgressDialog() {
-        mProgressDialog?.let { mProgressDialog = ProgressDialog(this, android.R.style.Theme_DeviceDefault_Dialog) }
+        if (mProgressDialog == null) {
+            mProgressDialog = ProgressDialog(this, android.R.style.Theme_DeviceDefault_Dialog)
+        }
         mProgressDialog!!.apply {
             setMessage(getString(R.string.loading))
             setCancelable(false)
@@ -84,12 +79,11 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
             Locale.setDefault(Locale.forLanguageTag(localeTag))
             val config = Configuration(resources.configuration)
             config.setLocale(Locale.forLanguageTag(localeTag))
-            context.getResources()
-                .updateConfiguration(config, context.getResources().getDisplayMetrics())
+            context.resources.updateConfiguration(config, context.resources.displayMetrics)
         }
     }
 
-    override fun handleNetworkEvent(state: NetworkEvent.NetworkState) {
+    override fun handleNetworkEvent(state: NetworkEvent.NetworkState?) {
         when(state) {
             NetworkEvent.NetworkState.LOADING -> showProgressDialog()
             NetworkEvent.NetworkState.SUCCESS -> {
@@ -101,6 +95,9 @@ abstract class BaseActivity<B : ViewDataBinding, VM : BaseViewModel> : AppCompat
             NetworkEvent.NetworkState.ERROR -> {
                 hideProgressDialog()
                 showToast(getString(R.string.network_error))
+            }
+            else -> {
+                hideProgressDialog()
             }
         }
     }
@@ -142,9 +139,7 @@ interface BaseActivityView<VM : BaseViewModel> {
 
     fun initView(savedInstanceState: Bundle?)
 
-    fun initView()
-
     fun initLocale(context : Context)
 
-    fun handleNetworkEvent(state : NetworkEvent.NetworkState)
+    fun handleNetworkEvent(state : NetworkEvent.NetworkState?)
 }

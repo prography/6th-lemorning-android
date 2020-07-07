@@ -1,6 +1,7 @@
 package org.prography.lemorning.src.view.signin
 
 import android.content.Intent
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
@@ -15,7 +16,7 @@ class SignInActivity(override val layoutId: Int = R.layout.activity_sign_in)
 
     override fun getViewModel(): SignInViewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         /* Set On Click Listener */
         binding.mbtnSkipSignIn.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
@@ -37,10 +38,5 @@ class SignInActivity(override val layoutId: Int = R.layout.activity_sign_in)
                 }
             }
         })
-    }
-
-    override fun finish() {
-        overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
-        super.finish()
     }
 }
