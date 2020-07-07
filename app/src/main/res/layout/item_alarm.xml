@@ -28,7 +28,7 @@
                 android:id="@+id/alarm_recycler_image"
                 android:layout_width="62dp"
                 android:layout_height="62dp"
-                song="@{alarm.songNo}"
+                bind_img_url_circle="@{alarm.imgUrl}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

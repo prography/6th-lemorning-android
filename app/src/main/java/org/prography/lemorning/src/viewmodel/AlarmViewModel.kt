@@ -4,25 +4,19 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.media.MediaPlayer
 import android.os.Build
+import android.util.Log
 import android.widget.CheckBox
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.TimePicker
 import androidx.core.view.get
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
-import org.prography.lemorning.R
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.models.PlaySong
-import org.prography.lemorning.src.repository.networks.PlaySongApiService
+import org.prography.lemorning.src.apis.PlaySongApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,7 +26,9 @@ import kotlin.collections.ArrayList
 
 class AlarmViewModel: BaseViewModel() {
 
-    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int): Alarm {
+    var songs: LiveData<ArrayList<PlaySong?>> = getAlarmSongs()
+
+    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int, imgUrl: String): Alarm {
         val hour = timePicker.hour
         val minute = timePicker.minute
 
@@ -58,7 +54,7 @@ class AlarmViewModel: BaseViewModel() {
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.time, songNo)
+        return Alarm(null, timeText, true, week, currentTime.time, songNo, imgUrl)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
@@ -100,8 +96,9 @@ class AlarmViewModel: BaseViewModel() {
         else "야간"
     }
 
-    fun getSongs(): LiveData<ArrayList<PlaySong?>>{
-        var result: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
+    fun getAlarmSongs(): LiveData<ArrayList<PlaySong?>> {
+        val songs: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
+
         ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object :
             Callback<ArrayList<PlaySong?>> {
             override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
@@ -109,10 +106,11 @@ class AlarmViewModel: BaseViewModel() {
             }
 
             override fun onResponse(call: Call<ArrayList<PlaySong?>>, response: Response<ArrayList<PlaySong?>>) {
-                response.body()?.let { result.value = it }
+                Log.d("playsong", response.body()?.get(0)?.title)
+                response.body()?.let { songs.value = it }
             }
         })
 
-        return result
+        return songs
     }
 }

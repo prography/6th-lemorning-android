@@ -18,5 +18,7 @@ data class Alarm (
     @ColumnInfo(name = "date")
     var date: Long,
     @ColumnInfo(name = "songNo")
-    var songNo: Int
+    var songNo: Int,
+    @ColumnInfo(name = "imgUrl")
+    var imgUrl: String
 )
