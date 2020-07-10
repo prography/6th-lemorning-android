@@ -55,4 +55,5 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
             }
         }
     }
+
 }
