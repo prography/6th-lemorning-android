@@ -38,8 +38,10 @@ class AlarmService: Service() {
         })
     }
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        val alarmNote = intent?.getStringExtra("alarmNote")
         val alarmIntent = Intent(this.applicationContext, AlarmStartActivity::class.java).apply {
             putExtra("songNo", intent?.getIntExtra("songNo", -1))
+            putExtra("alarmNote", alarmNote)
             this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
         }
 
@@ -50,7 +52,7 @@ class AlarmService: Service() {
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_lemorning)
             .setContentTitle("Lemorning 알람")
-            .setContentText("알람: Note")
+            .setContentText(if(alarmNote?.isNotEmpty()!!) alarmNote else "우와오아와오아오아아오와")
             .setFullScreenIntent(fullScreenIntent, true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)

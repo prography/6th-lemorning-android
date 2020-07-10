@@ -18,6 +18,7 @@ import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
 class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: AlarmDBViewModel, val alarmViewModel: AlarmViewModel): RecyclerView.Adapter<AlarmRecyclerAdapter.AlarmViewHolder>() {
+    var flag = false
 
     class AlarmViewHolder(itemView: View) : BindingViewHolder<ItemAlarmBinding>(itemView)
 
@@ -48,6 +49,7 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
                     putExtra("week", alarm.week)
                     putExtra("id", alarm.id)
                     putExtra("date", alarm.date)
+                    putExtra("alarmNote", alarm.alarmNote)
                 }
                 val pendingIntent =
                     alarm.id?.let {alarmId ->
@@ -65,9 +67,11 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
         }
 
         holder.binding.alarmRecyclerCard.setOnLongClickListener{
-            vm.cancelAlarm(alarm)
-            vm.delete(alarm)
-            true
+            if(flag){
+                vm.cancelAlarm(alarm)
+                vm.delete(alarm)
+                true
+            }else false
         }
     }
 }

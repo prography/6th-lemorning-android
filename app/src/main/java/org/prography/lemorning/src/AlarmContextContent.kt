@@ -16,6 +16,7 @@ class AlarmContextContent(private val context: Context){
             putExtra("week", alarm.week)
             putExtra("id", alarm.id)
             putExtra("date", alarm.date)
+            putExtra("alarmNote", alarm.alarmNote)
         }
 
         return alarm.id?.let {

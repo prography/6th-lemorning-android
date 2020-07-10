@@ -25,6 +25,7 @@ import kotlin.collections.ArrayList
 class AlarmViewModel: BaseViewModel() {
 
     var songs: LiveData<ArrayList<PlaySong?>> = getAlarmSongs()
+    var alarmNote = ""
 
     fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int, imgUrl: String): Alarm {
         val hour = timePicker.hour
@@ -52,7 +53,7 @@ class AlarmViewModel: BaseViewModel() {
             Locale.getDefault()
         ).format(currentTime)
 
-        return Alarm(null, timeText, true, week, currentTime.time, songNo, imgUrl)
+        return Alarm(null, timeText, true, week, currentTime.time, songNo, imgUrl, alarmNote)
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {

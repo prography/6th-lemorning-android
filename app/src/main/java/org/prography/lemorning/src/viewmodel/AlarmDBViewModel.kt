@@ -38,6 +38,7 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
             putExtra("week", alarm.week)
             putExtra("id", alarm.id)
             putExtra("date", alarm.date)
+            putExtra("alarmNote", alarm.alarmNote)
         }
         val pendingIntent =
             alarm.id?.let {

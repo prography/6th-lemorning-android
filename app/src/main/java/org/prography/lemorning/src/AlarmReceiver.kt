@@ -35,6 +35,7 @@ class AlarmReceiver: BroadcastReceiver() {
 
         val alarmIntent = Intent(context, AlarmService::class.java).apply {
             putExtra("songNo", intent?.getIntExtra("songNo", -1))
+            putExtra("alarmNote", intent?.getStringExtra("alarmNote"))
         }
         context.startService(alarmIntent)
     }

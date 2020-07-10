@@ -12,14 +12,14 @@ import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityAlarmStartBinding
 import org.prography.lemorning.src.AlarmService
-import org.prography.lemorning.src.viewmodel.PlayAlarmViewModel
+import org.prography.lemorning.src.viewmodel.PlaySongViewModel
 
-class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, PlayAlarmViewModel>() {
+class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, PlaySongViewModel>() {
 
-    override fun getViewModel(): PlayAlarmViewModel {
+    override fun getViewModel(): PlaySongViewModel {
         val songNo = intent.getIntExtra("songNo", -1)
 
-        return ViewModelProvider(this, PlayAlarmViewModelFactory(songNo)).get(PlayAlarmViewModel::class.java)
+        return ViewModelProvider(this, PlaySongViewModelFactory(songNo)).get(PlaySongViewModel::class.java)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
@@ -29,6 +29,8 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
             or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON         // 화면을 켜진 상태로 유지
             or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
+
+        alarm_note.text = intent.getStringExtra("alarmNote")
 
         NotificationManagerCompat.from(this).cancel(12345)
 
@@ -44,8 +46,8 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
         }
     }
 
-    class PlayAlarmViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = PlayAlarmViewModel(songNo) as T
+    class PlaySongViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = PlaySongViewModel(songNo) as T
     }
 
     override fun onDestroy() {
