@@ -8,4 +8,5 @@
     <string name="positive">네</string>
     <string name="negative">아니오</string>
     <string name="network_error">네트워크 연결이 원활하지 않습니다.\n네트워크 상태를 확인해주세요.</string>
+    <string name="ignore_battery_optimization">정상적인 앱 사용을 위해 해당 어플을 \"배터리 사용량 최적화\" 목록에서 \"제외\"해야 합니다. \n\n[확인] 버튼을 누른 후 제외해주세요</string>
 </resources>

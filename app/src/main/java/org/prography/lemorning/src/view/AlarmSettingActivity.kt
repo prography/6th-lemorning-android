@@ -25,12 +25,15 @@ class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_
 
         alarm_setting_button.setOnClickListener {
             val contextContent = AlarmContextContent(this)
+
             val alarmSongNo = (alarm_setting_recycler.adapter as AlarmSettingRecyclerAdapter).selectItemSongNo
             val alarmImgUrl = (alarm_setting_recycler.adapter as AlarmSettingRecyclerAdapter).selectItemUrl
+
             if(alarmSongNo == -1){
                 showToast("음악을 선택해주세요")
                 return@setOnClickListener
             }
+
             val alarm = viewmodel.setAlarm(alarm_setting_time_picker, alarm_setting_week, alarmSongNo, alarmImgUrl)
             if (alarm.week == "0000000") {
                 showToast("요일을 선택해주세요")

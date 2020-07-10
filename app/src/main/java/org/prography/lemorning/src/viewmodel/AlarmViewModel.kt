@@ -5,7 +5,6 @@ import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TimePicker
@@ -68,17 +67,11 @@ class AlarmViewModel: BaseViewModel() {
 //            AlarmManager.INTERVAL_DAY, pendingIntent
 //        )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                pendingIntent
-            )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        }
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
     }
 
     fun setBootAlarm(packageManager: PackageManager, receiver: ComponentName) {
@@ -87,13 +80,6 @@ class AlarmViewModel: BaseViewModel() {
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
             PackageManager.DONT_KILL_APP
         )
-    }
-
-    fun currentTime(): String {
-        val cur = SimpleDateFormat("hh:mm:ss", Locale.US).format(Date(System.currentTimeMillis()))
-        return if(cur < "19:00:00" && cur >= "11:00:00") "주간"
-        else if(cur < "11:00:00" && cur >= "06:00:00") "아침"
-        else "야간"
     }
 
     fun getAlarmSongs(): LiveData<ArrayList<PlaySong?>> {
@@ -106,7 +92,6 @@ class AlarmViewModel: BaseViewModel() {
             }
 
             override fun onResponse(call: Call<ArrayList<PlaySong?>>, response: Response<ArrayList<PlaySong?>>) {
-                Log.d("playsong", response.body()?.get(0)?.title)
                 response.body()?.let { songs.value = it }
             }
         })
