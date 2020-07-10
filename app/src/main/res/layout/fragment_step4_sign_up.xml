@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -75,6 +74,7 @@
                     android:insetBottom="0dp"
                     android:letterSpacing="0"
                     android:text="Go back to sign in"
+                    android:onClick="@{() -> viewmodel.onClickNext(3)}"
                     android:textAllCaps="false"
                     app:cornerRadius="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"

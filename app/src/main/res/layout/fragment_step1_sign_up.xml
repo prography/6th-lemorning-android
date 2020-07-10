@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="org.prography.lemorning.utils.Converters" />
+        <import type="org.prography.lemorning.utils.Validators" />
         <variable
             name="viewmodel"
             type="org.prography.lemorning.src.viewmodel.SignUpViewModel" />
@@ -77,9 +80,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
-                    android:textColor="#99d362"
-                    android:fontFamily="@font/timeburnerbold"
-                    android:text="You can use it!"
+                    android:textColor="@{Converters.txtColorFromEmailValidation(context, viewmodel.emailStatus)}"
+                    android:fontFamily="@font/timeburnernormal"
+                    android:text="@{Converters.txtFromEmailValidation(viewmodel.emailStatus)}"
+                    tools:text="You can use it!"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toEndOf="@id/tv_email_step1_sign_up"
                     app:layout_constraintTop_toTopOf="@id/tv_email_step1_sign_up"
@@ -109,6 +113,7 @@
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
                     android:hint="Enter your Email"
+                    android:text="@={viewmodel.email}"
                     android:fontFamily="@font/timeburnerbold"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp" />
@@ -129,6 +134,7 @@
                     app:layout_constraintTop_toTopOf="@id/et_email_step1_sign_up"
                     app:layout_constraintBottom_toBottomOf="@id/et_email_step1_sign_up"
                     android:layout_marginEnd="12dp"
+                    android:onClick="@{() -> viewmodel.onClickValidateEmail()}"
                     android:text="Check"
                     android:textAllCaps="false"
                     android:letterSpacing="0" />
@@ -154,9 +160,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
-                    android:textColor="#99d362"
-                    android:fontFamily="@font/timeburnerbold"
-                    android:text="Correct!"
+                    android:textColor="@{Converters.txtColorFromPasswordValidation(context, Validators.isValidPasswords(viewmodel.password, viewmodel.passwordRe))}"
+                    android:fontFamily="@font/timeburnernormal"
+                    tools:text="Correct!"
+                    android:text="@{Converters.txtFromPasswordValidation(Validators.isValidPasswords(viewmodel.password, viewmodel.passwordRe))}"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toEndOf="@id/tv_password_step1_sign_up"
                     app:layout_constraintTop_toTopOf="@id/tv_password_step1_sign_up"
@@ -184,6 +191,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
+                    android:text="@={viewmodel.password}"
                     android:hint="Enter your Password (6~20 letters)"
                     android:fontFamily="@font/timeburnerbold"
                     android:paddingTop="11dp"
@@ -207,6 +215,7 @@
                     android:inputType="textPassword"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
+                    android:text="@={viewmodel.passwordRe}"
                     android:textSize="12sp"
                     android:hint="Confirm your Password"
                     android:fontFamily="@font/timeburnerbold"
@@ -227,6 +236,7 @@
                     android:insetBottom="0dp"
                     android:letterSpacing="0"
                     android:text="Next Step"
+                    android:onClick="@{() -> viewmodel.onClickNext(0)}"
                     android:textAllCaps="false"
                     app:cornerRadius="4dp"
                     android:layout_marginTop="120dp"

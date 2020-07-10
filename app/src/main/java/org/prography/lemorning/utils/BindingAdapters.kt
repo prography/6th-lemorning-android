@@ -1,5 +1,6 @@
 package org.prography.lemorning.utils
 
+import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -58,6 +59,18 @@ object BindingAdapters {
             .transition(DrawableTransitionOptions.withCrossFade())
             .transform(BlurTransformation(30, 3), CenterCrop())
             .error(R.drawable.shape_black)
+            .into(view)
+        view.clipToOutline = true
+    }
+
+    @BindingAdapter("bind_profile_uri")
+    @JvmStatic
+    fun bindImgUri(view: ImageView, uri: Uri?) {
+        Glide.with(view.context)
+            .load(uri)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .circleCrop()
+            .error(R.drawable.ic_profile)
             .into(view)
         view.clipToOutline = true
     }

@@ -33,4 +33,5 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
     class PlayAlarmViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T = PlayAlarmViewModel(songNo) as T
     }
+
 }

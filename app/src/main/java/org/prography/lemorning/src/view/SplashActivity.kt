@@ -8,6 +8,7 @@ import org.prography.lemorning.ApplicationClass.Companion.BASE_URL
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivitySplashBinding
+import org.prography.lemorning.src.view.signin.SignInActivity
 import org.prography.lemorning.src.viewmodel.SplashViewModel
 import org.prography.lemorning.utils.FirebaseUtils
 import retrofit2.Retrofit
@@ -30,7 +31,14 @@ class SplashActivity(override val layoutId: Int = R.layout.activity_splash)
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
             startActivity(Intent(this, SignInActivity::class.java))
+            /*startActivity(
+                Intent(this, SignInActivity::class.java),
+                ActivityOptions.makeSceneTransitionAnimation(this, binding.ivLogoSplash, "logo_lemorning").toBundle()
+            )*/
+            //finishAfterTransition()
             finish()
+            overridePendingTransition(R.anim.anim_fade_in, R.anim.anim_fade_out)
         })
     }
+
 }

@@ -3,13 +3,15 @@ package org.prography.lemorning
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.firebase.FirebaseApp
+import com.orhanobut.logger.AndroidLogAdapter
+import com.orhanobut.logger.Logger
+import com.orhanobut.logger.PrettyFormatStrategy
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.prography.lemorning.config.XAccessTokenInterceptor
 import retrofit2.Retrofit
-import java.text.SimpleDateFormat
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
@@ -39,11 +41,16 @@ class ApplicationClass : Application() {
         // LANGUAGE 설정 값
         val LANGUAGE = "LANGUAGE"
 
-        // 날짜 형식
-        val DATE_FORMAT_SERVER = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.KOREA)
-
         // Retrofit 인스턴스
-        val httpLoggingInterceptor = HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
+        val httpLoggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+            override fun log(message: String) {
+                if (message.startsWith("{") && message.endsWith("}")) {
+                    Logger.t("OKHTTP").json(message)
+                } else {
+                    Log.i("OKHTTP", message)
+                }
+            }
+        }).apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
         val client: OkHttpClient = OkHttpClient.Builder()
             .readTimeout(5000, TimeUnit.MILLISECONDS)
             .connectTimeout(5000, TimeUnit.MILLISECONDS)
@@ -57,6 +64,13 @@ class ApplicationClass : Application() {
     override fun onCreate() {
         super.onCreate()
         sSharedPreferences = applicationContext.getSharedPreferences(TAG, Context.MODE_PRIVATE)
+
+        Logger.addLogAdapter(object : AndroidLogAdapter(PrettyFormatStrategy.newBuilder()
+            .showThreadInfo(false)
+            .methodCount(0)
+            .build()) {
+            override fun isLoggable(priority: Int, tag: String?): Boolean = BuildConfig.DEBUG
+        })
 
         FirebaseApp.initializeApp(this)
     }
