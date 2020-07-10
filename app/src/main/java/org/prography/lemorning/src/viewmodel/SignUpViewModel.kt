@@ -29,7 +29,7 @@ class SignUpViewModel : BaseViewModel() {
     var password : MutableLiveData<String> = MutableLiveData("")
     var passwordRe : MutableLiveData<String> = MutableLiveData("")
     var profileUri : MutableLiveData<Uri?> = MutableLiveData()
-    var gender : MutableLiveData<String> = MutableLiveData("male")
+    var gender : MutableLiveData<String> = MutableLiveData(Constants.MALE)
     var birth : MutableLiveData<String> = MutableLiveData()
     var nickname : MutableLiveData<String> = MutableLiveData("")
 
@@ -45,8 +45,8 @@ class SignUpViewModel : BaseViewModel() {
 
     fun onClickGender(idx : Int) {
         gender.value = when(idx) {
-            0 -> "male"
-            else -> "female"
+            0 -> Constants.MALE
+            else -> Constants.FEMALE
         }
     }
 

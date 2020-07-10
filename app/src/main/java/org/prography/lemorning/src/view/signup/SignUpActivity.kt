@@ -1,5 +1,6 @@
 package org.prography.lemorning.src.view.signup
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -13,7 +14,7 @@ class SignUpActivity(override val layoutId: Int = R.layout.activity_sign_up)
     override fun getViewModel(): SignUpViewModel
             = ViewModelProvider(this).get(SignUpViewModel::class.java)
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         /* Data Observing */
         viewmodel.navTo.observe(this, Observer {
             it.get()?.let { if (it != -1) {

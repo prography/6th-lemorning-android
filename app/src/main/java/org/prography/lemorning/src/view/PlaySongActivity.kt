@@ -1,5 +1,6 @@
 package org.prography.lemorning.src.view
 
+import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +19,7 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
         return ViewModelProvider(this, PlaySongViewModelFactory(songNo)).get(PlaySongViewModel::class.java)
     }
 
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
 
         /* 추천 RecyclerView */
         binding.rvRecommendPlaySong.adapter = viewmodel.playRecommendAdapter

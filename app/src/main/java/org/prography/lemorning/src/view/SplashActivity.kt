@@ -41,5 +41,4 @@ class SplashActivity(override val layoutId: Int = R.layout.activity_splash)
         })
     }
 
-    override fun initView() {}
 }

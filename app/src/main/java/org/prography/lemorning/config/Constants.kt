@@ -18,4 +18,7 @@ object Constants {
     const val EMAIL_EMPTY = 1011
     const val EMAIL_INVALID = 1012
     const val EMAIL_VALID = 1013
+
+    const val MALE = "male"
+    const val FEMALE = "Female"
 }
