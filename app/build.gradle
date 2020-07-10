@@ -123,6 +123,11 @@ dependencies {
     // https://github.com/orhanobut/logger
     implementation 'com.orhanobut:logger:2.2.0'
 
+    // https://github.com/google/ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.11.7'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.7'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.7'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.7'
 
     kapt 'com.android.databinding:compiler:3.6.3'
 
