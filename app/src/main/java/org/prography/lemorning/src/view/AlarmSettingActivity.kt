@@ -1,47 +1,52 @@
 package org.prography.lemorning.src.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_alarm_setting.*
+import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityAlarmSettingBinding
+import org.prography.lemorning.src.AlarmContextContent
+import org.prography.lemorning.src.adapters.AlarmSettingRecyclerAdapter
+import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
 
-class AlarmSettingActivity : AppCompatActivity() {
+class AlarmSettingActivity(override val layoutId: Int = R.layout.activity_alarm_setting) : BaseActivity<ActivityAlarmSettingBinding, AlarmViewModel>() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding =
-            DataBindingUtil.setContentView<ActivityAlarmSettingBinding>(
-                this,
-                R.layout.activity_alarm_setting
-            )
-        binding.vm = ViewModelProvider(this)
+    override fun getViewModel(): AlarmViewModel {
+        return ViewModelProvider(this)
             .get(AlarmViewModel::class.java)
-        binding.lifecycleOwner = this
-        val viewModel = binding.vm
+    }
 
-        alarm_setting_button.setOnClickListener{
-            val alarm = viewModel!!.setAlarm(alarm_setting_time_picker, alarm_setting_week)
-            if(alarm.week == "0000000"){
-                Toast.makeText(
-                    this,
-                    "요일을 선택해주세요",
-                    Toast.LENGTH_LONG
-                ).show()
-            }else{
-                viewModel.insert(alarm)
-                viewModel.getAll().observe(this, Observer {
-                    for(a in it){
-                        if(alarm.date == a.date) viewModel.setAlarmManager(this, a)
+    override fun initView(savedInstanceState: Bundle?) {
+        val dbViewModel = ViewModelProvider(this).get(AlarmDBViewModel::class.java)
+
+        alarm_setting_button.setOnClickListener {
+            val contextContent = AlarmContextContent(this)
+            val alarmSongNo = (alarm_setting_recycler.adapter as AlarmSettingRecyclerAdapter).selectItemSongNo
+            val alarmImgUrl = (alarm_setting_recycler.adapter as AlarmSettingRecyclerAdapter).selectItemUrl
+            if(alarmSongNo == -1){
+                showToast("음악을 선택해주세요")
+                return@setOnClickListener
+            }
+            val alarm = viewmodel.setAlarm(alarm_setting_time_picker, alarm_setting_week, alarmSongNo, alarmImgUrl)
+            if (alarm.week == "0000000") {
+                showToast("요일을 선택해주세요")
+            } else {
+                dbViewModel.insert(alarm)
+                dbViewModel.getAll().observe(this, Observer {
+                    for (a in it) {
+                        if (alarm.date == a.date) {
+                            contextContent.getPendingIntent(a)?.let { pendingIntent ->
+                                viewmodel.setAlarmManager(a, pendingIntent, contextContent.getAlarmManager())
+                            }
+                            viewmodel.setBootAlarm(contextContent.getPackageManager(), contextContent.getComponentName())
+                        }
                     }
                 })
-                viewModel.setBootAlarm(this)
+                showToast(alarm.time + "으로 알람이 설정되었습니다")
                 finish()
             }
         }

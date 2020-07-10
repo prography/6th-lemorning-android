@@ -1,50 +1,36 @@
 package org.prography.lemorning.src.viewmodel
 
 import android.app.AlarmManager
-import android.app.Application
 import android.app.PendingIntent
 import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.media.MediaPlayer
 import android.os.Build
+import android.util.Log
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TimePicker
-import android.widget.Toast
 import androidx.core.view.get
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import org.prography.lemorning.src.AlarmReceiver
-import org.prography.lemorning.src.DeviceBootReceiver
-import org.prography.lemorning.src.model.Alarm
-import org.prography.lemorning.src.repository.AlarmRepository
+import androidx.lifecycle.MutableLiveData
+import org.prography.lemorning.ApplicationClass
+import org.prography.lemorning.BaseViewModel
+import org.prography.lemorning.src.models.Alarm
+import org.prography.lemorning.src.models.PlaySong
+import org.prography.lemorning.src.apis.PlaySongApiService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class AlarmViewModel (application: Application): AndroidViewModel(application) {
-    private val repository = AlarmRepository(application)
-    private val alarms = repository.getAll()
+class AlarmViewModel: BaseViewModel() {
 
-    fun getAll(): LiveData<List<Alarm>> {
-        return this.alarms
-    }
+    var songs: LiveData<ArrayList<PlaySong?>> = getAlarmSongs()
 
-    fun insert(Alarm: Alarm) {
-        repository.insert(Alarm)
-    }
-
-    fun delete(Alarm: Alarm) {
-        repository.delete(Alarm)
-    }
-
-    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout): Alarm {
-        var hour = 0
-        var minute = 0
-
-        hour = timePicker.hour
-        minute = timePicker.minute
+    fun setAlarm(timePicker: TimePicker, linearLayout: LinearLayout, songNo: Int, imgUrl: String): Alarm {
+        val hour = timePicker.hour
+        val minute = timePicker.minute
 
         var week = ""
 
@@ -54,63 +40,48 @@ class AlarmViewModel (application: Application): AndroidViewModel(application) {
             } else week += "0"
         }
 
-        val calendar = java.util.Calendar.getInstance()
+        val calendar = Calendar.getInstance()
         calendar.timeInMillis = System.currentTimeMillis()
-        calendar.set(java.util.Calendar.HOUR_OF_DAY, hour)
-        calendar.set(java.util.Calendar.MINUTE, minute)
-        calendar.set(java.util.Calendar.SECOND, 0)
+        calendar.set(Calendar.HOUR_OF_DAY, hour)
+        calendar.set(Calendar.MINUTE, minute)
+        calendar.set(Calendar.SECOND, 0)
 
-        if (calendar.before(java.util.Calendar.getInstance())) calendar.add(java.util.Calendar.DATE, 1)
+        if (calendar.before(Calendar.getInstance())) calendar.add(Calendar.DATE, 1)
 
         val currentTime = calendar.time
         val timeText = SimpleDateFormat(
             "a hh : mm",
             Locale.getDefault()
         ).format(currentTime)
-        Toast.makeText(getApplication(), timeText + "으로 알람이 설정되었습니다.", Toast.LENGTH_LONG).show()
 
-        return Alarm(null, timeText, true, week, currentTime.toString())
+        return Alarm(null, timeText, true, week, currentTime.time, songNo, imgUrl)
     }
 
-    fun setAlarmManager(context: Context, alarm: Alarm) {
-        val calendar = java.util.Calendar.getInstance()
+    fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
+        val calendar = Calendar.getInstance()
 
-        val date = SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy", Locale.getDefault()).parse(alarm.date)
+        val date = Date(alarm.date)
         calendar.time = date
-
-        val intent = Intent(getApplication(), AlarmReceiver::class.java)
-        val pendingIntent = alarm.id?.let {
-            PendingIntent.getBroadcast(
-                getApplication(),
-                it,
-                intent,
-                0
-            )
-        }
-        val alarmManager = getApplication<Application>().getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
 //        alarmManager.setRepeating(
 //            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
 //            AlarmManager.INTERVAL_DAY, pendingIntent
 //        )
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 calendar.timeInMillis,
                 pendingIntent
             )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         } else {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
         }
     }
 
-    fun setBootAlarm(context: Context) {
-        val packageManager = context.packageManager
-        val receiver = ComponentName(context, DeviceBootReceiver::class.java)
-
+    fun setBootAlarm(packageManager: PackageManager, receiver: ComponentName) {
         packageManager.setComponentEnabledSetting(
             receiver,
             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
@@ -118,16 +89,28 @@ class AlarmViewModel (application: Application): AndroidViewModel(application) {
         )
     }
 
-    fun playAlarm(resId:Int): MediaPlayer {
-        val mediaPlayer = MediaPlayer.create(getApplication(), resId)
-        mediaPlayer.start()
-
-        return mediaPlayer
+    fun currentTime(): String {
+        val cur = SimpleDateFormat("hh:mm:ss", Locale.US).format(Date(System.currentTimeMillis()))
+        return if(cur < "19:00:00" && cur >= "11:00:00") "주간"
+        else if(cur < "11:00:00" && cur >= "06:00:00") "아침"
+        else "야간"
     }
 
-    fun stopAlarm(mediaPlayer: MediaPlayer){
-        mediaPlayer.stop()
-        mediaPlayer.reset()
-        mediaPlayer.release()
+    fun getAlarmSongs(): LiveData<ArrayList<PlaySong?>> {
+        val songs: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
+
+        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object :
+            Callback<ArrayList<PlaySong?>> {
+            override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
+                t.printStackTrace()
+            }
+
+            override fun onResponse(call: Call<ArrayList<PlaySong?>>, response: Response<ArrayList<PlaySong?>>) {
+                Log.d("playsong", response.body()?.get(0)?.title)
+                response.body()?.let { songs.value = it }
+            }
+        })
+
+        return songs
     }
 }

@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="vm"
-            type="org.prography.lemorning.src.viewmodel.AlarmViewModel" />
+            name="viewmodel"
+            type="org.prography.lemorning.src.viewmodel.PlayAlarmViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

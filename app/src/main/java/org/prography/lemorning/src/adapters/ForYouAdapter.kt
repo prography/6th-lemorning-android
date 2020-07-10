@@ -1,47 +1,50 @@
 package org.prography.lemorning.src.adapters
 
 import android.content.Context
-import android.graphics.Rect
+import android.view.LayoutInflater
 import android.view.View
-import androidx.recyclerview.widget.DiffUtil
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemForyouBinding
+import org.prography.lemorning.databinding.ItemForyouPlaceholderBinding
 import org.prography.lemorning.src.models.ForYou
 import org.prography.lemorning.src.viewmodel.TrendingViewModel
-import org.prography.lemorning.utils.BaseListAdapter
+import org.prography.lemorning.utils.base.BaseRecyclerPlaceholderAdapter
+import org.prography.lemorning.utils.base.BaseViewPlaceHolder
 
 class ForYouAdapter(
     override val layoutId: Int = R.layout.item_foryou,
+    override val placeholderLayoutId: Int = R.layout.item_foryou_placeholder,
     viewModel: TrendingViewModel
-) : BaseListAdapter<ForYou, TrendingViewModel, ItemForyouBinding>(DIFF_CALLBACK, viewModel) {
+) : BaseRecyclerPlaceholderAdapter<ForYou, TrendingViewModel, ItemForyouBinding, ItemForyouPlaceholderBinding>(viewModel) {
 
-    object DIFF_CALLBACK : DiffUtil.ItemCallback<ForYou>() {
-        override fun areItemsTheSame(oldItem: ForYou, newItem: ForYou): Boolean =
-            oldItem.no == newItem.no
-
-        override fun areContentsTheSame(oldItem: ForYou, newItem: ForYou): Boolean =
-            oldItem.no == newItem.no && oldItem.title == newItem.title && oldItem.category == newItem.category
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseViewPlaceHolder<ForYou, ItemForyouBinding, ItemForyouPlaceholderBinding> {
+        return when (viewType) {
+            TYPE_REALVIEW -> object : BaseViewPlaceHolder<ForYou, ItemForyouBinding, ItemForyouPlaceholderBinding>(
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false),
+                viewType = viewType
+            ) {
+                override fun initItem(item: ForYou?) {
+                    super.initItem(item)
+                    binding?.root?.setOnClickListener { item?.let { viewmodel.onClickSong(it.no, null) } }
+                }
+            }
+            else -> object : BaseViewPlaceHolder<ForYou, ItemForyouBinding, ItemForyouPlaceholderBinding>(
+                placeholder = DataBindingUtil.inflate(LayoutInflater.from(parent.context), placeholderLayoutId, parent, false),
+                viewType = viewType
+            ) {}
+        }
     }
-
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        recyclerView.addItemDecoration(ForYouDecoration())
         recyclerView.layoutManager = ForYouLayoutManager(recyclerView.context)
-    }
-
-    class ForYouDecoration : RecyclerView.ItemDecoration() {
-        override fun getItemOffsets(
-            outRect: Rect,
-            view: View,
-            parent: RecyclerView,
-            state: RecyclerView.State
-        ) {
-            super.getItemOffsets(outRect, view, parent, state)
-            outRect.right = 0
-        }
     }
 
     class ForYouLayoutManager(context : Context)
@@ -52,21 +55,38 @@ class ForYouAdapter(
             state: RecyclerView.State?
         ): Int {
             val scrolled = super.scrollHorizontallyBy(dx, recycler, state)
-            val midPoint = width / 2f
-            val d0 = 0.8f
-            val d1 = 0.9f * midPoint
-            val s0 = 1f;
-            val s1 = 1f - 0.2f;
+            val startCenterPoint = getChildAt(0)?.let { it.width / 2f + paddingStart } ?: 30f
+            val d1 = 0.8f * startCenterPoint
             for (i in 0 until childCount) {
                 val child : View = getChildAt(i)!!
-                val childMidpoint = child.let { (getDecoratedRight(it) + getDecoratedLeft(it)) / 2f}
-                val d = Math.min(d1, Math.abs(midPoint - childMidpoint))
-                val scale = s0 + (s1 - s0) * (d - d0) / (d1 - d0)
-                child.scaleX = scale
-                child.scaleY = scale
+                val childMidpoint = child.let { (getDecoratedLeft(it) + getDecoratedRight(it)) / 2f}
+                val d = Math.min(d1, Math.abs(startCenterPoint - childMidpoint))
+                val scaleFactor =  (d - 0.8f) / (d1 - 0.8f)
+                child.apply {
+                    pivotX =
+                        if (childMidpoint / startCenterPoint > 1f)
+                            child.width.toFloat()
+                        else if (childMidpoint / startCenterPoint < -1f)
+                            0f
+                        else
+                            0.5f * (childMidpoint / startCenterPoint) * child.width
+                    pivotY = height / 2f
+                    scaleX = 1 - 0.2f * scaleFactor
+                    scaleY = 1 - 0.2f * scaleFactor
+                }
             }
             return scrolled
         }
+
+        override fun onLayoutChildren(
+            recycler: RecyclerView.Recycler?,
+            state: RecyclerView.State?
+        ) {
+            super.onLayoutChildren(recycler, state)
+            scrollHorizontallyBy(0, recycler, state)
+        }
+
+
     }
 }
 

@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_trending"
+    android:id="@+id/nav_alarm"
     app:startDestination="@id/fg_alarm">
     <fragment
         android:id="@+id/fg_alarm"
-        android:name="org.prography.lemorning.src.view.TrendingFragment"
-        tools:layout="@layout/activity_alarm"/>
+        android:name="org.prography.lemorning.src.view.AlarmFragment"
+        tools:layout="@layout/fragment_alarm"/>
 </navigation>

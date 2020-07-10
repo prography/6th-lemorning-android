@@ -1,15 +1,11 @@
 package org.prography.lemorning.utils
 
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.OvalShape
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.DrawableTransformation
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import jp.wasabeef.glide.transformations.BlurTransformation
 import org.prography.lemorning.R
 import java.text.SimpleDateFormat
@@ -22,24 +18,35 @@ object BindingAdapters {
     fun bindImgUrlCircle(view : ImageView, url : String?) {
         Glide.with(view.context)
             .load(url)
-            .error(R.drawable.backgroud_black)
+            .error(R.drawable.shape_black)
             .transition(DrawableTransitionOptions.withCrossFade())
             .circleCrop()
             .into(view)
         view.clipToOutline = true
     }
 
-    @BindingAdapter("bind_img_url_round_4")
+    @BindingAdapter("bind_img_url_round_8")
     @JvmStatic
-    fun bindImgUrlRound4(view : ImageView, url : String?) {
+    fun bindImgUrlRound8(view : ImageView, url : String?) {
+        view.clipToOutline = true
+        view.setBackgroundResource(R.drawable.shape_8_round_gradient_top0000_bottom1000)
         Glide.with(view.context)
             .load(url)
             .error(R.drawable.img_foryou_sample1)
             .transition(DrawableTransitionOptions.withCrossFade())
             .centerCrop()
             .into(view)
-        view.setBackgroundResource(R.drawable.background_round_12_white)
-        view.clipToOutline = true
+    }
+
+    @BindingAdapter("bind_img_url")
+    @JvmStatic
+    fun bindImgUrl(view : ImageView, url : String?) {
+        Glide.with(view.context)
+            .load(url)
+            .error(R.drawable.ic_lemorning)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .centerCrop()
+            .into(view)
     }
 
 
@@ -48,11 +55,9 @@ object BindingAdapters {
     fun bindImgUrlOpaque(view : ImageView, url : String?) {
         Glide.with(view.context)
             .load(url)
-            .thumbnail(0.1f)
-            .apply(RequestOptions.bitmapTransform(BlurTransformation(100, 3)))
             .transition(DrawableTransitionOptions.withCrossFade())
-            .error(R.drawable.backgroud_black)
-            .centerCrop()
+            .transform(BlurTransformation(30, 3), CenterCrop())
+            .error(R.drawable.shape_black)
             .into(view)
         view.clipToOutline = true
     }
@@ -62,5 +67,12 @@ object BindingAdapters {
     fun timeToDay(view : TextView, time : Long) {
         val sdf = SimpleDateFormat("dd MMM yyyy", Locale.US)
         view.text = sdf.format(Date(time))
+    }
+
+    @BindingAdapter("m_ss")
+    @JvmStatic
+    fun intToM_ss(view : TextView, time : Int) {
+        val sdf = SimpleDateFormat("mm:ss", Locale.US)
+        view.text = sdf.format(Date(time.toLong()))
     }
 }

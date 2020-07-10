@@ -16,7 +16,13 @@
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:overScrollMode="never"
+            android:fillViewport="true">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -69,10 +75,14 @@
                     android:id="@+id/rv_foryou_trending"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:overScrollMode="never"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/di_main_trending"
                     android:layout_marginTop="20dp"
+                    android:clipToPadding="false"
+                    android:paddingStart="30dp"
+                    android:paddingEnd="30dp"
                     tools:itemCount="4"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_foryou"
@@ -91,11 +101,11 @@
                     app:layout_constraintTop_toBottomOf="@id/rv_foryou_trending"
                     app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginStart="30dp"
-                    android:layout_marginTop="35dp"
+                    android:layout_marginTop="40dp"
                     />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/tv_period_popular_trending"
+                    android:id="@+id/mbtn_period_popular_trending"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -117,37 +127,46 @@
                     android:layout_marginStart="10dp"
                     />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/mbtn_search_trending"
-                    style="@style/Widget.MaterialComponents.Button"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/cl_search_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:icon="@drawable/ic_search"
-                    android:backgroundTint="#ffffff"
-                    android:elevation="6dp"
-                    app:iconTint="#171717"
-                    app:cornerRadius="12dp"
-                    android:padding="10dp"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:insetTop="0dp"
-                    app:iconGravity="end"
-                    app:iconPadding="0dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/tv_title_popular_trending"
                     app:layout_constraintBottom_toBottomOf="@id/tv_title_popular_trending"
                     android:layout_marginEnd="30dp"
-                    android:insetBottom="0dp" />
+                    android:transitionName="search_box"
+                    android:background="@drawable/shape_round_12_white"
+                    android:padding="10dp"
+                    android:elevation="6dp">
+
+                    <ImageView
+                        android:id="@+id/iv_search_icon"
+                        android:src="@drawable/ic_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:transitionName="search_icon"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_popular_trending"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_popular_trending"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     tools:listitem="@layout/item_popular"
                     tools:itemCount="3" />
 

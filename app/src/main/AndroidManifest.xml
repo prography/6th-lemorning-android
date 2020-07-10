@@ -17,16 +17,31 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".src.view.AlarmActivity">
-        </activity>
+
         <activity android:name=".src.view.MainActivity">
+
+        </activity>
+        <activity android:name=".src.view.AlarmSettingActivity"/>
+        <activity android:name=".src.view.AlarmStartActivity">
+            <intent-filter>
+                <action android:name="alarm.lemorning"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".src.view.PlaySongActivity"
+            android:theme="@style/TransparentStatusBar"/>
+        <activity android:name=".src.view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.view.SignInActivity" />
+        <activity android:name=".src.view.signup.SignUpActivity" />
+
+        <receiver android:name=".src.AlarmReceiver"/>
+        <receiver android:name=".src.DeviceBootReceiver"/>
     </application>
 
 </manifest>

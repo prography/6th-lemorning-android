@@ -1,30 +1,36 @@
 package org.prography.lemorning.src.view
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_alarm_start.*
+import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityAlarmStartBinding
-import org.prography.lemorning.src.viewmodel.AlarmViewModel
+import org.prography.lemorning.src.viewmodel.PlayAlarmViewModel
 
-class AlarmStartActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        val binding = DataBindingUtil.setContentView<ActivityAlarmStartBinding>(this, R.layout.activity_alarm_start)
-        binding.vm = ViewModelProvider(this).get(AlarmViewModel::class.java)
-        binding.lifecycleOwner = this
-        val viewModel = binding.vm
+class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, PlayAlarmViewModel>() {
 
-        if(viewModel != null){
-            val mediaPlayer = viewModel.playAlarm(R.raw.ouu)
-            alarm_off_button.setOnClickListener {
-                viewModel.stopAlarm(mediaPlayer)
-                startActivity(Intent(this, AlarmActivity::class.java))
-                finish()
+    override fun getViewModel(): PlayAlarmViewModel {
+        val songNo = intent.getIntExtra("songNo", -1)
+        return ViewModelProvider(this, PlayAlarmViewModelFactory(songNo)).get(PlayAlarmViewModel::class.java)
+    }
+
+    override fun initView(savedInstanceState: Bundle?) {
+        viewmodel.mediaPlayer.observe(this, Observer {
+            it?.setOnPreparedListener{mediaPlayer ->
+                mediaPlayer.start()
             }
+        })
+
+        alarm_off_button.setOnClickListener {
+            viewmodel.mediaPlayer.value?.stop()
+            finish()
         }
+    }
+
+    class PlayAlarmViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = PlayAlarmViewModel(songNo) as T
     }
 }

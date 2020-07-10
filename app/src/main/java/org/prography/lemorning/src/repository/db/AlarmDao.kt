@@ -2,7 +2,7 @@ package org.prography.lemorning.src.repository.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import org.prography.lemorning.src.model.Alarm
+import org.prography.lemorning.src.models.Alarm
 
 @Dao
 interface AlarmDao{
@@ -10,8 +10,11 @@ interface AlarmDao{
     fun getAll(): LiveData<List<Alarm>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(Alarm: Alarm)
+    fun insert(alarm: Alarm)
 
     @Delete
-    fun delete(Alarm: Alarm)
+    fun delete(alarm: Alarm)
+
+    @Query("SELECT * FROM alarm WHERE id = :id")
+    fun getAlarm(id : Int): Alarm
 }

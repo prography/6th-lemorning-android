@@ -3,6 +3,7 @@ package org.prography.lemorning
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.res.Configuration
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import androidx.transition.ChangeBounds
 import java.util.*
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(), BaseFragmentView<VM> {
@@ -32,6 +34,14 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
         binding.lifecycleOwner = this
 
         initLocale(context)
+
+        sharedElementEnterTransition = ChangeBounds().apply {
+            duration = 300
+        }
+        sharedElementReturnTransition = ChangeBounds().apply {
+            duration = 300
+        }
+
         initView()
 
         return binding.root
