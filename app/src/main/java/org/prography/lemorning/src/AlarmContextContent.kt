@@ -17,12 +17,13 @@ class AlarmContextContent(private val context: Context){
             putExtra("id", alarm.id)
             putExtra("date", alarm.date)
         }
+
         return alarm.id?.let {
             PendingIntent.getBroadcast(
                 context,
                 it,
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
         }
     }

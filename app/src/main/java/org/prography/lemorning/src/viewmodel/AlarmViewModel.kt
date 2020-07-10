@@ -4,7 +4,6 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.ComponentName
 import android.content.pm.PackageManager
-import android.os.Build
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.TimePicker
@@ -61,11 +60,6 @@ class AlarmViewModel: BaseViewModel() {
 
         val date = Date(alarm.date)
         calendar.time = date
-
-//        alarmManager.setRepeating(
-//            AlarmManager.RTC_WAKEUP, calendar.timeInMillis,
-//            AlarmManager.INTERVAL_DAY, pendingIntent
-//        )
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,

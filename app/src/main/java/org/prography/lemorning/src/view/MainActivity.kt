@@ -20,17 +20,6 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
     override fun getViewModel(): MainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
     override fun initView(savedInstanceState: Bundle?) {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            val powerManager =
-//                getSystemService(Context.POWER_SERVICE) as PowerManager
-//            if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
-//                SimpleMessageDialog(
-//                    context = this,
-//                    message = getString(R.string.ignore_battery_optimization),
-//                    onClickListener = this
-//                ).show()
-//            }
-//        }
 
         if (savedInstanceState == null) {
             setupBottomNavigationBar()
@@ -65,12 +54,4 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
     }
-
-//    override fun onClick(dialog: Dialog?) {
-//        val intent = Intent()
-//        intent.action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-//        intent.data = Uri.parse("package:$packageName")
-//        startActivity(intent)
-//        dialog?.dismiss()
-//    }
 }
