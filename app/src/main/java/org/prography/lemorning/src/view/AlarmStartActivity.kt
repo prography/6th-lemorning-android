@@ -1,6 +1,11 @@
 package org.prography.lemorning.src.view
 
+import android.content.Context
 import android.content.Intent
+import android.media.AudioAttributes
+import android.media.AudioFocusRequest
+import android.media.AudioManager
+import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.core.app.NotificationManagerCompat
@@ -29,6 +34,22 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
             or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON         // 화면을 켜진 상태로 유지
             or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
+        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
+            audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND)
+        val audioAttributes = AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+            .setUsage(AudioAttributes.USAGE_MEDIA)
+            .build()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val audioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                .setAudioAttributes(audioAttributes)
+                .setAcceptsDelayedFocusGain(true)
+                .setOnAudioFocusChangeListener {  }
+                .build()
+            audioManager.requestAudioFocus(audioFocusRequest)
+        }else{
+            audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
+        }
 
         alarm_note.text = intent.getStringExtra("alarmNote")
 
