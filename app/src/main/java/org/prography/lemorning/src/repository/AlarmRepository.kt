@@ -51,4 +51,15 @@ class AlarmRepository(application: Application){
         }
         return alarm
     }
+
+    fun update(alarm: Alarm){
+        try{
+            val thread = Thread(Runnable {
+                alarmDao.update(alarm)
+            })
+            thread.start()
+        } catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
 }

@@ -31,6 +31,11 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
         return repository.getAlarm(id)
     }
 
+    fun updateOn(alarm: Alarm, on:Boolean){
+        alarm.on = on
+        repository.update(alarm)
+    }
+
     fun cancelAlarm(alarm: Alarm){
         val alarmManager = getApplication<Application>().getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(getApplication(), AlarmReceiver::class.java).apply {
