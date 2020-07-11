@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
@@ -36,8 +37,14 @@ class AlarmReceiver: BroadcastReceiver() {
         val alarmIntent = Intent(context, AlarmService::class.java).apply {
             putExtra("songNo", intent?.getIntExtra("songNo", -1))
             putExtra("alarmNote", intent?.getStringExtra("alarmNote"))
+            action = "AlarmStart"
         }
-        context.startService(alarmIntent)
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            context.startForegroundService(alarmIntent)
+        }else{
+            context.startService(alarmIntent)
+        }
     }
 
 

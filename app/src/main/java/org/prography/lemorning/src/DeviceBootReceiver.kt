@@ -3,6 +3,7 @@ package org.prography.lemorning.src
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.src.view.AlarmSettingActivity
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
@@ -26,6 +27,13 @@ class DeviceBootReceiver : BroadcastReceiver() {
                     }
                 })
             }
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                context.startForegroundService(Intent(context, AlarmService::class.java))
+            }else{
+                context.startService(Intent(context, AlarmService::class.java))
+            }
+
         }
     }
 }

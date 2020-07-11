@@ -8,12 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_alarm.*
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentAlarmBinding
+import org.prography.lemorning.src.AlarmService
 import org.prography.lemorning.src.adapters.AlarmRecyclerAdapter
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
@@ -21,14 +26,11 @@ import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
 class AlarmFragment: Fragment(), View.OnClickListener {
 
-    lateinit var containerContext: Context
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        containerContext = container?.context!!
         val contextThemeWrapper = ContextThemeWrapper(activity, R.style.AlarmTheme);
         val localInflater = inflater.cloneInContext(contextThemeWrapper);
 
@@ -56,12 +58,12 @@ class AlarmFragment: Fragment(), View.OnClickListener {
                     alarm_edit_button.text = "삭제"
                     (alarm_recycler.adapter as AlarmRecyclerAdapter).flag = true
 //                    alarm_delete_check.visibility = View.VISIBLE
-                    Toast.makeText(containerContext, "삭제할 알람을 길게 클릭해주세요", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "삭제할 알람을 길게 클릭해주세요", Toast.LENGTH_LONG).show()
                 }
             }
             R.id.alarm_add -> {
                 val intent = Intent(
-                    containerContext,
+                    context,
                     AlarmSettingActivity::class.java
                 )
                 startActivity(intent)
