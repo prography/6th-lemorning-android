@@ -11,6 +11,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+
 class PlayAlarmViewModel(var songNo: Int) : BaseViewModel() {
 
     var playSong: LiveData<PlaySong> = getSong(songNo)
@@ -25,11 +26,12 @@ class PlayAlarmViewModel(var songNo: Int) : BaseViewModel() {
             }
 
             override fun onResponse(call: Call<PlaySong>, response: Response<PlaySong>) {
-                val playSong : PlaySong? = response.body() ?: return
+                val playSong : PlaySong = response.body() ?: return
                 result.value = playSong
                 mediaPlayer.value = MediaPlayer().apply {
-                    setDataSource(playSong?.musicUrl)
+                    setDataSource(playSong.musicUrl)
                     setScreenOnWhilePlaying(true)
+                    isLooping = true
                     prepareAsync() // might take long! (for buffering, etc)
                 }
             }

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.PlaySongViewModel" />
+            type="org.prography.lemorning.src.viewmodel.PlayAlarmViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,7 +1,6 @@
 package org.prography.lemorning.src.view
 
 import android.content.Context
-import android.content.Intent
 import android.media.AudioAttributes
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -16,27 +15,49 @@ import kotlinx.android.synthetic.main.activity_alarm_start.*
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityAlarmStartBinding
-import org.prography.lemorning.src.AlarmService
-import org.prography.lemorning.src.viewmodel.PlaySongViewModel
+import org.prography.lemorning.src.viewmodel.PlayAlarmViewModel
 
-class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, PlaySongViewModel>() {
+class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, PlayAlarmViewModel>() {
 
     private lateinit var audioManager:AudioManager
 
-    override fun getViewModel(): PlaySongViewModel {
+    override fun getViewModel(): PlayAlarmViewModel {
         val songNo = intent.getIntExtra("songNo", -1)
 
-        return ViewModelProvider(this, PlaySongViewModelFactory(songNo)).get(PlaySongViewModel::class.java)
+        return ViewModelProvider(this, PlaySongViewModelFactory(songNo)).get(PlayAlarmViewModel::class.java)
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-        window.addFlags(
-            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED    // 잠김 화면 위에 표시할 때 사용
-            or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD      // 순정 잠금 화면을 해제 할 때 사용
-            or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON         // 화면을 켜진 상태로 유지
-            or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
-        )
+        setWindow()
+        setAudio()
 
+        NotificationManagerCompat.from(this).cancel(12345)
+
+        alarm_note.text = intent.getStringExtra("alarmNote")
+
+        viewmodel.mediaPlayer.observe(this, Observer {
+            it?.setOnPreparedListener{mediaPlayer ->
+                mediaPlayer.start()
+            }
+        })
+
+        alarm_off_button.setOnClickListener {
+            viewmodel.mediaPlayer.value?.stop()
+            finish()
+        }
+    }
+
+    class PlaySongViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T = PlayAlarmViewModel(songNo) as T
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        audioManager.mode = AudioManager.MODE_NORMAL
+        audioManager.isSpeakerphoneOn = false
+    }
+
+    private fun setAudio(){
         audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
         audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
         audioManager.isSpeakerphoneOn = true
@@ -57,31 +78,14 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
         }else{
             audioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
         }
-
-        alarm_note.text = intent.getStringExtra("alarmNote")
-
-        NotificationManagerCompat.from(this).cancel(12345)
-
-        viewmodel.mediaPlayer.observe(this, Observer {
-            it?.setOnPreparedListener{mediaPlayer ->
-                mediaPlayer.start()
-            }
-        })
-
-        alarm_off_button.setOnClickListener {
-            viewmodel.mediaPlayer.value?.stop()
-            finish()
-        }
     }
 
-    class PlaySongViewModelFactory(var songNo: Int) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T = PlaySongViewModel(songNo) as T
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        stopService(Intent(this, AlarmService::class.java))
-        audioManager.mode = AudioManager.MODE_NORMAL
-        audioManager.isSpeakerphoneOn = false
+    private fun setWindow(){
+        window.addFlags(
+            WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED    // 잠김 화면 위에 표시할 때 사용
+                    or WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD      // 순정 잠금 화면을 해제 할 때 사용
+                    or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON         // 화면을 켜진 상태로 유지
+                    or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        )
     }
 }
