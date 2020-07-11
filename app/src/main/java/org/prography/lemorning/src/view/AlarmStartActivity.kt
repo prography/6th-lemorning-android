@@ -21,6 +21,8 @@ import org.prography.lemorning.src.viewmodel.PlaySongViewModel
 
 class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_start) : BaseActivity<ActivityAlarmStartBinding, PlaySongViewModel>() {
 
+    private lateinit var audioManager:AudioManager
+
     override fun getViewModel(): PlaySongViewModel {
         val songNo = intent.getIntExtra("songNo", -1)
 
@@ -34,9 +36,14 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
             or WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON         // 화면을 켜진 상태로 유지
             or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
         )
-        val audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager.mode = AudioManager.MODE_IN_COMMUNICATION
+        audioManager.isSpeakerphoneOn = true
+
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC,
             audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), AudioManager.FLAG_PLAY_SOUND)
+
         val audioAttributes = AudioAttributes.Builder().setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
             .setUsage(AudioAttributes.USAGE_MEDIA)
             .build()
@@ -74,5 +81,7 @@ class AlarmStartActivity(override val layoutId: Int = R.layout.activity_alarm_st
     override fun onDestroy() {
         super.onDestroy()
         stopService(Intent(this, AlarmService::class.java))
+        audioManager.mode = AudioManager.MODE_NORMAL
+        audioManager.isSpeakerphoneOn = false
     }
 }
