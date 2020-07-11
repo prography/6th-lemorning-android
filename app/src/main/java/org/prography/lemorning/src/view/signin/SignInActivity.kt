@@ -19,8 +19,9 @@ class SignInActivity(override val layoutId: Int = R.layout.activity_sign_in)
     override fun initView(savedInstanceState: Bundle?) {
         /* Set On Click Listener */
         binding.mbtnSkipSignIn.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
+            showToast(getString(R.string.coming_soon))
+            //startActivity(Intent(this, MainActivity::class.java))
+            //finish()
         }
         binding.mbtnSignupSignIn.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))

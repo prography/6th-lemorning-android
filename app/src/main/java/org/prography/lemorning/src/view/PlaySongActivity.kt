@@ -4,11 +4,16 @@ import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.crashlytics.internal.common.CrashlyticsCore
+import com.google.firebase.crashlytics.internal.common.CrashlyticsReportDataCapture
+import com.google.firebase.crashlytics.internal.model.CrashlyticsReport
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.BuildConfig
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityPlaySongBinding
 import org.prography.lemorning.src.viewmodel.PlaySongViewModel
+import org.prography.lemorning.utils.Converters
 import org.prography.lemorning.utils.components.SimpleMessageDialog
 
 class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
@@ -27,35 +32,20 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
         binding.visualizerPlaySong.setColor(getColor(R.color.colorPrimary))
 
         /* Alarm Play & Stop */
-        binding.ivPlayPlaySong.setOnClickListener {
-            viewmodel.mediaPlayer.let { mediaPlayer ->
-                mediaPlayer.value?.let {
-                    if (it.isPlaying) {
-                        it.pause()
-                    } else {
-                        it.start()
-                    }
-                }
-            }
-        }
-        binding.sdSeekbarPlaySong.addOnChangeListener { slider, value, fromUser ->
-            if (fromUser) viewmodel.mediaPlayer.value?.seekTo(value.toInt())
-        }
+        binding.ivPlayPlaySong.setOnClickListener { viewmodel.mediaPlayer.let { it.value?.let { if (it.isPlaying) it.pause() else it.start() } } }
+        binding.sdSeekbarPlaySong.addOnChangeListener { _, value, fromUser -> if (fromUser) viewmodel.mediaPlayer.value?.seekTo(value.toInt()) }
 
         viewmodel.mediaPlayer.observe(this,  Observer {
-            run {
-                /* Audio Visualizer */
-                it?.setOnPreparedListener {
-                    //binding.visualizerPlaySong.setPlayer(it.audioSessionId)
-                    binding.sdSeekbarPlaySong.valueTo = it.duration.toFloat()
-                    binding.sdSeekbarPlaySong.valueFrom = it.currentPosition.toFloat()
-                    binding.tvStartPlaySong.text = it.currentPosition.toString()
-                    binding.tvEndPlaySong.text = it.duration.toString()
-                    it.start()
-                }
+            /* Audio Visualizer */
+            it?.setOnPreparedListener {
+                //binding.visualizerPlaySong.setPlayer(it.audioSessionId)
+                binding.sdSeekbarPlaySong.valueTo = it.duration.toFloat()
+                binding.sdSeekbarPlaySong.valueFrom = it.currentPosition.toFloat()
+                binding.tvEndPlaySong.text = Converters.mediaPositionToRealTimeTxt(it.duration)
+                it.start()
+                viewmodel.registerTimerOnMediaPlayer(it)
             }
         })
-        //viewmodel.mediaPlayer.value?.listener
 
         /* Set On Click Listener */
         binding.ivClosePlaySong.setOnClickListener { finish() }

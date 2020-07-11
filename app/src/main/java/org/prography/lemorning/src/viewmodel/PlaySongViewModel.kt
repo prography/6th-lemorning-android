@@ -3,7 +3,8 @@ package org.prography.lemorning.src.viewmodel
 import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Flowable
+import com.orhanobut.logger.Logger
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.prography.lemorning.ApplicationClass
@@ -24,6 +25,7 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
     var nextSongList: LiveData<ArrayList<PlaySong?>> = getNextSongs()
 
     var mediaPlayer: MutableLiveData<MediaPlayer?> = MutableLiveData()
+    var curTime : MutableLiveData<Int> = MutableLiveData(0)
 
     fun getSong(songNo: Int) : LiveData<PlaySong> {
         var result: MutableLiveData<PlaySong> = MutableLiveData()
@@ -50,12 +52,15 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
         return result
     }
 
-    fun makeCurrentTimeRx (mediaPlayer: MediaPlayer) : Flowable<Int> {
-        return Flowable.just(mediaPlayer.currentPosition)
-            .repeatWhen { it.delay(1, TimeUnit.SECONDS) }
+
+    fun registerTimerOnMediaPlayer(mediaPlayer: MediaPlayer) {
+        Logger.d("Registered")
+        val max = mediaPlayer.duration
+        rxDisposable.add(Observable.timer(100, TimeUnit.MILLISECONDS)
+            .repeat()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
+            .subscribe { if (mediaPlayer.isPlaying && mediaPlayer.currentPosition <= max) curTime.value = mediaPlayer.currentPosition })
     }
 
     fun getNextSongs() : LiveData<ArrayList<PlaySong?>> {

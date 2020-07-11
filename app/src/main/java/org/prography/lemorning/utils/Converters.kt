@@ -48,4 +48,11 @@ object Converters {
             else -> ""
         }
 
+
+    @JvmStatic
+    fun mediaPositionToRealTimeTxt(position: Int) : String {
+        var seconds = position / 1000
+        return String.format("%02d:%02d", seconds / 60, seconds % 60)
+    }
+
 }

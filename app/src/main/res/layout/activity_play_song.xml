@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="org.prography.lemorning.utils.Converters"/>
         <variable
             name="viewmodel"
             type="org.prography.lemorning.src.viewmodel.PlaySongViewModel" />
@@ -51,14 +52,6 @@
             app:layout_constraintEnd_toStartOf="@id/guide4_play_song"
             app:layout_constraintStart_toEndOf="@id/guide3_play_song"
             app:layout_constraintTop_toBottomOf="@id/tv_title_play_song" />
-
-        <com.google.android.exoplayer2.ui.PlayerControlView
-            android:id="@+id/pcv_play_song"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_thumbnail_play_song" />
 
         <ImageView
             android:id="@+id/iv_thumbnail_play_song"
@@ -142,7 +135,8 @@
             android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="@id/sd_seekbar_play_song"
             app:layout_constraintBottom_toTopOf="@id/sd_seekbar_play_song"
-            android:text="-:--"
+            tools:text="-:--"
+            android:text="@{Converters.mediaPositionToRealTimeTxt(viewmodel.curTime)}"
             />
 
         <TextView
@@ -184,6 +178,7 @@
             app:trackColorActive="@color/colorPrimary"
             app:trackColorInactive="#88bfbfbf"
             app:trackHeight="4dp"
+            android:value="@{viewmodel.curTime}"
             tools:value="30" />
 
         <ImageView
