@@ -10,8 +10,11 @@ interface AlarmDao{
     fun getAll(): LiveData<List<Alarm>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(Alarm: Alarm)
+    fun insert(alarm: Alarm)
 
     @Delete
-    fun delete(Alarm: Alarm)
+    fun delete(alarm: Alarm)
+
+    @Query("SELECT * FROM alarm WHERE id = :id")
+    fun getAlarm(id : Int): Alarm
 }

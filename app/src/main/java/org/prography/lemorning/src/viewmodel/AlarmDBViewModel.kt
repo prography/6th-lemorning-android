@@ -19,12 +19,16 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
         return this.alarms
     }
 
-    fun insert(Alarm: Alarm) {
-        repository.insert(Alarm)
+    fun insert(alarm: Alarm) {
+        repository.insert(alarm)
     }
 
-    fun delete(Alarm: Alarm) {
-        repository.delete(Alarm)
+    fun delete(alarm: Alarm) {
+        repository.delete(alarm)
+    }
+
+    fun getAlarm(id: Int): Alarm? {
+        return repository.getAlarm(id)
     }
 
     fun cancelAlarm(alarm: Alarm){
@@ -32,7 +36,9 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
         val intent = Intent(getApplication(), AlarmReceiver::class.java).apply {
             putExtra("songNo", alarm.songNo)
             putExtra("week", alarm.week)
-            action = "alarm.lemorning"
+            putExtra("id", alarm.id)
+            putExtra("date", alarm.date)
+            putExtra("alarmNote", alarm.alarmNote)
         }
         val pendingIntent =
             alarm.id?.let {

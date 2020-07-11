@@ -14,14 +14,17 @@ class AlarmContextContent(private val context: Context){
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra("songNo", alarm.songNo)
             putExtra("week", alarm.week)
-            action = "alarm.lemorning"
+            putExtra("id", alarm.id)
+            putExtra("date", alarm.date)
+            putExtra("alarmNote", alarm.alarmNote)
         }
+
         return alarm.id?.let {
             PendingIntent.getBroadcast(
                 context,
                 it,
                 intent,
-                PendingIntent.FLAG_CANCEL_CURRENT
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
         }
     }

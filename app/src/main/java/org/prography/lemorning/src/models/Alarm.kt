@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-
 @Entity(tableName = "alarm")
 data class Alarm (
     @PrimaryKey(autoGenerate = true)
@@ -18,5 +17,9 @@ data class Alarm (
     @ColumnInfo(name = "date")
     var date: Long,
     @ColumnInfo(name = "songNo")
-    var songNo: Int
+    var songNo: Int,
+    @ColumnInfo(name = "imgUrl")
+    var imgUrl: String,
+    @ColumnInfo(name = "alarmNote")
+    var alarmNote: String
 )

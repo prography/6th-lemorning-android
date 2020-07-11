@@ -1,24 +1,19 @@
 package org.prography.lemorning.src
 
 import android.graphics.Color
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.get
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import org.prography.lemorning.ApplicationClass
-import org.prography.lemorning.R
-import org.prography.lemorning.src.apis.PlaySongApiService
+import androidx.recyclerview.widget.SimpleItemAnimator
+import org.prography.lemorning.src.adapters.AlarmRecyclerAdapter
+import org.prography.lemorning.src.adapters.AlarmSettingRecyclerAdapter
 import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 @BindingAdapter(value = ["alarms", "viewModel", "setVM"])
 fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewModel, setVM: AlarmViewModel) {
@@ -31,32 +26,35 @@ fun settingAdapter(view: RecyclerView, alarms: List<Alarm>?, vm: AlarmDBViewMode
         }
     } ?: run {
         if (alarms != null) {
-            AlarmRecyclerAdapter(alarms, vm, setVM).apply { view.adapter = this }
+            AlarmRecyclerAdapter(
+                alarms,
+                vm,
+                setVM
+            ).apply { view.adapter = this }
         }
     }
 }
 
-@BindingAdapter(value = ["song"])
-fun getSong(view: ImageView, songNo: Int) {
-
-    ApplicationClass.retrofit.create(PlaySongApiService::class.java).getPlaySong(songNo).enqueue(object :
-        Callback<PlaySong> {
-        override fun onFailure(call: Call<PlaySong>, t: Throwable) {
-            t.printStackTrace()
+@BindingAdapter(value = ["songs"])
+fun settingAdapter(view: RecyclerView, songs: ArrayList<PlaySong?>?) {
+    view.adapter?.run {
+        if (this is AlarmSettingRecyclerAdapter) {
+            if (songs != null) {
+                this.songs = songs
+            }
+            this.notifyDataSetChanged()
         }
-
-        override fun onResponse(call: Call<PlaySong>, response: Response<PlaySong>) {
-            val playSong : PlaySong? = response.body() ?: return
-            val url = playSong?.imgUrl
-            Glide.with(view.context)
-                .load(url)
-                .error(R.drawable.shape_black)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .circleCrop()
-                .into(view)
-            view.clipToOutline = true
+    } ?: run {
+        val animator = view.itemAnimator
+        if (animator is SimpleItemAnimator) {
+            animator.supportsChangeAnimations = false
         }
-    })
+        songs?.let {
+            AlarmSettingRecyclerAdapter(
+                it
+            ).apply { view.adapter = this }
+        }
+    }
 }
 
 @BindingAdapter(value = ["setWeek"])
