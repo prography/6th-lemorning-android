@@ -32,15 +32,7 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
         binding.visualizerPlaySong.setColor(getColor(R.color.colorPrimary))
 
         /* Alarm Play & Stop */
-        binding.ivPlayPlaySong.setOnClickListener { viewmodel.mediaPlayer.let { it.value?.let {
-            if (it.isPlaying) {
-                it.pause()
-                binding.ivPlayPlaySong.setImageResource(R.drawable.ic_play_big)
-            } else {
-                it.start()
-                binding.ivPlayPlaySong.setImageResource(R.drawable.ic_pause)
-            }
-        } } }
+        binding.ivPlayPlaySong.setOnClickListener { viewmodel.mediaPlayer.let { it.value?.let { if (it.isPlaying) it.pause() else it.start() } } }
         binding.sdSeekbarPlaySong.addOnChangeListener { _, value, fromUser -> if (fromUser) viewmodel.mediaPlayer.value?.seekTo(value.toInt()) }
 
         viewmodel.mediaPlayer.observe(this,  Observer {
