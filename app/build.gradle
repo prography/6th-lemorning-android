@@ -13,8 +13,8 @@ android {
         applicationId "org.prography.lemorning"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 3
-        versionName "0.2.2"
+        versionCode 5
+        versionName "0.2.4"
         // convention: 0.0.* : alpha dev
         // convention: 0.n.* : nth milestone beta prod
         // convention: 1.* : prod

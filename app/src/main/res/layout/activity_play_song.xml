@@ -187,7 +187,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/ic_play_big"
+            android:src="@drawable/ic_pause"
             android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toTopOf="@+id/tv_recommend_play_song"
             app:layout_constraintEnd_toEndOf="parent"
