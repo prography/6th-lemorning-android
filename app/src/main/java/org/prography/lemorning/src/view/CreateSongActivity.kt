@@ -32,7 +32,6 @@ class CreateSongActivity(override val layoutId: Int = R.layout.activity_create_s
     var mediaRecorder : MediaRecorder? = null
     var mediaPlayer : MediaPlayer? = null
     var tempFile = ""
-    var isRecording = false
 
     override fun getViewModel(): CreateSongViewModel = ViewModelProvider(this).get(CreateSongViewModel::class.java)
 
@@ -41,7 +40,7 @@ class CreateSongActivity(override val layoutId: Int = R.layout.activity_create_s
         binding.ivThumbnailCreateSong.setOnClickListener { openImagePicker() }
 
         binding.mbtnRecordCreateSong.setOnClickListener {
-            if (!isRecording) {
+            if (viewmodel.isRecording == null || !viewmodel.isRecording!!) {
                 tempFile = "${externalCacheDir?.absolutePath ?: cacheDir}/${Date().time}.mp3"
                 mediaRecorder = MediaRecorder().apply {
                     setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -54,14 +53,15 @@ class CreateSongActivity(override val layoutId: Int = R.layout.activity_create_s
                     } catch (e : IOException) {
                         e.printStackTrace()
                     }
-                    isRecording = true
                     start()
                     binding.mbtnRecordCreateSong.text = "끝"
+                    toggleTimerForAudio(this)
+                    viewmodel.isRecording = true
                 }
             } else {
                 mediaRecorder?.let {
                     it.stop()
-                    isRecording = false
+                    viewmodel.isRecording = false
                     binding.mbtnRecordCreateSong.text = "다시 녹음하기"
                     binding.mbtnPlayCreateSong.isEnabled = true
                 }
@@ -93,6 +93,14 @@ class CreateSongActivity(override val layoutId: Int = R.layout.activity_create_s
 
         /* Data Observing */
         viewmodel.canFinish.observe(this, androidx.lifecycle.Observer { it.get()?.let { if (it) finish() } })
+        viewmodel.curAmpitude.observe(this, androidx.lifecycle.Observer { binding.arvCreateSong.update(it) })
+    }
+
+    private fun toggleTimerForAudio(mediaRecorder: MediaRecorder) {
+        if (viewmodel.isRecording == null) {
+            viewmodel.registerTimerOnAudio(mediaRecorder)
+        }
+        binding.arvCreateSong.recreate()
     }
 
     override fun onRequestPermissionsResult(
@@ -175,7 +183,7 @@ class CreateSongActivity(override val layoutId: Int = R.layout.activity_create_s
     }
 
     override fun onDestroy() {
-        if (!isRecording) mediaRecorder?.release()
+        viewmodel.isRecording?.let { if (!it)  mediaRecorder?.release() }
         super.onDestroy()
     }
 }

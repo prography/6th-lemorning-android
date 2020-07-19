@@ -13,8 +13,8 @@ android {
         applicationId "org.prography.lemorning"
         minSdkVersion 23
         targetSdkVersion 29
-        versionCode 6
-        versionName "0.2.5"
+        versionCode 7
+        versionName "0.2.6"
         // convention: 0.0.* : alpha dev
         // convention: 0.n.* : nth milestone beta prod
         // convention: 1.* : prod
@@ -27,6 +27,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "LeMorning"
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+            debuggable true
+            resValue "string", "app_name", "LeNight"
         }
     }
     dataBinding {
@@ -94,12 +101,12 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     
     // https://firebase.google.com/docs/android/setup?authuser=0#available-libraries
-    implementation 'com.google.firebase:firebase-analytics:17.4.3'
-    implementation 'com.google.firebase:firebase-core:17.4.3'
-    implementation 'com.google.firebase:firebase-messaging:20.2.1'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+    implementation 'com.google.firebase:firebase-core:17.4.4'
+    implementation 'com.google.firebase:firebase-messaging:20.2.3'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
     implementation 'com.google.firebase:firebase-storage:19.1.1'
-    implementation 'com.google.firebase:firebase-config:19.1.4'
+    implementation 'com.google.firebase:firebase-config:19.2.0'
 
     // https://github.com/bumptech/glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
@@ -128,6 +135,10 @@ dependencies {
     implementation 'com.google.android.exoplayer:exoplayer-ui:2.11.7'
     implementation 'com.google.android.exoplayer:exoplayer-dash:2.11.7'
     implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.11.7'
+
+
+    // https://github.com/Armen101/AudioRecordView
+    implementation 'com.github.Armen101:AudioRecordView:1.0.2'
 
     kapt 'com.android.databinding:compiler:3.6.3'
 

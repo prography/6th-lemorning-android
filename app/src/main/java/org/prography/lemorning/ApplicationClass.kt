@@ -46,8 +46,8 @@ class ApplicationClass : Application() {
             }
         }).apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
         val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
-            .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .readTimeout(6000, TimeUnit.MILLISECONDS)
+            .connectTimeout(6000, TimeUnit.MILLISECONDS)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addNetworkInterceptor(httpLoggingInterceptor)
             .build()

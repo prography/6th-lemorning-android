@@ -1,7 +1,10 @@
 package org.prography.lemorning.src.viewmodel
 
+import android.media.MediaRecorder
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import com.orhanobut.logger.Logger
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MediaType.Companion.toMediaType
@@ -14,11 +17,15 @@ import org.prography.lemorning.config.Constants
 import org.prography.lemorning.src.apis.CreateSongApi
 import org.prography.lemorning.utils.base.BaseEvent
 import java.io.File
+import java.util.concurrent.TimeUnit
 
 class CreateSongViewModel : BaseViewModel() {
 
     var profileUri : MutableLiveData<Uri?> = MutableLiveData()
     var canFinish: MutableLiveData<BaseEvent<Boolean>> = MutableLiveData()
+
+    var isRecording: Boolean? = null
+    var curAmpitude: MutableLiveData<Int> = MutableLiveData()
 
     fun postSong(name: String, filePath: String) {
         rxDisposable.add(ApplicationClass.retrofit.create(CreateSongApi::class.java)
@@ -40,5 +47,15 @@ class CreateSongViewModel : BaseViewModel() {
                 it.printStackTrace()
                 toastEvent.value = BaseEvent("네트워크 연결이 원활하지 않습니다.")
             }))
+    }
+
+    fun registerTimerOnAudio(mediaRecorder: MediaRecorder) {
+        Logger.d("Registered")
+        rxDisposable.add(
+            Observable.timer(100, TimeUnit.MILLISECONDS)
+            .repeat()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { isRecording?.let { if (it) curAmpitude.value = mediaRecorder.maxAmplitude }})
     }
 }

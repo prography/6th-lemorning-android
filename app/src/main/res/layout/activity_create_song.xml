@@ -79,6 +79,27 @@
             android:textColorHint="#efefef"
             android:hint="Input title" />
 
+        <com.visualizer.amplitude.AudioRecordView
+            android:id="@+id/arv_create_song"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_title_create_song"
+            app:layout_constraintBottom_toTopOf="@id/mbtn_record_create_song"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            app:chunkSoftTransition="true"
+            app:chunkRoundedCorners="true"
+            app:chunkAlignTo="center"
+            app:chunkColor="@color/colorPrimary"
+            app:chunkSpace="2dp"
+            app:chunkWidth="4dp"
+            app:chunkMaxHeight="60dp"
+            app:chunkMinHeight="4dp"
+
+            />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbtn_record_create_song"
             android:layout_width="wrap_content"
@@ -87,7 +108,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/et_title_create_song"
-            android:layout_marginTop="40dp" />
+            android:layout_marginTop="80dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/mbtn_play_create_song"
