@@ -39,9 +39,9 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
     fun cancelAlarm(alarm: Alarm){
         val alarmManager = getApplication<Application>().getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(getApplication(), AlarmReceiver::class.java).apply {
+            putExtra("id", alarm.id)
             putExtra("songNo", alarm.songNo)
             putExtra("week", alarm.week)
-            putExtra("id", alarm.id)
             putExtra("date", alarm.date)
             putExtra("alarmNote", alarm.alarmNote)
         }

@@ -45,9 +45,9 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
                 val context = holder.binding.root.context.applicationContext
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java).apply {
+                    putExtra("id", alarm.id)
                     putExtra("songNo", alarm.songNo)
                     putExtra("week", alarm.week)
-                    putExtra("id", alarm.id)
                     putExtra("date", alarm.date)
                     putExtra("alarmNote", alarm.alarmNote)
                 }

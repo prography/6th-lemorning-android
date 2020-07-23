@@ -6,20 +6,22 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.util.Log
 import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
-
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent =
-            intent?.getIntExtra("id", -1)?.let { PendingIntent.getBroadcast(context, it, intent, PendingIntent.FLAG_UPDATE_CURRENT) }
-        val calendar = Calendar.getInstance()
 
+        val calendar = Calendar.getInstance()
         val date = intent?.getLongExtra("date", 0)?.let { Date(it) }
         calendar.time = date
-        calendar.add(Calendar.DATE, 1)
+        calendar.add(Calendar.MINUTE, 1)
+
+        intent?.putExtra("date", calendar.timeInMillis)
+        val pendingIntent =
+            intent?.getIntExtra("id", -1)?.let { PendingIntent.getBroadcast(context, it, intent, PendingIntent.FLAG_CANCEL_CURRENT) }
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,

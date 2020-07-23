@@ -12,9 +12,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import org.prography.lemorning.ApplicationClass
 import org.prography.lemorning.BaseViewModel
+import org.prography.lemorning.src.apis.PlayAlarmApiService
 import org.prography.lemorning.src.models.Alarm
 import org.prography.lemorning.src.models.PlaySong
-import org.prography.lemorning.src.apis.PlaySongApiService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -77,10 +77,10 @@ class AlarmViewModel: BaseViewModel() {
         )
     }
 
-    fun getAlarmSongs(): LiveData<ArrayList<PlaySong?>> {
+    private fun getAlarmSongs(): LiveData<ArrayList<PlaySong?>> {
         val songs: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
 
-        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object :
+        ApplicationClass.retrofit.create(PlayAlarmApiService::class.java).getSongs().enqueue(object :
             Callback<ArrayList<PlaySong?>> {
             override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
                 t.printStackTrace()
