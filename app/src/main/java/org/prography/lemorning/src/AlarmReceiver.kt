@@ -17,7 +17,7 @@ class AlarmReceiver: BroadcastReceiver() {
         val calendar = Calendar.getInstance()
         val date = intent?.getLongExtra("date", 0)?.let { Date(it) }
         calendar.time = date
-        calendar.add(Calendar.MINUTE, 1)
+        calendar.add(Calendar.DATE, 1)
 
         intent?.putExtra("date", calendar.timeInMillis)
         val pendingIntent =
