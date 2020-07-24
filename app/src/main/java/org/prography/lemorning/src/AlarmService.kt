@@ -33,7 +33,7 @@ class AlarmService: Service() {
 
     private val CHANNEL_ID = "Lemorning"
     private var BASE_URL: String = ""
-    private var mediaPlayer: MediaPlayer? = null
+    private lateinit var mediaPlayer: MediaPlayer
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -45,6 +45,8 @@ class AlarmService: Service() {
             false, "Lemorning", "App Notification channel")
         createNotificationChannel(this, NotificationManagerCompat.IMPORTANCE_HIGH,
             false, "Lemorning Alarm", "App Notification channel")
+
+        makeFirstAlarmNotification()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -69,19 +71,9 @@ class AlarmService: Service() {
 
                 makeAlarmNotification(alarmIntent, alarmNote)
             }
-        } else{
-            if(mediaPlayer != null){
-                mediaPlayer?.stop()
-                mediaPlayer?.release()
-            }
-
-            val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_lemorning)
-                .setContentTitle("Lemorning 알람")
-                .setContentText("알람이 설정되어 있습니다")
-                .setPriority(NotificationCompat.PRIORITY_LOW)
-
-            startForeground(123456, notificationBuilder.build())
+        } else if(intent?.action == "AlarmStop"){
+            mediaPlayer.stop()
+            mediaPlayer.release()
         }
 
         return super.onStartCommand(intent, flags, startId)
@@ -130,6 +122,16 @@ class AlarmService: Service() {
         })
     }
 
+    fun makeFirstAlarmNotification(){
+        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_lemorning)
+            .setContentTitle("Lemorning 알람")
+            .setContentText("알람이 설정되어 있습니다")
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+
+        startForeground(123456, notificationBuilder.build())
+    }
+
     private fun makeAlarmNotification(alarmIntent:Intent?, alarmNote:String){
         val pendingIntent:PendingIntent = if(alarmIntent?.action == "AlarmStop"){
             PendingIntent.getService(this.applicationContext, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
@@ -165,7 +167,7 @@ class AlarmService: Service() {
                     isLooping = true
                     prepareAsync() // might take long! (for buffering, etc)
                 }
-                mediaPlayer?.setOnPreparedListener {
+                mediaPlayer.setOnPreparedListener {
                     it.start()
                 }
             }

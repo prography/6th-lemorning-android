@@ -41,13 +41,13 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
         val switch = holder.binding.alarmRecyclerSwitch
         switch.setOnClickListener{
             if((it as SwitchMaterial).isChecked){
-                alarm.on = true
+                vm.updateOn(alarm, true)
                 val context = holder.binding.root.context.applicationContext
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java).apply {
+                    putExtra("id", alarm.id)
                     putExtra("songNo", alarm.songNo)
                     putExtra("week", alarm.week)
-                    putExtra("id", alarm.id)
                     putExtra("date", alarm.date)
                     putExtra("alarmNote", alarm.alarmNote)
                 }
@@ -61,7 +61,7 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
                         it1, alarmManager)
                 }
             }else{
-                alarm.on = false
+                vm.updateOn(alarm, false)
                 vm.cancelAlarm(alarm)
             }
         }

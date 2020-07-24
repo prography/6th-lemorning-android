@@ -12,9 +12,9 @@ class AlarmContextContent(private val context: Context){
 
     fun getPendingIntent(alarm: Alarm): PendingIntent?{
         val intent = Intent(context, AlarmReceiver::class.java).apply {
+            putExtra("id", alarm.id)
             putExtra("songNo", alarm.songNo)
             putExtra("week", alarm.week)
-            putExtra("id", alarm.id)
             putExtra("date", alarm.date)
             putExtra("alarmNote", alarm.alarmNote)
         }

@@ -1,6 +1,5 @@
 package org.prography.lemorning.src.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,17 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.view.ContextThemeWrapper
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.view.size
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.fragment_alarm.*
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentAlarmBinding
-import org.prography.lemorning.src.AlarmService
 import org.prography.lemorning.src.adapters.AlarmRecyclerAdapter
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
