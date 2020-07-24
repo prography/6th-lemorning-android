@@ -37,6 +37,7 @@ class AlarmFragment: Fragment(), View.OnClickListener {
 
         binding.alarmEditButton.setOnClickListener(this)
         binding.alarmAdd.setOnClickListener(this)
+        binding.alarmImage.setOnClickListener { startActivity(Intent(activity, MyPageActivity::class.java)) }
 
         return binding.root
     }

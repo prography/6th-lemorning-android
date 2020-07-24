@@ -24,4 +24,8 @@ object Validators {
             else Constants.PASSWORD_MALFORMED
         }
     }
+
+    @JvmStatic
+    fun isValidBirth(src: String) : Boolean =
+        Pattern.matches("^[0-9]{4}-[0-9]{2}-[0-9]]{2}$", src)
 }

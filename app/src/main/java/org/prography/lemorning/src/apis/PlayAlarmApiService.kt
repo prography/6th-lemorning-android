@@ -6,9 +6,9 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PlayAlarmApiService {
-    @GET("/api/shop/{songNo}")
+    @GET("/shop/lists/{songNo}")
     fun getPlaySong(@Path("songNo") songNo: Int) : Call<PlaySong>
 
-    @GET("/api/shop/")
+    @GET("/shop/lists/")
     fun getSongs() : Call<ArrayList<PlaySong?>>
 }

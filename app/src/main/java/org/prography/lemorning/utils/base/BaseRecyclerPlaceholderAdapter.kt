@@ -10,7 +10,8 @@ import org.prography.lemorning.BaseViewModel
 
 abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDataBinding, P : ViewDataBinding>(
     protected var viewmodel : VM,
-    protected var placeholderSize : Int = DEFALT_PLACEHOLDER_SIZE
+    protected var placeholderSize : Int = DEFALT_PLACEHOLDER_SIZE,
+    var onItemClick: (() -> Unit)? = null
 ) :
     RecyclerView.Adapter<BaseViewPlaceHolder<I, B, P>>(),
     BaseRecyclerPlaceholderAdapterInterface<I> {
@@ -33,7 +34,12 @@ abstract class BaseRecyclerPlaceholderAdapter<I, VM : BaseViewModel, B : ViewDat
             TYPE_REALVIEW -> object : BaseViewPlaceHolder<I, B, P>(
                 binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false),
                 viewType = viewType
-            ) {}
+            ) {
+                override fun bindTo(item: I?) {
+                    super.bindTo(item)
+                    binding?.root?.setOnClickListener { onItemClick?.invoke() }
+                }
+            }
             else -> object : BaseViewPlaceHolder<I, B, P>(
                 placeholder = DataBindingUtil.inflate(LayoutInflater.from(parent.context), placeholderLayoutId, parent, false),
                 viewType = viewType
