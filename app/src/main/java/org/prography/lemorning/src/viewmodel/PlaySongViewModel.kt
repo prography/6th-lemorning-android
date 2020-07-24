@@ -63,6 +63,10 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
             .subscribe { if (mediaPlayer.isPlaying && mediaPlayer.currentPosition <= max) curTime.value = mediaPlayer.currentPosition })
     }
 
+    fun unregisterTimerOnMediaPlayer() {
+        rxDisposable.clear()
+    }
+
     fun getNextSongs(songNo: Int) : LiveData<ArrayList<PlaySong?>> {
         var result: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
         ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs(songNo).enqueue(object : Callback<ArrayList<PlaySong?>> {

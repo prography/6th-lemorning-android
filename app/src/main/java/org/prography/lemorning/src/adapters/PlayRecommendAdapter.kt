@@ -38,6 +38,7 @@ class PlayRecommendAdapter(
                     super.bindTo(item)
                     binding?.root?.setOnClickListener {
                         item?.no?.let {
+                            viewmodel.unregisterTimerOnMediaPlayer()
                             viewmodel.mediaPlayer.value?.release()
                             viewmodel.playSong = viewmodel.getSong(it)
                             viewmodel.nextSongList = viewmodel.getNextSongs(it)
