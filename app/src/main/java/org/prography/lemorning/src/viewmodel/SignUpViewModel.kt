@@ -2,6 +2,7 @@ package org.prography.lemorning.src.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -94,7 +95,7 @@ class SignUpViewModel : BaseViewModel() {
                     toastEvent.value = BaseEvent("닉네임을 확인해주세요.")
                     return
                 }
-                if (birth.value!!.isEmpty()) {
+                if (birth.value!!.isEmpty() && Validators.isValidBirth(birth.value!!)) {
                     toastEvent.value = BaseEvent("생년월일을 선택해주세요.")
                     return
                 }

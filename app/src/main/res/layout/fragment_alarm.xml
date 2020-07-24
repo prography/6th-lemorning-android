@@ -40,16 +40,31 @@
             android:lineSpacingExtra="7sp"
             app:layout_constraintTop_toBottomOf="@+id/alarm_date"
             app:layout_constraintLeft_toLeftOf="@+id/alarm_date"/>
+
+        <CheckBox
+            android:id="@+id/alarm_delete_check"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="16dp"
+            android:visibility="invisible"
+            android:background="@drawable/selector_alarm"
+            android:button="@null"
+            android:gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="11dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/alarm_scroll"/>
+
         <TextView
-            android:id="@+id/alarm_am_pm"
+            android:id="@+id/alarm_edit_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
             android:lineSpacingExtra="6sp"
-            tools:text="주간"
-            android:text="@{dateVM.currentTime()}"
-            app:layout_constraintLeft_toLeftOf="@+id/alarm_title"
+            android:text="관리"
+            android:layout_marginEnd="30dp"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/alarm_title"
             android:layout_marginTop="11dp" />
         <ImageView
@@ -62,11 +77,12 @@
             android:layout_marginEnd="30dp"/>
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/alarm_scroll"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/alarm_am_pm"
+            app:layout_constraintTop_toBottomOf="@+id/alarm_edit_button"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="12dp">
 
@@ -85,8 +101,9 @@
 
                 <ImageView
                     android:id="@+id/alarm_add"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:background="@color/selector_add"
                     android:src="@drawable/ic_add_black_24dp"
                     android:layout_gravity="center"/>
             </LinearLayout>

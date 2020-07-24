@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
-            android:text="@{item.category}"
+            android:text="@{!item.tags.empty ? `#` + item.tags[0] : `#None`}"
             tools:text="Morning Breaker"
             android:fontFamily="@font/timeburnernormal"
             android:includeFontPadding="false"

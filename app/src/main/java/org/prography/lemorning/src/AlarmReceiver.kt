@@ -6,32 +6,28 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import org.prography.lemorning.src.view.AlarmStartActivity
+import android.util.Log
 import java.util.*
 
 class AlarmReceiver: BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val pendingIntent =
-            intent?.getIntExtra("id", -1)?.let { PendingIntent.getBroadcast(context, it, intent, PendingIntent.FLAG_CANCEL_CURRENT) }
-        val calendar = Calendar.getInstance()
 
+        val calendar = Calendar.getInstance()
         val date = intent?.getLongExtra("date", 0)?.let { Date(it) }
         calendar.time = date
         calendar.add(Calendar.DATE, 1)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            alarmManager.setExactAndAllowWhileIdle(
-                AlarmManager.RTC_WAKEUP,
-                calendar.timeInMillis,
-                pendingIntent
-            )
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, pendingIntent)
-        }
+        intent?.putExtra("date", calendar.timeInMillis)
+        val pendingIntent =
+            intent?.getIntExtra("id", -1)?.let { PendingIntent.getBroadcast(context, it, intent, PendingIntent.FLAG_CANCEL_CURRENT) }
+
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            pendingIntent
+        )
 
         intent?.getStringExtra("week").let {
             if(it?.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1) == '0'){
@@ -40,10 +36,18 @@ class AlarmReceiver: BroadcastReceiver() {
             if(it == null) return
         }
 
-        val alarmIntent = Intent(context, AlarmStartActivity::class.java)
-        alarmIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val songNo = intent?.getIntExtra("songNo", -1)
-        alarmIntent.putExtra("songNo", songNo)
-        context?.startActivity(alarmIntent)
+        val alarmIntent = Intent(context, AlarmService::class.java).apply {
+            putExtra("songNo", intent?.getIntExtra("songNo", -1))
+            putExtra("alarmNote", intent?.getStringExtra("alarmNote"))
+            action = "AlarmStart"
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            context.startForegroundService(alarmIntent)
+        }else{
+            context.startService(alarmIntent)
+        }
     }
+
+
 }

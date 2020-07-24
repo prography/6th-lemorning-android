@@ -32,17 +32,14 @@ class TrendingViewModel : BaseViewModel() {
 
             override fun onFailure(call: Call<ArrayList<ForYou?>>, t: Throwable) {
                 t.printStackTrace()
+                alertEvent.value = BaseEvent("네트워크 연결을 확인해주세요.")
             }
 
             override fun onResponse(
                 call: Call<ArrayList<ForYou?>>,
                 response: Response<ArrayList<ForYou?>>
             ) {
-                var baseResponse = response.body();
-                if (!response.isSuccessful || baseResponse == null) {
-                    return
-                }
-                result.value = baseResponse
+                response.body()?.let { result.value = it }
             }
         })
         return result

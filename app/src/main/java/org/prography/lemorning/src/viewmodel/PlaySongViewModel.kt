@@ -3,7 +3,8 @@ package org.prography.lemorning.src.viewmodel
 import android.media.MediaPlayer
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import io.reactivex.Flowable
+import com.orhanobut.logger.Logger
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.prography.lemorning.ApplicationClass
@@ -21,9 +22,10 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
     val playRecommendAdapter = PlayRecommendAdapter(viewModel = this)
 
     var playSong: LiveData<PlaySong> = getSong(songNo)
-    var nextSongList: LiveData<ArrayList<PlaySong?>> = getNextSongs()
+    var nextSongList: LiveData<ArrayList<PlaySong?>> = getNextSongs(songNo)
 
     var mediaPlayer: MutableLiveData<MediaPlayer?> = MutableLiveData()
+    var curTime : MutableLiveData<Int> = MutableLiveData(0)
 
     fun getSong(songNo: Int) : LiveData<PlaySong> {
         var result: MutableLiveData<PlaySong> = MutableLiveData()
@@ -50,17 +52,24 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
         return result
     }
 
-    fun makeCurrentTimeRx (mediaPlayer: MediaPlayer) : Flowable<Int> {
-        return Flowable.just(mediaPlayer.currentPosition)
-            .repeatWhen { it.delay(1, TimeUnit.SECONDS) }
+
+    fun registerTimerOnMediaPlayer(mediaPlayer: MediaPlayer) {
+        Logger.d("Registered")
+        val max = mediaPlayer.duration
+        rxDisposable.add(Observable.timer(100, TimeUnit.MILLISECONDS)
+            .repeat()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-
+            .subscribe { if (mediaPlayer.isPlaying && mediaPlayer.currentPosition <= max) curTime.value = mediaPlayer.currentPosition })
     }
 
-    fun getNextSongs() : LiveData<ArrayList<PlaySong?>> {
+    fun unregisterTimerOnMediaPlayer() {
+        rxDisposable.clear()
+    }
+
+    fun getNextSongs(songNo: Int) : LiveData<ArrayList<PlaySong?>> {
         var result: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
-        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object : Callback<ArrayList<PlaySong?>> {
+        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs(songNo).enqueue(object : Callback<ArrayList<PlaySong?>> {
             override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
                 t.printStackTrace()
             }

@@ -2,7 +2,10 @@ package org.prography.lemorning.src.adapters
 
 import android.content.Context
 import android.graphics.Rect
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -12,12 +15,41 @@ import org.prography.lemorning.databinding.ItemRecommendPlaySongPlaceholderBindi
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.viewmodel.PlaySongViewModel
 import org.prography.lemorning.utils.base.BaseRecyclerPlaceholderAdapter
+import org.prography.lemorning.utils.base.BaseViewPlaceHolder
 
 class PlayRecommendAdapter(
     override val layoutId: Int = R.layout.item_recommend_play_song,
     override val placeholderLayoutId: Int = R.layout.item_recommend_play_song_placeholder,
     viewModel: PlaySongViewModel) :
-    BaseRecyclerPlaceholderAdapter<PlaySong, PlaySongViewModel, ItemRecommendPlaySongBinding, ItemRecommendPlaySongPlaceholderBinding>(viewModel) {
+    BaseRecyclerPlaceholderAdapter<PlaySong, PlaySongViewModel, ItemRecommendPlaySongBinding, ItemRecommendPlaySongPlaceholderBinding>(
+        viewModel
+    ) {
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): BaseViewPlaceHolder<PlaySong, ItemRecommendPlaySongBinding, ItemRecommendPlaySongPlaceholderBinding> =
+        when (viewType) {
+            TYPE_REALVIEW -> object : BaseViewPlaceHolder<PlaySong, ItemRecommendPlaySongBinding, ItemRecommendPlaySongPlaceholderBinding>(
+                binding = DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false),
+                viewType = viewType
+            ) {
+                override fun bindTo(item: PlaySong?) {
+                    super.bindTo(item)
+                    binding?.root?.setOnClickListener {
+                        item?.no?.let {
+                            viewmodel.unregisterTimerOnMediaPlayer()
+                            viewmodel.mediaPlayer.value?.release()
+                            viewmodel.playSong = viewmodel.getSong(it)
+                            viewmodel.nextSongList = viewmodel.getNextSongs(it)
+                        } }
+                }
+            }
+            else -> object : BaseViewPlaceHolder<PlaySong, ItemRecommendPlaySongBinding, ItemRecommendPlaySongPlaceholderBinding>(
+                placeholder = DataBindingUtil.inflate(LayoutInflater.from(parent.context), placeholderLayoutId, parent, false),
+                viewType = viewType
+            ) {}
+        }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)

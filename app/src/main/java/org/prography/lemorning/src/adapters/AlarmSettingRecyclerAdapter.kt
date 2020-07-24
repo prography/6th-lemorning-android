@@ -15,7 +15,8 @@ import org.prography.lemorning.src.models.PlaySong
 class AlarmSettingRecyclerAdapter(var songs: ArrayList<PlaySong?> = arrayListOf()):
     RecyclerView.Adapter<AlarmSettingRecyclerAdapter.AlarmSettingViewHolder>() {
 
-    var selectItem = -1
+    private var selectItem = -1
+
     var selectItemSongNo = -1
     var selectItemUrl = ""
 
@@ -38,7 +39,7 @@ class AlarmSettingRecyclerAdapter(var songs: ArrayList<PlaySong?> = arrayListOf(
             }else{
                 selectItem = position
                 selectItemSongNo = songs[position]?.no ?: -1
-                selectItemUrl = songs[position]?.imgUrl!!
+                selectItemUrl = songs[position]?.imgUrl?: ""
             }
             notifyItemRangeChanged(0, songs.size)
         }
@@ -59,7 +60,7 @@ class AlarmSettingRecyclerAdapter(var songs: ArrayList<PlaySong?> = arrayListOf(
         if(position == selectItem){
             holder.binding.alarmSettingRecyclerSelect.setImageResource(R.drawable.shape_circle_yellow)
         }else{
-            holder.binding.alarmSettingRecyclerSelect.setImageResource(R.drawable.background_bottom_round_white)
+            holder.binding.alarmSettingRecyclerSelect.setImageResource(R.drawable.background_oval_white)
         }
     }
 
@@ -106,8 +107,6 @@ class AlarmSettingRecyclerAdapter(var songs: ArrayList<PlaySong?> = arrayListOf(
             super.onLayoutChildren(recycler, state)
             scrollHorizontallyBy(0, recycler, state)
         }
-
-
     }
 }
 

@@ -31,13 +31,19 @@ class AlarmDBViewModel(application: Application): AndroidViewModel(application) 
         return repository.getAlarm(id)
     }
 
+    fun updateOn(alarm: Alarm, on:Boolean){
+        alarm.on = on
+        repository.update(alarm)
+    }
+
     fun cancelAlarm(alarm: Alarm){
         val alarmManager = getApplication<Application>().getSystemService(ALARM_SERVICE) as AlarmManager
         val intent = Intent(getApplication(), AlarmReceiver::class.java).apply {
+            putExtra("id", alarm.id)
             putExtra("songNo", alarm.songNo)
             putExtra("week", alarm.week)
-            putExtra("id", alarm.id)
             putExtra("date", alarm.date)
+            putExtra("alarmNote", alarm.alarmNote)
         }
         val pendingIntent =
             alarm.id?.let {

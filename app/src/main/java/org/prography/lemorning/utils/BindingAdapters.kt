@@ -19,7 +19,7 @@ object BindingAdapters {
     fun bindImgUrlCircle(view : ImageView, url : String?) {
         Glide.with(view.context)
             .load(url)
-            .error(R.drawable.shape_black)
+            .error(R.drawable.shape_circle_gray)
             .transition(DrawableTransitionOptions.withCrossFade())
             .circleCrop()
             .into(view)
@@ -58,7 +58,7 @@ object BindingAdapters {
             .load(url)
             .transition(DrawableTransitionOptions.withCrossFade())
             .transform(BlurTransformation(30, 3), CenterCrop())
-            .error(R.drawable.shape_black)
+            .error(R.drawable.shape_circle_gray)
             .into(view)
         view.clipToOutline = true
     }

@@ -18,6 +18,7 @@ import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
 
 class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: AlarmDBViewModel, val alarmViewModel: AlarmViewModel): RecyclerView.Adapter<AlarmRecyclerAdapter.AlarmViewHolder>() {
+    var flag = false
 
     class AlarmViewHolder(itemView: View) : BindingViewHolder<ItemAlarmBinding>(itemView)
 
@@ -40,14 +41,15 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
         val switch = holder.binding.alarmRecyclerSwitch
         switch.setOnClickListener{
             if((it as SwitchMaterial).isChecked){
-                alarm.on = true
+                vm.updateOn(alarm, true)
                 val context = holder.binding.root.context.applicationContext
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
                 val intent = Intent(context, AlarmReceiver::class.java).apply {
+                    putExtra("id", alarm.id)
                     putExtra("songNo", alarm.songNo)
                     putExtra("week", alarm.week)
-                    putExtra("id", alarm.id)
                     putExtra("date", alarm.date)
+                    putExtra("alarmNote", alarm.alarmNote)
                 }
                 val pendingIntent =
                     alarm.id?.let {alarmId ->
@@ -59,15 +61,17 @@ class AlarmRecyclerAdapter(var alarms: List<Alarm> = arrayListOf(), val vm: Alar
                         it1, alarmManager)
                 }
             }else{
-                alarm.on = false
+                vm.updateOn(alarm, false)
                 vm.cancelAlarm(alarm)
             }
         }
 
         holder.binding.alarmRecyclerCard.setOnLongClickListener{
-            vm.cancelAlarm(alarm)
-            vm.delete(alarm)
-            true
+            if(flag){
+                vm.cancelAlarm(alarm)
+                vm.delete(alarm)
+                true
+            }else false
         }
     }
 }

@@ -31,12 +31,6 @@ class ApplicationClass : Application() {
         // JWT Token 값
         val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
 
-        // login 형식
-        const val LOGIN_TYPE = "LOGIN-TYPE"
-        const val TYPE_NORMAL = "NORMAL"
-        const val TYPE_KAKAO = "KAKAO"
-        const val TYPE_NAVER = "NAVER"
-        const val TYPE_GOOGLE = "GOOGLE"
 
         // LANGUAGE 설정 값
         val LANGUAGE = "LANGUAGE"
@@ -52,8 +46,8 @@ class ApplicationClass : Application() {
             }
         }).apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
         val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
-            .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .readTimeout(6000, TimeUnit.MILLISECONDS)
+            .connectTimeout(6000, TimeUnit.MILLISECONDS)
             .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
             .addNetworkInterceptor(httpLoggingInterceptor)
             .build()

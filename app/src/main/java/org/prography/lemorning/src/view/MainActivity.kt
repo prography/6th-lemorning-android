@@ -1,5 +1,6 @@
 package org.prography.lemorning.src.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
@@ -8,6 +9,8 @@ import androidx.navigation.NavController
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityMainBinding
+import org.prography.lemorning.src.AlarmService
+import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.MainViewModel
 import org.prography.lemorning.utils.helpers.setupWithNavController
 
@@ -20,6 +23,11 @@ class MainActivity(override val layoutId: Int = R.layout.activity_main)
 
     override fun initView(savedInstanceState: Bundle?) {
         setupBottomNavigationBar()
+
+        val dbViewModel = ViewModelProvider(this).get(AlarmDBViewModel::class.java)
+        dbViewModel.getAll().observe(this, Observer {
+            if(it.isEmpty()) stopService(Intent(this, AlarmService::class.java))
+        })
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
