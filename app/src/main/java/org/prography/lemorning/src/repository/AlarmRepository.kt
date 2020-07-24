@@ -62,17 +62,4 @@ class AlarmRepository(application: Application){
             e.printStackTrace()
         }
     }
-
-    fun getAlarm(id: Int): Alarm? {
-        var alarm: Alarm? = null
-        try{
-            val thread = Thread(Runnable {
-                alarm = alarmDao.getAlarm(id)
-            })
-            thread.start()
-        } catch (e: Exception){
-            e.printStackTrace()
-        }
-        return alarm
-    }
 }
