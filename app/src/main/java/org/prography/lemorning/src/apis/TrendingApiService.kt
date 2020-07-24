@@ -6,9 +6,9 @@ import retrofit2.Call
 import retrofit2.http.GET
 
 interface TrendingApiService {
-    @GET("/api/shop/")
+    @GET("/shop/lists/")
     fun getForYous() : Call<ArrayList<ForYou?>>
 
-    @GET("/api/shop/")
+    @GET("/shop/lists/")
     fun getPopulars() : Call<ArrayList<Popular?>>
 }

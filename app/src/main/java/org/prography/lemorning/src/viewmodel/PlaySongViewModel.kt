@@ -22,7 +22,7 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
     val playRecommendAdapter = PlayRecommendAdapter(viewModel = this)
 
     var playSong: LiveData<PlaySong> = getSong(songNo)
-    var nextSongList: LiveData<ArrayList<PlaySong?>> = getNextSongs()
+    var nextSongList: LiveData<ArrayList<PlaySong?>> = getNextSongs(songNo)
 
     var mediaPlayer: MutableLiveData<MediaPlayer?> = MutableLiveData()
     var curTime : MutableLiveData<Int> = MutableLiveData(0)
@@ -63,9 +63,9 @@ class PlaySongViewModel(var songNo: Int) : BaseViewModel() {
             .subscribe { if (mediaPlayer.isPlaying && mediaPlayer.currentPosition <= max) curTime.value = mediaPlayer.currentPosition })
     }
 
-    fun getNextSongs() : LiveData<ArrayList<PlaySong?>> {
+    fun getNextSongs(songNo: Int) : LiveData<ArrayList<PlaySong?>> {
         var result: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
-        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object : Callback<ArrayList<PlaySong?>> {
+        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs(songNo).enqueue(object : Callback<ArrayList<PlaySong?>> {
             override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
                 t.printStackTrace()
             }

@@ -7,5 +7,6 @@ data class PlaySong (
     @SerializedName("name") var title: String?,
     @SerializedName("category_name") var category: String?,
     @SerializedName("image") var imgUrl: String?,
-    @SerializedName("alarm") var musicUrl: String?
+    @SerializedName("alarm") var musicUrl: String?,
+    @SerializedName("tags") var tags: ArrayList<String?>
 )

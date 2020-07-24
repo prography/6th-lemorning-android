@@ -23,6 +23,7 @@
             android:layout_height="0dp"
             app:layout_constraintDimensionRatio="1"
             android:adjustViewBounds="true"
+            bind_img_url_round_8="@{item.imgUrl}"
             tools:src="@drawable/img_recommend_thumb_sample1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +40,8 @@
             android:textColor="#bfbfbf"
             android:fontFamily="@font/timeburnernormal"
             android:includeFontPadding="false"
-            android:text="Morning Breaker"
+            android:text="@{item.tags.empty ? `#` + item.tags[0]: `#None`}"
+            tools:text="Morning Breaker"
             app:layout_constraintVertical_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@id/iv_thumb_item_recommend_play_song"
             app:layout_constraintTop_toTopOf="@id/iv_thumb_item_recommend_play_song"
@@ -58,7 +60,8 @@
             app:layout_constraintBottom_toBottomOf="@id/iv_thumb_item_recommend_play_song"
             app:layout_constraintTop_toBottomOf="@id/tv_category_item_recommend_play_song"
             android:layout_marginTop="2dp"
-            android:text="관짝밈"
+            android:text="@{item.title}"
+            tools:text="관짝밈"
             android:layout_marginStart="12dp"
             android:layout_marginBottom="2dp" />
 

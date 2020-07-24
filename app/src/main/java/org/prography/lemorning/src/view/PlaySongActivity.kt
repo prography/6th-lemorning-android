@@ -28,6 +28,7 @@ class PlaySongActivity(override val layoutId: Int = R.layout.activity_play_song)
 
         /* 추천 RecyclerView */
         binding.rvRecommendPlaySong.adapter = viewmodel.playRecommendAdapter
+        viewmodel.nextSongList.observe(this, Observer { viewmodel.playRecommendAdapter.setItem(it) })
 
         binding.visualizerPlaySong.setColor(getColor(R.color.colorPrimary))
 

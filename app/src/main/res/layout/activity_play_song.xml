@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
-            android:text="@{viewmodel.playSong.category}"
+            android:text="@{!viewmodel.playSong.tags.empty ? `#` + viewmodel.playSong.tags.toString() : `None`}"
             tools:text="Morning Breaker"
             android:fontFamily="@font/timeburnernormal"
             android:includeFontPadding="false"
