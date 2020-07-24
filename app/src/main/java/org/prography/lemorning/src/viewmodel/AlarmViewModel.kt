@@ -54,6 +54,7 @@ class AlarmViewModel: BaseViewModel() {
         ).format(currentTime)
 
         return Alarm(null, timeText, true, week, currentTime.time, songNo, imgUrl, alarmNote)
+
     }
 
     fun setAlarmManager(alarm: Alarm, pendingIntent: PendingIntent, alarmManager: AlarmManager) {
@@ -87,6 +88,24 @@ class AlarmViewModel: BaseViewModel() {
             }
 
             override fun onResponse(call: Call<ArrayList<PlaySong?>>, response: Response<ArrayList<PlaySong?>>) {
+                response.body()?.let { songs.value = it }
+            }
+        })
+
+        return songs
+    }
+
+    fun getAlarmSongs(): LiveData<ArrayList<PlaySong?>> {
+        val songs: MutableLiveData<ArrayList<PlaySong?>> = MutableLiveData()
+
+        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getNextSongs().enqueue(object :
+            Callback<ArrayList<PlaySong?>> {
+            override fun onFailure(call: Call<ArrayList<PlaySong?>>, t: Throwable) {
+                t.printStackTrace()
+            }
+
+            override fun onResponse(call: Call<ArrayList<PlaySong?>>, response: Response<ArrayList<PlaySong?>>) {
+                Log.d("playsong", response.body()?.get(0)?.title)
                 response.body()?.let { songs.value = it }
             }
         })

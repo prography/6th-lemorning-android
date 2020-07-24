@@ -17,7 +17,7 @@ interface AlarmDao{
 
     @Query("SELECT * FROM alarm WHERE id = :id")
     fun getAlarm(id : Int): Alarm
-
+  
     @Update
     fun update(alarm: Alarm)
 }

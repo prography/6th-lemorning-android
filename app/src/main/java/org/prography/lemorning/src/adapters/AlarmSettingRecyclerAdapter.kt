@@ -16,6 +16,7 @@ class AlarmSettingRecyclerAdapter(var songs: ArrayList<PlaySong?> = arrayListOf(
     RecyclerView.Adapter<AlarmSettingRecyclerAdapter.AlarmSettingViewHolder>() {
 
     private var selectItem = -1
+
     var selectItemSongNo = -1
     var selectItemUrl = ""
 
