@@ -19,5 +19,9 @@ class MyPageActivity(override val layoutId: Int = R.layout.activity_mypage)
         }
 
         binding.ivCloseMypage.setOnClickListener { finish() }
+
+        binding.tvMadeByMe.setOnClickListener {
+            startActivity(Intent(this@MyPageActivity, CardActivity::class.java))
+        }
     }
 }
