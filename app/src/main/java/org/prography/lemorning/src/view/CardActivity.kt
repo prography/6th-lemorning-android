@@ -1,5 +1,6 @@
 package org.prography.lemorning.src.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
@@ -13,6 +14,12 @@ class CardActivity(override val layoutId: Int = R.layout.activity_card)
     override fun getViewModel(): CardViewModel = ViewModelProvider(this).get(CardViewModel::class.java)
 
     override fun initView(savedInstanceState: Bundle?) {
+        binding.tvAddCard.setOnClickListener {
+            startActivity(Intent(this@CardActivity, MyPageActivity::class.java))
+        }
 
+        binding.ivCloseCard.setOnClickListener {
+            finish()
+        }
     }
 }
