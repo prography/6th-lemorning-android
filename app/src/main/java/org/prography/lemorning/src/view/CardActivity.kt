@@ -15,7 +15,7 @@ class CardActivity(override val layoutId: Int = R.layout.activity_card)
 
     override fun initView(savedInstanceState: Bundle?) {
         binding.tvAddCard.setOnClickListener {
-            startActivity(Intent(this@CardActivity, MyPageActivity::class.java))
+            startActivity(Intent(this@CardActivity, AddCardActivity::class.java))
         }
 
         binding.ivCloseCard.setOnClickListener {
