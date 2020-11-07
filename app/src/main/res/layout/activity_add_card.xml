@@ -246,5 +246,28 @@
             android:paddingTop="11dp"
             android:paddingBottom="11dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbtn_next_step1_sign_up"
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+            android:layout_width="match_parent"
+            android:layout_height="37dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:fontFamily="@font/timeburnerbold"
+            android:includeFontPadding="false"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:letterSpacing="0"
+            android:text="Add Card"
+            android:textAllCaps="false"
+            app:cornerRadius="4dp"
+            android:layout_marginTop="120dp"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_birth_add_card" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
