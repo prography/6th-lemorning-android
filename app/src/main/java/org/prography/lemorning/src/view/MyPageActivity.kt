@@ -14,13 +14,13 @@ class MyPageActivity(override val layoutId: Int = R.layout.activity_mypage)
     override fun getViewModel(): MyPageViewModel = ViewModelProvider(this).get(MyPageViewModel::class.java)
 
     override fun initView(savedInstanceState: Bundle?) {
-        binding.fbtnCreateSongMypage.setOnClickListener {
+        binding.layoutMusicMypage.setOnClickListener {
             startActivity(Intent(this@MyPageActivity, CreateSongActivity::class.java))
         }
 
         binding.ivCloseMypage.setOnClickListener { finish() }
 
-        binding.tvMadeByMe.setOnClickListener {
+        binding.tvMyCardMypage.setOnClickListener {
             startActivity(Intent(this@MyPageActivity, CardActivity::class.java))
         }
     }
