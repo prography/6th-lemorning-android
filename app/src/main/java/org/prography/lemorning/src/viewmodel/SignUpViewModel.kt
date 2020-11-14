@@ -130,7 +130,6 @@ class SignUpViewModel : BaseViewModel() {
         return ApplicationClass.retrofit.create(SignUpApiService::class.java)
             .postUser(email = email.value?.toRequestBody(),
                 password = password.value?.toRequestBody(),
-//                passwordRe = passwordRe.value?.toRequestBody(),
                 profile = MultipartBody.Part.createFormData("profile", file.name ,file.asRequestBody(Constants.MEDIA_TYPE_FORM_DATA.toMediaType())),
                 nickname = nickname.value?.toRequestBody(),
                 gender = gender.value?.toRequestBody(),

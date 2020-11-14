@@ -15,7 +15,6 @@ interface SignUpApiService {
     @POST("/signup")
     fun postUser(@Part("email") email: RequestBody?,
                  @Part("password") password: RequestBody?,
-//                 @Part("password2") passwordRe: RequestBody?,
                  @Part profile: MultipartBody.Part?,
                  @Part("account.nickname") nickname: RequestBody?,
                  @Part("account.sex") gender: RequestBody?,

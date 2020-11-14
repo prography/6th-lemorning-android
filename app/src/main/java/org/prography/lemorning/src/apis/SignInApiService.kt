@@ -7,6 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface SignInApiService {
-    @POST("/login/")
+    @POST("/login")
     fun postToken(@Body param : SignInParam) : Single<Jwt>
 }
