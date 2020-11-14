@@ -1,6 +1,12 @@
 package org.prography.lemorning.src
 
 import android.graphics.Color
+import android.graphics.Typeface
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
+import android.text.style.StyleSpan
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.get
@@ -9,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SimpleItemAnimator
 import org.prography.lemorning.src.adapters.AlarmRecyclerAdapter
 import org.prography.lemorning.src.adapters.AlarmSettingRecyclerAdapter
+import org.prography.lemorning.src.adapters.CardRecyclerAdapter
 import org.prography.lemorning.src.models.Alarm
+import org.prography.lemorning.src.models.Card
 import org.prography.lemorning.src.models.PlaySong
 import org.prography.lemorning.src.viewmodel.AlarmDBViewModel
 import org.prography.lemorning.src.viewmodel.AlarmViewModel
@@ -57,6 +65,24 @@ fun settingAdapter(view: RecyclerView, songs: ArrayList<PlaySong?>?) {
     }
 }
 
+@BindingAdapter(value = ["cards"])
+fun settingCardAdapter(view: RecyclerView, cards: ArrayList<Card>?) {
+    view.adapter?.run {
+        if (this is CardRecyclerAdapter) {
+            if (cards != null) {
+                this.cards = cards
+            }
+            this.notifyDataSetChanged()
+        }
+    } ?: run {
+        cards?.let {
+            CardRecyclerAdapter(
+                it
+            ).apply { view.adapter = this }
+        }
+    }
+}
+
 @BindingAdapter(value = ["setWeek"])
 fun setWeek(view:LinearLayout, week:String){
     for(i in week.indices){
@@ -66,4 +92,13 @@ fun setWeek(view:LinearLayout, week:String){
             (view[i] as TextView).setTextColor(Color.parseColor("#bfbfbf"))
         }
     }
+}
+
+@BindingAdapter(value = ["text", "subText"])
+fun setTextSpan(view:TextView, text:String, subText:String){
+    val spannableStringBuilder = SpannableStringBuilder(text + subText)
+    spannableStringBuilder.setSpan(StyleSpan(Typeface.BOLD),  0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+    spannableStringBuilder.setSpan(RelativeSizeSpan(1.5f),  0, text.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+    view.text = spannableStringBuilder
 }

@@ -2,7 +2,6 @@ package org.prography.lemorning.src.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -18,6 +17,7 @@ import org.prography.lemorning.src.apis.SignUpApiService
 import org.prography.lemorning.src.models.SignUpResponse
 import org.prography.lemorning.utils.Validators
 import org.prography.lemorning.utils.base.BaseEvent
+import org.prography.lemorning.utils.base.BaseResponse
 import org.prography.lemorning.utils.components.NetworkEvent
 import java.io.File
 
@@ -108,7 +108,7 @@ class SignUpViewModel : BaseViewModel() {
                 }
                 networkEvent.startLoading()
                 rxDisposable.add(tryRegisterUser().subscribe({
-                    if (it.status == 201) {
+                    if (it == 200) {
                         networkEvent.handleResponse(it)
                         navTo.value = BaseEvent(R.id.action_to_step4)
                     }
@@ -125,17 +125,17 @@ class SignUpViewModel : BaseViewModel() {
         }
     }
 
-    private fun tryRegisterUser() : Single<SignUpResponse> {
+    private fun tryRegisterUser() : Single<Int> {
         val file = File(profileUri.value?.path!!)
         return ApplicationClass.retrofit.create(SignUpApiService::class.java)
             .postUser(email = email.value?.toRequestBody(),
                 password = password.value?.toRequestBody(),
-                passwordRe = passwordRe.value?.toRequestBody(),
                 profile = MultipartBody.Part.createFormData("profile", file.name ,file.asRequestBody(Constants.MEDIA_TYPE_FORM_DATA.toMediaType())),
                 nickname = nickname.value?.toRequestBody(),
                 gender = gender.value?.toRequestBody(),
                 birth = birth.value?.toRequestBody()
             )
+            .map { it.code }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
