@@ -5,8 +5,11 @@
 
     <data>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SignUpViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SignUpViewModel" />
+        <variable
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,12 +81,12 @@
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="30dp"
-                    android:fontFamily="@font/notosanscjkkr_medium"
+                    android:fontFamily="@font/noto_medium"
                     android:includeFontPadding="false"
                     android:minWidth="0dp"
                     android:minHeight="0dp"
-                    android:checked="@{viewmodel.agreeAll}"
-                    android:onClick="@{() -> viewmodel.onClickAgreement(0, viewmodel.agreeAll)}"
+                    android:checked="@{pvm.agreeAll}"
+                    android:onClick="@{() -> pvm.onClickAgreement(0, vm.agreeAll)}"
                     android:text="모두 동의"
                     android:textColor="#3f3f3f"
                     android:textSize="12sp"
@@ -101,10 +104,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cb_agree_all_step3_sign_up"
-                    android:checked="@{viewmodel.agreeFirst}"
-                    android:onClick="@{() -> viewmodel.onClickAgreement(1, viewmodel.agreeFirst)}"
+                    android:checked="@{pvm.agreeFirst}"
+                    android:onClick="@{() -> pvm.onClickAgreement(1, pvm.agreeFirst)}"
                     android:text="이용약관 동의"
-                    android:fontFamily="@font/notosanscjkkr_medium"
+                    android:fontFamily="@font/noto_medium"
                     tools:checked="true"
                     android:includeFontPadding="false"
                     android:textColor="#3f3f3f"
@@ -122,10 +125,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cb_agree_first_step3_sign_up"
-                    android:checked="@{viewmodel.agreeSecond}"
-                    android:onClick="@{() -> viewmodel.onClickAgreement(2, viewmodel.agreeSecond)}"
+                    android:checked="@{pvm.agreeSecond}"
+                    android:onClick="@{() -> pvm.onClickAgreement(2, pvm.agreeSecond)}"
                     android:text="개인정보 처리 방침 동의"
-                    android:fontFamily="@font/notosanscjkkr_medium"
+                    android:fontFamily="@font/noto_medium"
                     tools:checked="true"
                     android:includeFontPadding="false"
                     android:textColor="#3f3f3f"
@@ -143,10 +146,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cb_agree_second_step3_sign_up"
-                    android:checked="@{viewmodel.agreeThird}"
-                    android:onClick="@{() -> viewmodel.onClickAgreement(3, viewmodel.agreeThird)}"
+                    android:checked="@{pvm.agreeThird}"
+                    android:onClick="@{() -> pvm.onClickAgreement(3, pvm.agreeThird)}"
                     android:text="광고성 메일 수신 동의 (선택)"
-                    android:fontFamily="@font/notosanscjkkr_medium"
+                    android:fontFamily="@font/noto_medium"
                     tools:checked="true"
                     android:includeFontPadding="false"
                     android:textColor="#3f3f3f"
@@ -170,7 +173,7 @@
                     android:insetBottom="0dp"
                     android:letterSpacing="0"
                     android:text="Sign Up"
-                    android:onClick="@{() -> viewmodel.onClickNext(2)}"
+                    android:onClick="@{() -> pvm.onClickNext(2)}"
                     android:textAllCaps="false"
                     app:cornerRadius="4dp"
                     app:layout_constraintBottom_toBottomOf="parent"

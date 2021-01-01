@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fg_step1_signup"
-        android:name="org.prography.lemorning.src.view.signup.Step1Fragment"
+        android:name="org.prography.lemorning.src.views.components.SignUpStep1Fragment"
         tools:layout="@layout/fragment_step1_sign_up">
         <action
             android:id="@+id/action_to_step2"
@@ -20,7 +20,7 @@
 
     <fragment
         android:id="@+id/fg_step2_signup"
-        android:name="org.prography.lemorning.src.view.signup.Step2Fragment"
+        android:name="org.prography.lemorning.src.views.components.SignUpStep2Fragment"
         tools:layout="@layout/fragment_step2_sign_up">
         <action
             android:id="@+id/action_to_step3"
@@ -33,7 +33,7 @@
 
     <fragment
         android:id="@+id/fg_step3_signup"
-        android:name="org.prography.lemorning.src.view.signup.Step3Fragment"
+        android:name="org.prography.lemorning.src.views.components.SignUpStep3Fragment"
         tools:layout="@layout/fragment_step3_sign_up">
         <action
             android:id="@+id/action_to_step4"
@@ -46,7 +46,7 @@
 
     <fragment
         android:id="@+id/fg_step4_signup"
-        android:name="org.prography.lemorning.src.view.signup.Step4Fragment"
+        android:name="org.prography.lemorning.src.views.components.SignUpStep4Fragment"
         tools:layout="@layout/fragment_step4_sign_up"/>
 
 </navigation>

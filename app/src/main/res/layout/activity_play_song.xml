@@ -7,7 +7,7 @@
         <import type="org.prography.lemorning.utils.Converters"/>
         <variable
             name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.PlaySongViewModel" />
+            type="org.prography.lemorning.src.viewmodels.SongDetailViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,12 +26,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="#000000"
             android:foreground="#61000000"
-            bind_img_url_opaque="@{viewmodel.playSong.imgUrl}"
+            bind_img_url_opaque="@{viewmodel.songDetail.imgUrl}"
             tools:src="@drawable/img_album_sample2_kkang"
             tools:scaleType="centerCrop"
             />
 
-        <org.prography.lemorning.utils.components.CircleVisualizerSmooth
+        <org.prography.lemorning.src.utils.components.CircleVisualizerSmooth
             android:id="@+id/visualizer_play_song"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -55,7 +55,7 @@
 
         <ImageView
             android:id="@+id/iv_thumbnail_play_song"
-            bind_img_url_circle="@{viewmodel.playSong.imgUrl}"
+            bind_img_url_circle="@{viewmodel.songDetail.imgUrl}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
-            android:text="@{!viewmodel.playSong.tags.empty ? `#` + viewmodel.playSong.tags.toString() : `None`}"
+            android:text="@{!viewmodel.songDetail.tags.empty ? `#` + viewmodel.songDetail.tags.toString() : `None`}"
             tools:text="Morning Breaker"
             android:fontFamily="@font/timeburnernormal"
             android:includeFontPadding="false"
@@ -117,7 +117,7 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textColor="#ffffff"
-            android:text="@{viewmodel.playSong.title}"
+            android:text="@{viewmodel.songDetail.title}"
             tools:text="관짝밈"
             android:fontFamily="@font/timeburnerbold"
             android:includeFontPadding="false"

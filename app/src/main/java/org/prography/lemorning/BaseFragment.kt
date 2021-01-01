@@ -1,9 +1,7 @@
 package org.prography.lemorning
 
+import android.app.Dialog
 import android.app.ProgressDialog
-import android.content.Context
-import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,14 +12,28 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.transition.ChangeBounds
+import org.prography.lemorning.src.utils.components.NetworkEvent
 import java.util.*
 
-abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(), BaseFragmentView<VM> {
+abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel, PVM: BaseViewModel>(@LayoutRes val layoutId: Int)
+    : Fragment(layoutId), IBaseFragment<VM, PVM> {
 
     protected lateinit var binding : B
-    protected lateinit var viewmodel : VM
+    protected lateinit var vm : VM
+    protected lateinit var pvm : PVM
 
-    var mProgressDialog: ProgressDialog? = null
+    protected var messageDialog: SimpleMessageDialog? = null
+    var progressDialog: ProgressDialog? = null
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = DataBindingUtil.bind(view)!!
+        vm = getViewModel()
+        pvm = getParentViewModel()
+        binding.setVariable(BR.vm, vm)
+        binding.setVariable(BR.pvm, pvm)
+        binding.lifecycleOwner = this
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,11 +41,6 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        viewmodel = getViewModel()
-        binding.setVariable(BR.viewmodel, viewmodel)
-        binding.lifecycleOwner = this
-
-        initLocale(context)
 
         sharedElementEnterTransition = ChangeBounds().apply {
             duration = 300
@@ -42,59 +49,61 @@ abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel> : Fragment(
             duration = 300
         }
 
-        initView()
+        vm.toastEvent.observe(viewLifecycleOwner) { it.get()?.let { showToast(it) } }
+        vm.alertEvent.observe(viewLifecycleOwner) { it.get()?.let { showSimpleMessageDialog(it) } }
+        vm.networkEvent.observe(viewLifecycleOwner) { onNetworkEventChanged(it) }
+
+        initView(savedInstanceState)
 
         return binding.root
-    }
-
-    override fun initLocale(context : Context?) {
-        val localeTag: String? = ApplicationClass.sSharedPreferences.getString(ApplicationClass.LANGUAGE, null)
-        if (localeTag != null) {
-            Locale.setDefault(Locale.forLanguageTag(localeTag))
-            val config =
-                Configuration(resources.configuration)
-            config.setLocale(Locale.forLanguageTag(localeTag))
-            context?.resources?.updateConfiguration(config, context.resources?.getDisplayMetrics())
-        }
     }
 
     open fun showToast(message: String?) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    open fun showProgressDialog() {
-        if (mProgressDialog == null) {
-            mProgressDialog = ProgressDialog(context)
-            mProgressDialog!!.setMessage(getString(R.string.loading))
-            mProgressDialog!!.setCancelable(false)
-            mProgressDialog!!.setIndeterminate(true)
-        }
-        if (!isRemoving) {
-            mProgressDialog!!.show()
-        }
+    open fun showSimpleMessageDialog(
+        message: String?,
+        btnText: String? = getString(R.string.confirm),
+        isCancelable: Boolean = true,
+        onClick: ((Dialog) -> Unit)? = null
+    ) {
+        messageDialog = SimpleMessageDialog(requireActivity(), message, btnText, isCancelable, onClick)
+        messageDialog?.show()
     }
 
-    open fun hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog!!.isShowing()) {
-            mProgressDialog!!.dismiss()
+    open fun showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = ProgressDialog(requireActivity(), android.R.style.Theme_DeviceDefault_Dialog).apply {
+                setMessage(getString(R.string.loading))
+                isIndeterminate = true
+                setCancelable(false)
+            }
         }
+        progressDialog?.show()
     }
+
+    open fun hideProgressDialog() = progressDialog?.apply { if (isShowing) dismiss() }
 
     override fun onStop() {
         super.onStop()
         hideProgressDialog()
     }
+
+    override fun onNetworkEventChanged(state: NetworkEvent.NetworkState?) {
+        when (state) {
+            NetworkEvent.NetworkState.LOADING -> showProgressDialog()
+            NetworkEvent.NetworkState.COMPLETE -> hideProgressDialog()
+        }
+    }
 }
 
-
-interface BaseFragmentView<VM : BaseViewModel> {
-
-    @get:LayoutRes
-    val layoutId: Int
-
+interface IBaseFragment<VM : BaseViewModel, PVM: BaseViewModel> {
     fun getViewModel() : VM
 
-    fun initView()
+    fun getParentViewModel(): PVM
 
-    fun initLocale(context : Context?)
+    fun initView(savedInstanceState: Bundle?)
+
+    fun onNetworkEventChanged(state: NetworkEvent.NetworkState?)
 }

@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.AlarmViewModel" />
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,7 +61,6 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_foryou"
-                    songs="@{viewmodel.songs}"
                     app:layout_constraintBottom_toTopOf="@+id/alarm_setting_time_picker"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

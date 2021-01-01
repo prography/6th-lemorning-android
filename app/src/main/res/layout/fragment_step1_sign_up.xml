@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="org.prography.lemorning.utils.Converters" />
-        <import type="org.prography.lemorning.utils.Validators" />
+        <import type="org.prography.lemorning.src.utils.Converters" />
+        <import type="org.prography.lemorning.src.utils.Validators" />
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SignUpViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SignUpViewModel" />
+        <variable
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,6 +40,7 @@
                     android:fontFamily="@font/timeburnerbold"
                     android:text="Sign Up"
                     android:includeFontPadding="false"
+                    app:layout_constraintVertical_bias="0.0"
                     app:layout_constraintVertical_chainStyle="packed"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -80,9 +84,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
-                    android:textColor="@{Converters.txtColorFromEmailValidation(context, viewmodel.emailStatus)}"
+                    android:textColor="@{Converters.txtColorFromEmailValidation(context, pvm.emailStatus)}"
                     android:fontFamily="@font/timeburnernormal"
-                    android:text="@{Converters.txtFromEmailValidation(viewmodel.emailStatus)}"
+                    android:text="@{Converters.txtFromEmailValidation(pvm.emailStatus)}"
                     tools:text="You can use it!"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toEndOf="@id/tv_email_step1_sign_up"
@@ -113,7 +117,7 @@
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
                     android:hint="Enter your Email"
-                    android:text="@={viewmodel.email}"
+                    android:text="@={pvm.email}"
                     android:fontFamily="@font/timeburnerbold"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp" />
@@ -134,7 +138,7 @@
                     app:layout_constraintTop_toTopOf="@id/et_email_step1_sign_up"
                     app:layout_constraintBottom_toBottomOf="@id/et_email_step1_sign_up"
                     android:layout_marginEnd="12dp"
-                    android:onClick="@{() -> viewmodel.onClickValidateEmail()}"
+                    android:onClick="@{() -> pvm.onClickValidateEmail()}"
                     android:text="Check"
                     android:textAllCaps="false"
                     android:letterSpacing="0" />
@@ -160,10 +164,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
-                    android:textColor="@{Converters.txtColorFromPasswordValidation(context, Validators.isValidPasswords(viewmodel.password, viewmodel.passwordRe))}"
+                    android:textColor="@{Converters.txtColorFromPasswordValidation(context, Validators.isValidPasswords(pvm.password, pvm.passwordRe))}"
                     android:fontFamily="@font/timeburnernormal"
                     tools:text="Correct!"
-                    android:text="@{Converters.txtFromPasswordValidation(Validators.isValidPasswords(viewmodel.password, viewmodel.passwordRe))}"
+                    android:text="@{Converters.txtFromPasswordValidation(Validators.isValidPasswords(pvm.password, pvm.passwordRe))}"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toEndOf="@id/tv_password_step1_sign_up"
                     app:layout_constraintTop_toTopOf="@id/tv_password_step1_sign_up"
@@ -191,7 +195,7 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
-                    android:text="@={viewmodel.password}"
+                    android:text="@={pvm.password}"
                     android:hint="Enter your Password (6~20 letters)"
                     android:fontFamily="@font/timeburnerbold"
                     android:paddingTop="11dp"
@@ -215,7 +219,7 @@
                     android:inputType="textPassword"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
-                    android:text="@={viewmodel.passwordRe}"
+                    android:text="@={pvm.passwordRe}"
                     android:textSize="12sp"
                     android:hint="Confirm your Password"
                     android:fontFamily="@font/timeburnerbold"
@@ -236,15 +240,14 @@
                     android:insetBottom="0dp"
                     android:letterSpacing="0"
                     android:text="Next Step"
-                    android:onClick="@{() -> viewmodel.onClickNext(0)}"
+                    android:onClick="@{() -> pvm.onClickNext(0)}"
                     android:textAllCaps="false"
                     app:cornerRadius="4dp"
                     android:layout_marginTop="120dp"
                     app:layout_constraintVertical_bias="1.0"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_password_check_step1_sign_up" />
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

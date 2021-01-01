@@ -22,35 +22,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".src.view.AddCardActivity"></activity>
-        <activity android:name=".src.view.CardActivity" />
-        <activity android:name=".src.view.MainActivity" />
-        <activity android:name=".src.view.AlarmSettingActivity" />
+        <activity android:name=".src.views.AddCardActivity"></activity>
+        <activity android:name=".src.views.CardActivity" />
+        <activity android:name=".src.views.MainActivity" />
+        <activity android:name=".src.views.AlarmSettingActivity" />
         <activity
-            android:name=".src.view.AlarmStartActivity"
+            android:name=".src.views.AlarmStartActivity"
             android:excludeFromRecents="true" />
         <activity
-            android:name=".src.view.PlaySongActivity"
+            android:name=".src.views.SongDetailActivity"
             android:theme="@style/TransparentStatusBar" />
-        <activity android:name=".src.view.SplashActivity">
+        <activity android:name=".src.views.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".src.view.signin.SignInActivity" />
-        <activity android:name=".src.view.signup.SignUpActivity" />
+        <activity android:name=".src.views.SignInActivity" />
+        <activity android:name=".src.views.SignUpActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat" />
-        <activity android:name=".src.view.MyPageActivity" />
-        <activity android:name=".src.view.CreateSongActivity" />
+        <activity android:name=".src.views.MyPageActivity" />
+        <activity android:name=".src.views.CreateSongActivity" />
 
         <receiver android:name=".src.AlarmReceiver" />
         <receiver
-            android:name=".src.DeviceBootReceiver"
+            android:name=".src.utils.tools.DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.CreateSongViewModel" />
+            type="org.prography.lemorning.src.viewmodels.CreateSongViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,7 +74,7 @@
             android:background="@null"
             android:layout_marginTop="20dp"
             android:textColor="@color/colorPrimaryDark"
-            android:fontFamily="@font/notosanscjkkr_medium"
+            android:fontFamily="@font/noto_medium"
             android:includeFontPadding="false"
             android:textColorHint="#efefef"
             android:hint="Input title" />

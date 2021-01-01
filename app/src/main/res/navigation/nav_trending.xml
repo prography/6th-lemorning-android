@@ -6,7 +6,7 @@
     app:startDestination="@id/fg_trending">
     <fragment
         android:id="@+id/fg_trending"
-        android:name="org.prography.lemorning.src.view.TrendingFragment"
+        android:name="org.prography.lemorning.src.views.TrendingFragment"
         tools:layout="@layout/fragment_trending">
 
         <action
@@ -20,6 +20,6 @@
 
     <fragment
         android:id="@+id/fg_search"
-        android:name="org.prography.lemorning.src.view.SearchFragment"
+        android:name="org.prography.lemorning.src.views.SearchFragment"
         tools:layout="@layout/fragment_search" />
 </navigation>

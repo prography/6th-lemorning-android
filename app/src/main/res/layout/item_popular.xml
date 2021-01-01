@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="org.prography.lemorning.src.models.Popular" />
+            type="org.prography.lemorning.src.models.Song" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

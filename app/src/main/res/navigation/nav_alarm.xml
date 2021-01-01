@@ -6,6 +6,6 @@
     app:startDestination="@id/fg_alarm">
     <fragment
         android:id="@+id/fg_alarm"
-        android:name="org.prography.lemorning.src.view.AlarmFragment"
-        tools:layout="@layout/fragment_alarm"/>
+        android:name="org.prography.lemorning.src.views.MyAlarmFragment"
+        tools:layout="@layout/fragment_my_alarms"/>
 </navigation>

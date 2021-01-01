@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.MainViewModel" />
+            type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context=".src.view.MainActivity">
+        tools:context=".src.views.MainActivity">
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/nav_container_main"

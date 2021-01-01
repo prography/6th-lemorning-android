@@ -6,8 +6,11 @@
     <data>
         <import type="java.util.Date"/>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.TrendingViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.TrendingViewModel" />
+        <variable
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -152,10 +155,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_popular_trending"
@@ -170,11 +170,7 @@
                     tools:listitem="@layout/item_popular"
                     tools:itemCount="3" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.core.widget.NestedScrollView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

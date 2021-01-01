@@ -3,7 +3,7 @@
 
     <data>
         <variable
-            name="card"
+            name="item"
             type="org.prography.lemorning.src.models.Card" />
     </data>
 
@@ -27,9 +27,9 @@
                 android:id="@+id/tv_card_item_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosanscjkkr_bold"
+                android:fontFamily="@font/noto_bold"
                 android:includeFontPadding="false"
-                android:text="@{card.bank}"
+                android:text="@{item.bank}"
                 android:textColor="#ffffff"
                 android:layout_marginTop="8dp"
                 android:layout_marginStart="16dp"
@@ -41,9 +41,9 @@
                 android:id="@+id/tv_card_item_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/notosanscjkkr_bold"
+                android:fontFamily="@font/noto_bold"
                 android:includeFontPadding="false"
-                android:text="@{card.no}"
+                android:text="@{item.no}"
                 android:textColor="#ffffff"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="삭제"
-                android:fontFamily="@font/notosanscjkkr_bold"
+                android:fontFamily="@font/noto_bold"
                 android:includeFontPadding="false"
                 android:textColor="#ffffff"
                 android:layout_marginTop="8dp"

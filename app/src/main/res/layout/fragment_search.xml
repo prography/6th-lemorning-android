@@ -6,8 +6,11 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SearchViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SearchViewModel" />
+        <variable
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -146,7 +149,7 @@
                     android:textColor="#bfbfbf"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:visibility="@{viewmodel.categoryList.size() > 6 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.categoryList.size() > 6 ? View.VISIBLE : View.GONE}"
                     android:text="more"
                     android:fontFamily="@font/timeburnernormal"
                     app:layout_constraintTop_toTopOf="@id/tv_category_search"
