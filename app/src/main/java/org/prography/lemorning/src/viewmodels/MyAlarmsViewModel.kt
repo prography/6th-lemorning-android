@@ -75,7 +75,7 @@ class MyAlarmsViewModel(application: Application) : BaseViewModel(application) {
 
     fun updateOn(alarm: Alarm, on:Boolean){
         alarm.on = on
-        repository.update(alarm)
+        // repository.update(alarm)
     }
 
     fun cancelAlarm(alarm: Alarm){

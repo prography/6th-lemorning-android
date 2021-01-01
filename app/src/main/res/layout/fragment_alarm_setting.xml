@@ -5,6 +5,9 @@
 
     <data>
         <variable
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.AlarmSettingViewModel" />
+        <variable
             name="pvm"
             type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
@@ -176,7 +179,7 @@
             android:layout_height="wrap_content"
             android:hint="Note"
             android:maxLength="10"
-            android:text="@={viewmodel.alarmNote}"
+            android:text="@={vm.newAlarmNote}"
             android:textColorHint="@color/colorPrimaryDark"
             android:layout_marginHorizontal="30dp"
             app:layout_constraintTop_toBottomOf="@+id/alarm_setting_note_title"

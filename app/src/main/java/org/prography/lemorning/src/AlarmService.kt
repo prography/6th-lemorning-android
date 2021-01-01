@@ -15,6 +15,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.orhanobut.logger.Logger
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.prography.lemorning.ApplicationClass.Companion.retrofit
@@ -36,6 +38,8 @@ class AlarmService : Service() {
     private val CHANNEL_ID = "Lemorning"
     private lateinit var mediaPlayer: MediaPlayer
 
+    private val rxDisposable = CompositeDisposable()
+
     override fun onBind(p0: Intent?): IBinder? {
         return null
     }
@@ -54,6 +58,11 @@ class AlarmService : Service() {
         makeFirstAlarmNotification()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        if (!rxDisposable.isDisposed) rxDisposable.dispose()
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action == "AlarmStart") {
             setRetrofit()
@@ -65,7 +74,7 @@ class AlarmService : Service() {
                 val alarmIntent = Intent(this.applicationContext, AlarmService::class.java).apply {
                     this.action = "AlarmStop"
                 }
-                makeAlarmNotification(alarmIntent, alarmNote)
+                makeAlarmNotification(alarmIntent, alarmNote!!)
                 playAlarm(intent.getIntExtra("songNo", -1))
             } else {
                 val alarmIntent =
@@ -75,7 +84,7 @@ class AlarmService : Service() {
                         this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
                     }
 
-                makeAlarmNotification(alarmIntent, alarmNote)
+                makeAlarmNotification(alarmIntent, alarmNote!!)
             }
         } else if (intent?.action == "AlarmStop") {
             mediaPlayer.stop()
@@ -165,25 +174,19 @@ class AlarmService : Service() {
 
     private fun playAlarm(songNo: Int) {
         retrofit.create(SongApi::class.java).getSongDetail(songNo)
-            .enqueue(object :
-                Callback<SongDetail> {
-                override fun onFailure(call: Call<SongDetail>, t: Throwable) {
-                    t.printStackTrace()
+            .observeOn(Schedulers.newThread())
+            .subscribe({
+                mediaPlayer = MediaPlayer().apply {
+                    setDataSource(it.musicUrl)
+                    setScreenOnWhilePlaying(true)
+                    isLooping = true
+                    prepareAsync() // might take long! (for buffering, etc)
                 }
-
-                override fun onResponse(call: Call<SongDetail>, response: Response<SongDetail>) {
-                    val playSong: SongDetail = response.body() ?: return
-                    mediaPlayer = MediaPlayer().apply {
-                        setDataSource(playSong.musicUrl)
-                        setScreenOnWhilePlaying(true)
-                        isLooping = true
-                        prepareAsync() // might take long! (for buffering, etc)
-                    }
-                    mediaPlayer.setOnPreparedListener {
-                        it.start()
-                    }
+                mediaPlayer.setOnPreparedListener {
+                    it.start()
                 }
-
+            }, {
+                it.printStackTrace()
             })
     }
 }

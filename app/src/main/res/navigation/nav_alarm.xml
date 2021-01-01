@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/fg_alarm"
         android:name="org.prography.lemorning.src.views.MyAlarmFragment"
-        tools:layout="@layout/fragment_my_alarms"/>
+        tools:layout="@layout/fragment_my_alarms">
+        <action android:id="@+id/fg_alarm_setting"
+            app:destination="@id/fg_alarm_setting" />
+    </fragment>
+    <fragment
+        android:id="@+id/fg_alarm_setting"
+        android:name="org.prography.lemorning.src.views.AlarmSettingFragment"
+        tools:layout="@layout/fragment_alarm_setting">
+        <action android:id="@+id/fg_alarm"
+            app:destination="@id/fg_alarm"
+            app:popUpTo="@id/fg_alarm"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

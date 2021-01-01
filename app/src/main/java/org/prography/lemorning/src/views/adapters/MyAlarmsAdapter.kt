@@ -26,8 +26,8 @@ class MyAlarmsAdapter(vm: MyAlarmsViewModel)
         DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
     ) {
         override fun initItem(item: Alarm) {
-            binding.alarmRecyclerSwitch.setOnClickListener{
-                if(binding.alarmRecyclerSwitch.isChecked){
+            binding.alarmRecyclerSwitch.setOnClickListener {
+                if (binding.alarmRecyclerSwitch.isChecked) {
                     vm.updateOn(item, true)
                     val context = binding.root.context.applicationContext
                     val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -38,15 +38,8 @@ class MyAlarmsAdapter(vm: MyAlarmsViewModel)
                         putExtra("date", item.date)
                         putExtra("alarmNote", item.alarmNote)
                     }
-                    val pendingIntent =
-                        item.id.let {alarmId ->
-                            PendingIntent.getBroadcast(context,
-                                alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-                        }
-                    pendingIntent?.let { it1 ->
-                        alarmViewModel.setAlarmManager(alarm,
-                            it1, alarmManager)
-                    }
+                    val pendingIntent = PendingIntent.getBroadcast(context, item.id, intent, PendingIntent.FLAG_CANCEL_CURRENT)
+                    pendingIntent?.let { vm.setAlarmManager(item, it, alarmManager) }
                 } else {
                     vm.updateOn(item, false)
                     vm.cancelAlarm(item)
@@ -54,9 +47,9 @@ class MyAlarmsAdapter(vm: MyAlarmsViewModel)
             }
 
             binding.alarmRecyclerCard.setOnLongClickListener{
-                if(flag){
+                if (flag) {
                     vm.cancelAlarm(item)
-                    vm.delete(item)
+                    //vm.delete(item) // TODO: vm 분리
                     true
                 } else false
             }

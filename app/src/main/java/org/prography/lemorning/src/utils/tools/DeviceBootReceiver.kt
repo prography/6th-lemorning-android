@@ -8,13 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.src.AlarmContextContent
 import org.prography.lemorning.src.AlarmService
 import org.prography.lemorning.src.viewmodels.MyAlarmsViewModel
-import org.prography.lemorning.src.views.AlarmSettingActivity
+import org.prography.lemorning.src.views.AlarmSettingFragment
 
 class DeviceBootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == "android.intent.action.BOOT_COMPLETED") {
-            val viewModel =
-                ViewModelProvider(context as AlarmSettingActivity).get(MyAlarmsViewModel::class.java)
+            /*val viewModel =
+                ViewModelProvider(context as AlarmSettingFragment).get(MyAlarmsViewModel::class.java)
             val dbViewModel = ViewModelProvider(context).get(AlarmDBViewModel::class.java)
 
             if (dbViewModel.getAll().value != null) {
@@ -29,12 +29,12 @@ class DeviceBootReceiver : BroadcastReceiver() {
                         }
                     }
                 })
-            }
+            }*/
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(Intent(context, AlarmService::class.java))
+                context?.startForegroundService(Intent(context, AlarmService::class.java))
             } else {
-                context.startService(Intent(context, AlarmService::class.java))
+                context?.startService(Intent(context, AlarmService::class.java))
             }
         }
     }

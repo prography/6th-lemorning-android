@@ -1,20 +1,17 @@
 package org.prography.lemorning.src.views.adapters
 
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_alarm_setting.view.*
-import org.prography.lemorning.BaseViewModel
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ItemAlarmSettingBinding
 import org.prography.lemorning.src.models.SongDetail
 import org.prography.lemorning.src.utils.objects.BaseRecyclerAdapter
+import org.prography.lemorning.src.viewmodels.AlarmSettingViewModel
 
-class AlarmSettingRecyclerAdapter:
-    BaseRecyclerAdapter<SongDetail,BaseViewModel, ItemAlarmSettingBinding>() {
+class AlarmSettingRecyclerAdapter(vm: AlarmSettingViewModel):
+    BaseRecyclerAdapter<SongDetail, AlarmSettingViewModel, ItemAlarmSettingBinding>(vm, R.layout.item_alarm_setting) {
 
     private var selectItem = -1
 
@@ -23,7 +20,8 @@ class AlarmSettingRecyclerAdapter:
 
 
 
-    override fun onCreateViewHolder(
+    // TODO: vm 분리
+    /*override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): AlarmSettingViewHolder {
@@ -59,7 +57,7 @@ class AlarmSettingRecyclerAdapter:
         }else{
             holder.binding.alarmSettingRecyclerSelect.setImageResource(R.drawable.background_oval_white)
         }
-    }
+    }*/
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)

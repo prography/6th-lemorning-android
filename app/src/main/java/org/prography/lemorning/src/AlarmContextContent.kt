@@ -20,14 +20,12 @@ class AlarmContextContent(private val context: Context){
             putExtra("alarmNote", alarm.alarmNote)
         }
 
-        return alarm.id?.let {
-            PendingIntent.getBroadcast(
-                context,
-                it,
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT
-            )
-        }
+        return PendingIntent.getBroadcast(
+            context,
+            alarm.id,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
     }
 
     fun getAlarmManager():AlarmManager{

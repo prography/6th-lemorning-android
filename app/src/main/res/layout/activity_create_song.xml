@@ -4,7 +4,7 @@
 
     <data>
         <variable
-            name="viewmodel"
+            name="vm"
             type="org.prography.lemorning.src.viewmodels.CreateSongViewModel" />
     </data>
 
@@ -50,7 +50,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_title_create_song"
             android:layout_marginTop="20dp"
-            bind_profile_uri="@{viewmodel.profileUri}"
+            bind_profile_uri="@{vm.profileUri}"
             android:src="@drawable/ic_lemorning"/>
 
         <ImageView

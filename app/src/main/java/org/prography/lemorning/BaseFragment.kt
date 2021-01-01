@@ -13,7 +13,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.transition.ChangeBounds
 import org.prography.lemorning.src.utils.components.NetworkEvent
-import java.util.*
+import org.prography.lemorning.src.utils.components.SimpleMessageDialog
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel, PVM: BaseViewModel>(@LayoutRes val layoutId: Int)
     : Fragment(layoutId), IBaseFragment<VM, PVM> {

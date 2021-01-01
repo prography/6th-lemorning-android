@@ -8,13 +8,12 @@ import androidx.lifecycle.ViewModelProvider
 import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.BuildConfig
 import org.prography.lemorning.R
-import org.prography.lemorning.databinding.ActivityPlaySongBinding
-import org.prography.lemorning.src.viewmodels.SongDetailViewModel
+import org.prography.lemorning.databinding.ActivitySongDetailBinding
 import org.prography.lemorning.src.utils.Converters
-import org.prography.lemorning.src.utils.components.SimpleMessageDialog
+import org.prography.lemorning.src.viewmodels.SongDetailViewModel
 
 class SongDetailActivity
-    : BaseActivity<ActivityPlaySongBinding, SongDetailViewModel>(R.layout.activity_play_song) {
+    : BaseActivity<ActivitySongDetailBinding, SongDetailViewModel>(R.layout.activity_song_detail) {
 
     override fun getViewModel(): SongDetailViewModel {
         val songNo = intent.getIntExtra("songNo", -1)
@@ -23,11 +22,11 @@ class SongDetailActivity
 
     override fun initView(savedInstanceState: Bundle?) {
         binding.rvRecommendPlaySong.adapter = vm.playRecommendAdapter
-        vm.nextSongList.observe(this) { vm.playRecommendAdapter.setItem(it) }
-
         binding.visualizerPlaySong.setColor(getColor(R.color.colorPrimary))
 
-        /* Alarm Play & Stop */
+        binding.ivClosePlaySong.setOnClickListener { finish() }
+        binding.ivMorePlaySong.setOnClickListener { showSimpleMessageDialog(getString(R.string.coming_soon)) }
+        binding.ivLikePlaySong.setOnClickListener { showSimpleMessageDialog(getString(R.string.coming_soon)) }
         binding.ivPlayPlaySong.setOnClickListener { vm.mediaPlayer.let { it.value?.let {
             if (it.isPlaying) {
                 it.pause()
@@ -39,6 +38,7 @@ class SongDetailActivity
         } } }
         binding.sdSeekbarPlaySong.addOnChangeListener { _, value, fromUser -> if (fromUser) vm.mediaPlayer.value?.seekTo(value.toInt()) }
 
+        /* Data Observing */
         vm.mediaPlayer.observe(this,  Observer {
             /* Audio Visualizer */
             it?.setOnPreparedListener {
@@ -50,18 +50,7 @@ class SongDetailActivity
                 vm.registerTimerOnMediaPlayer(it)
             }
         })
-
-        /* Set On Click Listener */
-        binding.ivClosePlaySong.setOnClickListener { finish() }
-        binding.ivMorePlaySong.setOnClickListener { SimpleMessageDialog(
-            context = this,
-            message = getString(R.string.coming_soon)
-        ).show() }
-        binding.ivLikePlaySong.setOnClickListener { SimpleMessageDialog(
-            context = this,
-            message = getString(R.string.coming_soon)
-        ).show() }
-
+        vm.nextSongList.observe(this) { vm.playRecommendAdapter.setItem(it) }
     }
 
     override fun onPause() {

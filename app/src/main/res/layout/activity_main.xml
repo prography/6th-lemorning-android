@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="viewmodel"
+            name="vm"
             type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 

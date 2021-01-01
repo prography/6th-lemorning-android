@@ -26,7 +26,6 @@ class SignUpStep2Fragment
 
     companion object {
         private const val REQUEST_CODE_CHOOSE = 10
-        private const val REQUEST_CODE_CROP = 11
         private const val REQUEST_STORAGE_PERMISSION = 12
     }
 
@@ -37,7 +36,6 @@ class SignUpStep2Fragment
         ViewModelProvider(requireActivity()).get(SignUpViewModel::class.java)
 
     override fun initView(savedInstanceState: Bundle?) {
-        /* Set On Click Listener */
         binding.ivProfileStep2SignUp.setOnClickListener { openImagePicker() }
         binding.ivChangeProfileStep2SignUp.setOnClickListener { openImagePicker() }
         binding.tvBirthStep2SignUp.setOnClickListener { openDatePickerSlider() }

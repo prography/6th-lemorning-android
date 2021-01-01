@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import org.prography.lemorning.BaseFragment
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.FragmentMyAlarmsBinding
@@ -30,9 +31,8 @@ class MyAlarmFragment: BaseFragment<FragmentMyAlarmsBinding, MyAlarmsViewModel, 
             }
         }
         binding.alarmAdd.setOnClickListener {
-            startActivity(Intent(activity, AlarmSettingActivity::class.java))
+            findNavController().navigate(R.id.fg_alarm_setting)
         }
-        binding.alarmImage.setOnClickListener { startActivity(Intent(activity, MyPageActivity::class.java)) }
 
         pvm.myAlarms.observe(this) { vm.myAlarmsAdapter.setItem(it) }
     }

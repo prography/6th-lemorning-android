@@ -9,6 +9,7 @@ import org.prography.lemorning.BaseActivity
 import org.prography.lemorning.R
 import org.prography.lemorning.databinding.ActivityMainBinding
 import org.prography.lemorning.src.AlarmService
+import org.prography.lemorning.src.utils.helpers.setupWithNavController
 import org.prography.lemorning.src.viewmodels.MainViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.activity_main) {
@@ -31,7 +32,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     }
 
     private fun setupBottomNavigationBar() {
-        val navGraphIds = listOf(R.navigation.nav_alarm, R.navigation.nav_trending, R.navigation.nav_subscribe)
+        val navGraphIds = listOf(R.navigation.nav_alarm, R.navigation.nav_trending, R.navigation.nav_mypage)
 
         // Setup the bottom navigation view with a list of navigation graphs
         val controller = binding.bnvMain.setupWithNavController(

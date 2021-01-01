@@ -17,7 +17,8 @@ import org.prography.lemorning.src.utils.objects.BaseViewHolder
 import org.prography.lemorning.src.viewmodels.SongDetailViewModel
 
 class PlayRecommendAdapter(
-    vm: SongDetailViewModel) :
+    vm: SongDetailViewModel
+) :
     BaseRecyclerAdapter<SongDetail, SongDetailViewModel, ItemRecommendPlaySongBinding>(
         vm,
         R.layout.item_recommend_play_song
@@ -26,19 +27,21 @@ class PlayRecommendAdapter(
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<SongDetail, ItemRecommendPlaySongBinding> = object : BaseViewHolder<SongDetail, ItemRecommendPlaySongBinding>(
-        DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
-    ) {
-        override fun initItem(item: SongDetail) {
-            binding.root.setOnClickListener {
-                item.id.let {
-                    vm.unregisterTimerOnMediaPlayer()
-                    vm.mediaPlayer.value?.release()
-                    vm.songDetail = vm.getSongDetail(it)
-                    vm.nextSongList = vm.getNextSongs(it)
-                } }
+    ): BaseViewHolder<SongDetail, ItemRecommendPlaySongBinding> =
+        object : BaseViewHolder<SongDetail, ItemRecommendPlaySongBinding>(
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
+        ) {
+            override fun initItem(item: SongDetail) {
+                binding.root.setOnClickListener {
+                    item.id.let {
+                        vm.unregisterTimerOnMediaPlayer()
+                        vm.mediaPlayer.value?.release()
+                        vm.getSongDetail(it)
+                        vm.getNextSongs(it)
+                    }
+                }
+            }
         }
-    }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -66,7 +69,8 @@ class PlayRecommendAdapter(
         }
     }
 
-    class PlayRecommendLayoutManager(context : Context) : LinearLayoutManager(context, HORIZONTAL, false) {
+    class PlayRecommendLayoutManager(context: Context) :
+        LinearLayoutManager(context, HORIZONTAL, false) {
         override fun scrollHorizontallyBy(
             dx: Int,
             recycler: RecyclerView.Recycler?,
@@ -76,10 +80,11 @@ class PlayRecommendAdapter(
             val startCenterPoint = getChildAt(0)?.let { it.width / 2f + paddingStart } ?: 30f
             val d1 = 0.8f * startCenterPoint
             for (i in 0 until childCount) {
-                val child : View = getChildAt(i)!!
-                val childMidpoint = child.let { (getDecoratedLeft(it) + getDecoratedRight(it)) / 2f}
+                val child: View = getChildAt(i)!!
+                val childMidpoint =
+                    child.let { (getDecoratedLeft(it) + getDecoratedRight(it)) / 2f }
                 val d = Math.min(d1, Math.abs(startCenterPoint - childMidpoint))
-                val scaleFactor =  (d - 0.8f) / (d1 - 0.8f)
+                val scaleFactor = (d - 0.8f) / (d1 - 0.8f)
                 child.apply {
                     alpha = 1 - 0.2f * scaleFactor
                 }

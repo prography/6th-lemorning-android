@@ -174,6 +174,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="21dp"
                     android:layout_marginEnd="21dp"
+                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false" />
 
                 <TextView
@@ -202,13 +203,9 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
+                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

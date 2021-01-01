@@ -6,10 +6,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.util.Log
 import java.util.*
 
-class AlarmReceiver: BroadcastReceiver() {
+class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -21,7 +20,14 @@ class AlarmReceiver: BroadcastReceiver() {
 
         intent?.putExtra("date", calendar.timeInMillis)
         val pendingIntent =
-            intent?.getIntExtra("id", -1)?.let { PendingIntent.getBroadcast(context, it, intent, PendingIntent.FLAG_CANCEL_CURRENT) }
+            intent?.getIntExtra("id", -1)?.let {
+                PendingIntent.getBroadcast(
+                    context,
+                    it,
+                    intent,
+                    PendingIntent.FLAG_CANCEL_CURRENT
+                )
+            }
 
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
@@ -30,10 +36,10 @@ class AlarmReceiver: BroadcastReceiver() {
         )
 
         intent?.getStringExtra("week").let {
-            if(it?.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1) == '0'){
+            if (it?.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK) - 1) == '0') {
                 return
             }
-            if(it == null) return
+            if (it == null) return
         }
 
         val alarmIntent = Intent(context, AlarmService::class.java).apply {
@@ -42,9 +48,9 @@ class AlarmReceiver: BroadcastReceiver() {
             action = "AlarmStart"
         }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(alarmIntent)
-        }else{
+        } else {
             context.startService(alarmIntent)
         }
     }

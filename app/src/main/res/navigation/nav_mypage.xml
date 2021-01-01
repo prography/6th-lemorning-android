@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_subscribe"
+    app:startDestination="@id/fg_mypage">
+    <fragment
+        android:id="@+id/fg_mypage"
+        android:name="org.prography.lemorning.src.views.MyPageFragment"
+        tools:layout="@layout/fragment_mypage">
+        <action
+            android:id="@+id/fg_pay_manage"
+            app:destination="@id/fg_pay_manage" />
+    </fragment>
+    <fragment
+        android:id="@+id/fg_pay_manage"
+        android:name="org.prography.lemorning.src.views.PayManageFragment"
+        tools:layout="@layout/fragment_pay_manage" >
+        <action
+            android:id="@+id/fg_card_register"
+            app:destination="@id/fg_card_register" />
+    </fragment>
+    <fragment
+        android:id="@+id/fg_card_register"
+        android:name="org.prography.lemorning.src.views.AddCardFragment"
+        tools:layout="@layout/fragment_card_register" >
+        <action
+            android:id="@+id/fg_pay_manage"
+            app:destination="@id/fg_pay_manage"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/fg_pay_manage" />
+    </fragment>
+</navigation>
