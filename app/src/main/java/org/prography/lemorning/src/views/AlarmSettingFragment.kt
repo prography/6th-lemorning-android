@@ -19,7 +19,7 @@ class AlarmSettingFragment :
   override fun initView(savedInstanceState: Bundle?) {
     binding.alarmSettingRecycler.adapter = vm.circularSongListAdapter
 
-    pvm.songs.observe(this) { /*vm.circularSongListAdapter.setItem(it)*/ }
+    pvm.mySongs.observe(this) { vm.circularSongListAdapter.setItem(it) }
 
     // TODO: 로직 수정
     /*binding.alarmSettingButton.setOnClickListener {

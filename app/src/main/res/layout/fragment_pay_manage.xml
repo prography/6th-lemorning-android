@@ -36,13 +36,12 @@
             android:id="@+id/tv_explain_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="등록된 카드로 서비스를 이용하세요"
+            android:text="@{pvm.myCards.size != 0 ? `등록된 카드로 서비스를 이용하세요` : `카드를 등록후 레모닝을 이용해보세요`"
+            tools:text="등록된 카드로 서비스를 이용하세요"
             android:textColor="#bfbfbf"
             android:fontFamily="@font/noto_medium"
             android:includeFontPadding="false"
             android:layout_marginTop="12dp"
-            tools:visibility="visible"
-            android:visibility="@{pvm.myCards.size != 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/tv_title_card"
             app:layout_constraintLeft_toLeftOf="parent" />
 
@@ -62,6 +61,7 @@
             android:id="@+id/tv_explain_no_card"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="@{pvm.myCards.size != 0 ? View.GONE : View.VISIBLE}"
             android:text="등록된 카드가 없습니다.\n카드를 등록해주세요"
             android:textColor="#bfbfbf"
             android:fontFamily="@font/noto_medium"
