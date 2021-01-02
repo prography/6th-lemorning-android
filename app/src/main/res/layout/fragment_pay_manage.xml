@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="org.prography.lemorning.src.viewmodels.PayManageViewModel" />
@@ -29,7 +30,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="60dp"
-            android:fontFamily="@font/timeburnerbold" />
+            android:fontFamily="@font/time_bold" />
 
         <TextView
             android:id="@+id/tv_explain_card"
@@ -41,6 +42,7 @@
             android:includeFontPadding="false"
             android:layout_marginTop="12dp"
             tools:visibility="visible"
+            android:visibility="@{pvm.myCards.size != 0 ? View.GONE : View.VISIBLE}"
             app:layout_constraintTop_toBottomOf="@id/tv_title_card"
             app:layout_constraintLeft_toLeftOf="parent" />
 
