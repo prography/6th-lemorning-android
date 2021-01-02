@@ -9,20 +9,20 @@ import org.prography.lemorning.src.utils.components.NetworkEvent
 
 abstract class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
-    protected val rxDisposable = CompositeDisposable()
+  protected val rxDisposable = CompositeDisposable()
 
-    val networkEvent = NetworkEvent()
-    val toastEvent : MutableLiveData<SingleEvent<String>> = MutableLiveData()
-    val alertEvent : MutableLiveData<SingleEvent<String>> = MutableLiveData()
+  val networkEvent = NetworkEvent()
+  val toastEvent : MutableLiveData<SingleEvent<String>> = MutableLiveData()
+  val alertEvent : MutableLiveData<SingleEvent<String>> = MutableLiveData()
 
-    override fun onCleared() {
-        super.onCleared()
-        if (!rxDisposable.isDisposed) rxDisposable.dispose()
-    }
+  override fun onCleared() {
+    super.onCleared()
+    if (!rxDisposable.isDisposed) rxDisposable.dispose()
+  }
 
-    open fun doOnNetworkError(error: Throwable?) {
-        error?.printStackTrace()
-        networkEvent.done()
-        alertEvent.value = SingleEvent(error?.message ?: "알 수 없는 오류입니다.")
-    }
+  open fun doOnNetworkError(error: Throwable?) {
+    error?.printStackTrace()
+    networkEvent.done()
+    alertEvent.value = SingleEvent(error?.message ?: "알 수 없는 오류입니다.")
+  }
 }

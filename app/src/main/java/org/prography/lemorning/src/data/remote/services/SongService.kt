@@ -17,51 +17,51 @@ import org.prography.lemorning.src.utils.Constants
 import org.prography.lemorning.src.utils.objects.ApiError
 import java.io.File
 
-class SongService: BaseService() {
-    private val songApi = retrofit.create(SongApi::class.java)
+class SongService : BaseService() {
+  private val songApi = retrofit.create(SongApi::class.java)
 
-    fun fetchSongs(): Single<List<Song>> {
-        return songApi.getSongs()
-            .map {
-                if (it.code != 200) throw ApiError(it)
-                it.data
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun fetchSongs(): Single<List<Song>> {
+    return songApi.getSongs()
+      .map {
+        if (it.code != 200) throw ApiError(it)
+        it.data
+      }
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 
-    fun fetchSongCategories(): Single<List<SongCategory>> {
-        return songApi.getCategory()
-            .map {
-                if (it.code != 200) throw ApiError(it)
-                it.data
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun fetchSongCategories(): Single<List<SongCategory>> {
+    return songApi.getCategory()
+      .map {
+        if (it.code != 200) throw ApiError(it)
+        it.data
+      }
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 
-    fun fetchSongDetail(songId: Int): Single<SongDetail> {
-        return songApi.getSongDetail(songId)
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun fetchSongDetail(songId: Int): Single<SongDetail> {
+    return songApi.getSongDetail(songId)
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 
-    fun fetchRecommendedSongs(songId: Int): Single<List<SongDetail>> {
-        return songApi.getRecommendedSongs(songId)
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun fetchRecommendedSongs(songId: Int): Single<List<SongDetail>> {
+    return songApi.getRecommendedSongs(songId)
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 
-    fun registerNewSong(name: String, amount: Int, price: Int, stock: Int, alarm: String, img: Uri): Completable {
-        return songApi.registerSong(
-            name = name.toRequestBody(),
-            number = amount.toString().toRequestBody(),
-            price = price.toString().toRequestBody(),
-            stock = stock.toString().toRequestBody(),
-            alarm = MultipartBody.Part.createFormData("alarm", alarm, File(alarm).asRequestBody(Constants.MEDIA_TYPE_FORM_DATA.toMediaType())),
-            image = MultipartBody.Part.createFormData("image", File(img.path!!).name,
-                File(img.path!!).asRequestBody(Constants.MEDIA_TYPE_FORM_DATA.toMediaType()))
-        )
-            .flatMapCompletable {
-                if (it.code != 200) throw ApiError(it)
-                Completable.complete()
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun registerNewSong(name: String, amount: Int, price: Int, stock: Int, alarm: String, img: Uri): Completable {
+    return songApi.registerSong(
+      name = name.toRequestBody(),
+      number = amount.toString().toRequestBody(),
+      price = price.toString().toRequestBody(),
+      stock = stock.toString().toRequestBody(),
+      alarm = MultipartBody.Part.createFormData("alarm", alarm, File(alarm).asRequestBody(Constants.MEDIA_TYPE_FORM_DATA.toMediaType())),
+      image = MultipartBody.Part.createFormData("image", File(img.path!!).name,
+        File(img.path!!).asRequestBody(Constants.MEDIA_TYPE_FORM_DATA.toMediaType()))
+    )
+      .flatMapCompletable {
+        if (it.code != 200) throw ApiError(it)
+        Completable.complete()
+      }
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 }

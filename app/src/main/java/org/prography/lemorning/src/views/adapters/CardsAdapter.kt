@@ -6,5 +6,5 @@ import org.prography.lemorning.databinding.ItemCardBinding
 import org.prography.lemorning.src.models.Card
 import org.prography.lemorning.src.utils.objects.BaseRecyclerAdapter
 
-class CardsAdapter(vm: BaseViewModel): BaseRecyclerAdapter<Card, BaseViewModel, ItemCardBinding>(vm, R.layout.item_card) {
+class CardsAdapter(vm: BaseViewModel) : BaseRecyclerAdapter<Card, BaseViewModel, ItemCardBinding>(vm, R.layout.item_card) {
 }

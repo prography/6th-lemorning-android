@@ -19,61 +19,59 @@ import java.util.concurrent.TimeUnit
 
 class ApplicationClass : Application() {
 
-    // 테스트 서버 주소
-    companion object {
-        lateinit var sharedPref: SharedPreferences
+  // 테스트 서버 주소
+  companion object {
+    lateinit var sharedPref: SharedPreferences
 
-        val httpLoggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                if (message.startsWith("{") && message.endsWith("}")) {
-                    Logger.t("OKHTTP").json(message)
-                } else {
-                    Log.i("OKHTTP", message)
-                }
-            }
-        }).apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
+    val httpLoggingInterceptor = HttpLoggingInterceptor { message ->
+      if (message.startsWith("{") && message.endsWith("}")) {
+        Logger.t("OKHTTP").json(message)
+      } else {
+        Log.i("OKHTTP", message)
+      }
+    }.apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
 
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(6000, TimeUnit.MILLISECONDS)
-            .connectTimeout(6000, TimeUnit.MILLISECONDS)
-            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+    val client: OkHttpClient = OkHttpClient.Builder()
+      .readTimeout(6000, TimeUnit.MILLISECONDS)
+      .connectTimeout(6000, TimeUnit.MILLISECONDS)
+      .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+      .addNetworkInterceptor(httpLoggingInterceptor)
+      .build()
 
-        val noTokenClient: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(6000, TimeUnit.MILLISECONDS)
-            .connectTimeout(6000, TimeUnit.MILLISECONDS)
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
+    val noTokenClient: OkHttpClient = OkHttpClient.Builder()
+      .readTimeout(6000, TimeUnit.MILLISECONDS)
+      .connectTimeout(6000, TimeUnit.MILLISECONDS)
+      .addNetworkInterceptor(httpLoggingInterceptor)
+      .build()
 
-        var retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
-            .build()
+    var retrofit = Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .client(client)
+      .addConverterFactory(GsonConverterFactory.create())
+      .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
+      .build()
 
-        var noTokenRetrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(noTokenClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
-            .build()
-    }
+    var noTokenRetrofit = Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .client(noTokenClient)
+      .addConverterFactory(GsonConverterFactory.create())
+      .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
+      .build()
+  }
 
-    override fun onCreate() {
-        super.onCreate()
-        sharedPref = applicationContext.getSharedPreferences(APP_TAG, MODE_PRIVATE)
+  override fun onCreate() {
+    super.onCreate()
+    sharedPref = applicationContext.getSharedPreferences(APP_TAG, MODE_PRIVATE)
 
-        Logger.addLogAdapter(object : AndroidLogAdapter(
-            PrettyFormatStrategy.newBuilder()
-                .showThreadInfo(false)
-                .methodCount(0)
-                .build()
-        ) {
-            override fun isLoggable(priority: Int, tag: String?): Boolean = BuildConfig.DEBUG
-        })
+    Logger.addLogAdapter(object : AndroidLogAdapter(
+      PrettyFormatStrategy.newBuilder()
+        .showThreadInfo(false)
+        .methodCount(0)
+        .build()
+    ) {
+      override fun isLoggable(priority: Int, tag: String?): Boolean = BuildConfig.DEBUG
+    })
 
-        FirebaseApp.initializeApp(this)
-    }
+    FirebaseApp.initializeApp(this)
+  }
 }

@@ -13,16 +13,16 @@ import retrofit2.http.Part
 
 interface UserApi {
 
-    @Multipart
-    @POST("/signup")
-    fun signUp(@Part("email") email: RequestBody?,
-               @Part("password") password: RequestBody?,
-               @Part profile: MultipartBody.Part?,
-               @Part("account.nickname") nickname: RequestBody?,
-               @Part("account.sex") gender: RequestBody?,
-               @Part("account.birth") birth: RequestBody?
-    ) : Single<BaseResponse<Any>>
+  @Multipart
+  @POST("/signup")
+  fun signUp(@Part("email") email: RequestBody?,
+             @Part("password") password: RequestBody?,
+             @Part profile: MultipartBody.Part?,
+             @Part("account.nickname") nickname: RequestBody?,
+             @Part("account.sex") gender: RequestBody?,
+             @Part("account.birth") birth: RequestBody?
+  ): Single<BaseResponse<Any>>
 
-    @POST("/login")
-    fun signIn(@Body param : SignInParam) : Single<Jwt>
+  @POST("/login")
+  fun signIn(@Body param: SignInParam): Single<Jwt>
 }

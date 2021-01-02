@@ -10,15 +10,15 @@ import org.prography.lemorning.src.viewmodels.CardRegisterViewModel
 import org.prography.lemorning.src.viewmodels.MainViewModel
 
 class AddCardFragment
-    : BaseFragment<FragmentCardRegisterBinding, CardRegisterViewModel, MainViewModel>(R.layout.fragment_card_register) {
+  : BaseFragment<FragmentCardRegisterBinding, CardRegisterViewModel, MainViewModel>(R.layout.fragment_card_register) {
 
-    override fun getViewModel(): CardRegisterViewModel = ViewModelProvider(this).get(CardRegisterViewModel::class.java)
+  override fun getViewModel(): CardRegisterViewModel = ViewModelProvider(this).get(CardRegisterViewModel::class.java)
 
-    override fun getParentViewModel(): MainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
+  override fun getParentViewModel(): MainViewModel = ViewModelProvider(requireActivity()).get(MainViewModel::class.java)
 
-    override fun initView(savedInstanceState: Bundle?) {
-        binding.mbtnSubmit.setOnClickListener {
-            findNavController().navigate(R.id.fg_pay_manage)
-        }
+  override fun initView(savedInstanceState: Bundle?) {
+    binding.mbtnSubmit.setOnClickListener {
+      findNavController().navigate(R.id.fg_pay_manage)
     }
+  }
 }

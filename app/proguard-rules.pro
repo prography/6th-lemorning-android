@@ -12,8 +12,6 @@
 #   public *;
 #}
 
--dontwarn com.squareup.picasso.**
--keep class androidx.appcompat.widget.** { *; }
 
 # Uncomment this to preserve the line number information for
 # debugging stack traces.

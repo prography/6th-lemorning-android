@@ -10,32 +10,32 @@ import org.prography.lemorning.src.utils.Helpers.toDisposal
 
 
 class PlayAlarmViewModel(songId: Int, application: Application) : BaseViewModel(application) {
-    private val songRepo = SongRepository(application)
+  private val songRepo = SongRepository(application)
 
-    val songDetail: MutableLiveData<SongDetail> = MutableLiveData()
-    val mediaPlayer: MutableLiveData<MediaPlayer?> = MutableLiveData()
+  val songDetail: MutableLiveData<SongDetail> = MutableLiveData()
+  val mediaPlayer: MutableLiveData<MediaPlayer?> = MutableLiveData()
 
-    private fun fetchSongDetail(songId: Int) {
-        songRepo.loadSongDetail(songId)
-            .toDisposal(rxDisposable, {
-                songDetail.value = it
-                mediaPlayer.value = MediaPlayer().apply {
-                    setDataSource(it.musicUrl)
-                    setScreenOnWhilePlaying(true)
-                    isLooping = true
-                    prepareAsync() // might take long! (for buffering, etc)
-                }
-            }, {
-                doOnNetworkError(it)
-            })
-    }
+  private fun fetchSongDetail(songId: Int) {
+    songRepo.loadSongDetail(songId)
+      .toDisposal(rxDisposable, {
+        songDetail.value = it
+        mediaPlayer.value = MediaPlayer().apply {
+          setDataSource(it.musicUrl)
+          setScreenOnWhilePlaying(true)
+          isLooping = true
+          prepareAsync() // might take long! (for buffering, etc)
+        }
+      }, {
+        doOnNetworkError(it)
+      })
+  }
 
-    override fun onCleared() {
-        super.onCleared()
-        mediaPlayer.value?.release()
-    }
+  override fun onCleared() {
+    super.onCleared()
+    mediaPlayer.value?.release()
+  }
 
-    init {
-        fetchSongDetail(songId)
-    }
+  init {
+    fetchSongDetail(songId)
+  }
 }

@@ -13,24 +13,24 @@ import java.util.concurrent.TimeUnit
 
 class SplashViewModel(application: Application) : BaseViewModel(application) {
 
-    private val userRepo = UserRepository(application)
+  private val userRepo = UserRepository(application)
 
-    val successLogin: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+  val successLogin: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
 
-    fun tryAutoSignIn() {
-        userRepo.tryAutoSignIn().toDisposal(rxDisposable, {
-            successLogin.value = SingleEvent(true)
-        }, {
-            successLogin.value = SingleEvent(false)
-        })
-    }
+  fun tryAutoSignIn() {
+    userRepo.tryAutoSignIn().toDisposal(rxDisposable, {
+      successLogin.value = SingleEvent(it)
+    }, {
+      successLogin.value = SingleEvent(false)
+    })
+  }
 
-    init {
-        rxDisposable.add(Observable.timer(500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                tryAutoSignIn()
-            })
-    }
+  init {
+    rxDisposable.add(Observable.timer(500, TimeUnit.MILLISECONDS)
+      .subscribeOn(Schedulers.newThread())
+      .observeOn(AndroidSchedulers.mainThread())
+      .subscribe {
+        tryAutoSignIn()
+      })
+  }
 }

@@ -7,14 +7,14 @@ import org.prography.lemorning.src.data.remote.apis.PaymentApi
 import org.prography.lemorning.src.models.Card
 import org.prography.lemorning.src.utils.objects.ApiError
 
-class PaymentService: BaseService() {
-    private val paymentApi = retrofit.create(PaymentApi::class.java)
+class PaymentService : BaseService() {
+  private val paymentApi = retrofit.create(PaymentApi::class.java)
 
-    fun fetchCreditCards(): Single<List<Card>> {
-        return paymentApi.getCardList().map {
-            if (it.code != 200) throw ApiError(it)
-            it.data
-        }
-            .observeOn(AndroidSchedulers.mainThread())
+  fun fetchCreditCards(): Single<List<Card>> {
+    return paymentApi.getCardList().map {
+      if (it.code != 200) throw ApiError(it)
+      it.data
     }
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 }

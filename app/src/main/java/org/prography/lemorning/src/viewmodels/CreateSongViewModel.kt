@@ -14,28 +14,39 @@ import org.prography.lemorning.src.utils.objects.SingleEvent
 import java.util.concurrent.TimeUnit
 
 class CreateSongViewModel(application: Application) : BaseViewModel(application) {
-    private val songRepo = SongRepository(application)
+  private val songRepo = SongRepository(application)
 
-    val profileUri : MutableLiveData<Uri?> = MutableLiveData()
-    val canFinish: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+  val profileUri: MutableLiveData<Uri?> = MutableLiveData()
+  val canFinish: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
 
-    var isRecording: Boolean? = null
-    val curAmpitude: MutableLiveData<Int> = MutableLiveData()
+  var isRecording: Boolean? = null
+  val curAmpitude: MutableLiveData<Int> = MutableLiveData()
 
-    fun registerNewSong(name: String, amount: Int = 10, price: Int = 500, stock: Int = 50, alarmPath: String) {
-        songRepo.registerNewSong(name, amount, price, stock, alarmPath, profileUri.value!!).toDisposal(rxDisposable, {
-            toastEvent.value = SingleEvent("업로드에 성공했습니다.")
-            canFinish.value = SingleEvent(true)
-        }, {
-            doOnNetworkError(it)
+  fun registerNewSong(
+    name: String,
+    amount: Int = 10,
+    price: Int = 500,
+    stock: Int = 50,
+    alarmPath: String
+  ) {
+    songRepo.registerNewSong(name, amount, price, stock, alarmPath, profileUri.value!!)
+      .toDisposal(rxDisposable, {
+        toastEvent.value = SingleEvent("업로드에 성공했습니다.")
+        canFinish.value = SingleEvent(true)
+      }, {
+        doOnNetworkError(it)
+      })
+  }
+
+  fun registerTimerOnAudio(mediaRecorder: MediaRecorder) {
+    rxDisposable.add(
+      Observable.interval(0, 100, TimeUnit.MILLISECONDS)
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe {
+          isRecording?.let {
+            if (it) curAmpitude.value = mediaRecorder.maxAmplitude
+          }
         })
-    }
-
-    fun registerTimerOnAudio(mediaRecorder: MediaRecorder) {
-        rxDisposable.add(
-            Observable.interval(0, 100, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.newThread())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { isRecording?.let { if (it) curAmpitude.value = mediaRecorder.maxAmplitude }})
-    }
+  }
 }

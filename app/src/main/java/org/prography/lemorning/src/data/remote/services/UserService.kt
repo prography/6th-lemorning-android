@@ -15,27 +15,27 @@ import org.prography.lemorning.src.models.SignInParam
 import org.prography.lemorning.src.utils.Constants
 import java.io.File
 
-class UserService: BaseService() {
-    private val userApi = retrofit.create(UserApi::class.java)
-    private val noTokenUserApi = noTokenRetrofit.create(UserApi::class.java)
+class UserService : BaseService() {
+  private val userApi = retrofit.create(UserApi::class.java)
+  private val noTokenUserApi = noTokenRetrofit.create(UserApi::class.java)
 
-    fun signIn(email: String, pwd: String): Single<Jwt> {
-        return noTokenUserApi.signIn(SignInParam(email, pwd))
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun signIn(email: String, pwd: String): Single<Jwt> {
+    return noTokenUserApi.signIn(SignInParam(email, pwd))
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 
-    fun signUp(email: String, password: String, profile: Uri, nickName: String, gender: String, birth: String): Single<Boolean> {
-        val file = File(profile.path!!)
-        return noTokenRetrofit.create(UserApi::class.java)
-            .signUp(email = email.toRequestBody(),
-                password = password.toRequestBody(),
-                profile = MultipartBody.Part.createFormData("profile", file.name ,file.asRequestBody(
-                    Constants.MEDIA_TYPE_FORM_DATA.toMediaType())),
-                nickname = nickName.toRequestBody(),
-                gender = gender.toRequestBody(),
-                birth = birth.toRequestBody()
-            )
-            .map { it.code == 200 }
-            .observeOn(AndroidSchedulers.mainThread())
-    }
+  fun signUp(email: String, password: String, profile: Uri, nickName: String, gender: String, birth: String): Single<Boolean> {
+    val file = File(profile.path!!)
+    return noTokenUserApi
+      .signUp(email = email.toRequestBody(),
+        password = password.toRequestBody(),
+        profile = MultipartBody.Part.createFormData("profile", file.name, file.asRequestBody(
+          Constants.MEDIA_TYPE_FORM_DATA.toMediaType())),
+        nickname = nickName.toRequestBody(),
+        gender = gender.toRequestBody(),
+        birth = birth.toRequestBody()
+      )
+      .map { it.code == 200 }
+      .observeOn(AndroidSchedulers.mainThread())
+  }
 }

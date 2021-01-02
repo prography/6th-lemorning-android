@@ -9,12 +9,12 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface PaymentApi {
-    @GET("/card/list")
-    fun getCardList(): Single<BaseResponse<List<Card>>>
+  @GET("/card/list")
+  fun getCardList(): Single<BaseResponse<List<Card>>>
 
-    @POST("/card/save")
-    fun registerNewCard(@Body param: CardRegisterParam): Single<BaseResponse<Any>>
+  @POST("/card/save")
+  fun registerNewCard(@Body param: CardRegisterParam): Single<BaseResponse<Any>>
 
-    @POST("/card/delete/{cardId}")
-    fun deleteCard(): Single<BaseResponse<Any>>
+  @POST("/card/delete/{cardId}")
+  fun deleteCard(): Single<BaseResponse<Any>>
 }

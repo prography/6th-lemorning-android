@@ -8,12 +8,12 @@ import org.prography.lemorning.src.repositories.AlarmRepository
 import org.prography.lemorning.src.views.adapters.AlarmSettingRecyclerAdapter
 
 class AlarmSettingViewModel(application: Application) : BaseViewModel(application) {
-    val alarmRepo = AlarmRepository(application)
-    val newAlarmNote = MutableLiveData("")
+  val alarmRepo = AlarmRepository(application)
+  val newAlarmNote = MutableLiveData("")
 
-    val circularSongListAdapter = AlarmSettingRecyclerAdapter(this)
+  val circularSongListAdapter = AlarmSettingRecyclerAdapter(this)
 
-    fun insertMyNewAlarm(alarm: Alarm) {
+  fun insertMyNewAlarm(alarm: Alarm) {
 
-    }
+  }
 }

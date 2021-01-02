@@ -16,94 +16,91 @@ import org.prography.lemorning.src.utils.components.NetworkEvent
 import org.prography.lemorning.src.utils.components.SimpleMessageDialog
 
 abstract class BaseFragment<B : ViewDataBinding, VM : BaseViewModel, PVM: BaseViewModel>(@LayoutRes val layoutId: Int)
-    : Fragment(layoutId), IBaseFragment<VM, PVM> {
+  : Fragment(layoutId), IBaseFragment<VM, PVM> {
 
-    protected lateinit var binding : B
-    protected lateinit var vm : VM
-    protected lateinit var pvm : PVM
+  protected lateinit var binding : B
+  protected lateinit var vm : VM
+  protected lateinit var pvm : PVM
 
-    protected var messageDialog: SimpleMessageDialog? = null
-    var progressDialog: ProgressDialog? = null
+  protected var messageDialog: SimpleMessageDialog? = null
+  var progressDialog: ProgressDialog? = null
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding = DataBindingUtil.bind(view)!!
-        vm = getViewModel()
-        pvm = getParentViewModel()
-        binding.setVariable(BR.vm, vm)
-        binding.setVariable(BR.pvm, pvm)
-        binding.lifecycleOwner = this
+  override fun onCreateView(
+    inflater: LayoutInflater,
+    container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View? {
+    sharedElementEnterTransition = ChangeBounds().apply {
+      duration = 300
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-
-        sharedElementEnterTransition = ChangeBounds().apply {
-            duration = 300
-        }
-        sharedElementReturnTransition = ChangeBounds().apply {
-            duration = 300
-        }
-
-        vm.toastEvent.observe(viewLifecycleOwner) { it.get()?.let { showToast(it) } }
-        vm.alertEvent.observe(viewLifecycleOwner) { it.get()?.let { showSimpleMessageDialog(it) } }
-        vm.networkEvent.observe(viewLifecycleOwner) { onNetworkEventChanged(it) }
-
-        initView(savedInstanceState)
-
-        return binding.root
+    sharedElementReturnTransition = ChangeBounds().apply {
+      duration = 300
     }
+    return super.onCreateView(inflater, container, savedInstanceState)
+  }
 
-    open fun showToast(message: String?) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
+    binding = DataBindingUtil.bind(view)!!
+    vm = getViewModel()
+    pvm = getParentViewModel()
+    binding.setVariable(BR.vm, vm)
+    binding.setVariable(BR.pvm, pvm)
+    binding.lifecycleOwner = this
+
+    vm.toastEvent.observe(viewLifecycleOwner) { it.get()?.let { showToast(it) } }
+    vm.alertEvent.observe(viewLifecycleOwner) { it.get()?.let { showSimpleMessageDialog(it) } }
+    vm.networkEvent.observe(viewLifecycleOwner) { onNetworkEventChanged(it) }
+
+    initView(savedInstanceState)
+  }
+
+  open fun showToast(message: String?) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+  }
+
+  open fun showSimpleMessageDialog(
+    message: String?,
+    btnText: String? = getString(R.string.confirm),
+    isCancelable: Boolean = true,
+    onClick: ((Dialog) -> Unit)? = null
+  ) {
+    messageDialog = SimpleMessageDialog(requireActivity(), message, btnText, isCancelable, onClick)
+    messageDialog?.show()
+  }
+
+  open fun showProgressDialog() {
+    if (progressDialog == null) {
+      progressDialog = ProgressDialog(requireActivity(), android.R.style.Theme_DeviceDefault_Dialog).apply {
+        setMessage(getString(R.string.loading))
+        isIndeterminate = true
+        setCancelable(false)
+      }
     }
+    progressDialog?.show()
+  }
 
-    open fun showSimpleMessageDialog(
-        message: String?,
-        btnText: String? = getString(R.string.confirm),
-        isCancelable: Boolean = true,
-        onClick: ((Dialog) -> Unit)? = null
-    ) {
-        messageDialog = SimpleMessageDialog(requireActivity(), message, btnText, isCancelable, onClick)
-        messageDialog?.show()
+  open fun hideProgressDialog() = progressDialog?.apply { if (isShowing) dismiss() }
+
+  override fun onStop() {
+    super.onStop()
+    hideProgressDialog()
+  }
+
+  override fun onNetworkEventChanged(state: NetworkEvent.NetworkState?) {
+    when (state) {
+      NetworkEvent.NetworkState.LOADING -> showProgressDialog()
+      NetworkEvent.NetworkState.COMPLETE -> hideProgressDialog()
     }
-
-    open fun showProgressDialog() {
-        if (progressDialog == null) {
-            progressDialog = ProgressDialog(requireActivity(), android.R.style.Theme_DeviceDefault_Dialog).apply {
-                setMessage(getString(R.string.loading))
-                isIndeterminate = true
-                setCancelable(false)
-            }
-        }
-        progressDialog?.show()
-    }
-
-    open fun hideProgressDialog() = progressDialog?.apply { if (isShowing) dismiss() }
-
-    override fun onStop() {
-        super.onStop()
-        hideProgressDialog()
-    }
-
-    override fun onNetworkEventChanged(state: NetworkEvent.NetworkState?) {
-        when (state) {
-            NetworkEvent.NetworkState.LOADING -> showProgressDialog()
-            NetworkEvent.NetworkState.COMPLETE -> hideProgressDialog()
-        }
-    }
+  }
 }
 
 interface IBaseFragment<VM : BaseViewModel, PVM: BaseViewModel> {
-    fun getViewModel() : VM
+  fun getViewModel() : VM
 
-    fun getParentViewModel(): PVM
+  fun getParentViewModel(): PVM
 
-    fun initView(savedInstanceState: Bundle?)
+  fun initView(savedInstanceState: Bundle?)
 
-    fun onNetworkEventChanged(state: NetworkEvent.NetworkState?)
+  fun onNetworkEventChanged(state: NetworkEvent.NetworkState?)
 }
