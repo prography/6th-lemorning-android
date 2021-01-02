@@ -18,8 +18,6 @@ class AlarmSettingRecyclerAdapter(vm: AlarmSettingViewModel):
     var selectItemSongNo = -1
     var selectItemUrl = ""
 
-
-
     // TODO: vm 분리
     /*override fun onCreateViewHolder(
         parent: ViewGroup,

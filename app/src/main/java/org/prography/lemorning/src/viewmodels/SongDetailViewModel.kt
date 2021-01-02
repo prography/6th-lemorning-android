@@ -14,7 +14,7 @@ import org.prography.lemorning.src.utils.Helpers.toDisposal
 import java.util.concurrent.TimeUnit
 
 class SongDetailViewModel(songId: Int, application: Application) : BaseViewModel(application) {
-    val songRepo = SongRepository(application)
+    private val songRepo = SongRepository(application)
 
     val playRecommendAdapter = PlayRecommendAdapter(this)
 

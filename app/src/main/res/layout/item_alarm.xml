@@ -18,6 +18,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
+                android:layout_marginStart="10dp"
+                tools:checked="true"
+                android:id="@+id/check_alarm"
+                tools:visibility="visible"
+                android:visibility="gone"/>
+
             <ImageView
                 android:id="@+id/alarm_recycler_image"
                 android:layout_width="62dp"
@@ -25,7 +40,7 @@
                 tools:src="@drawable/img_recommend_thumb_sample1"
                 bind_img_url_circle="@{item.imgUrl}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toEndOf="@id/check_alarm"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginTop="16dp"
                 android:layout_marginStart="10dp"

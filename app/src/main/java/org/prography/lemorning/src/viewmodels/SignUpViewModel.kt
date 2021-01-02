@@ -31,8 +31,7 @@ class SignUpViewModel(application: Application) : BaseViewModel(application) {
     val agreeThird: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun onClickValidateEmail() {
-        emailStatus.value = if (Validators.isValidEmail(email.value)) Constants.EMAIL_VALID
-        else Constants.EMAIL_INVALID
+        emailStatus.value = if (Validators.isValidEmail(email.value)) Constants.EMAIL_VALID else Constants.EMAIL_INVALID
     }
 
     fun onClickGender(idx: Int) {

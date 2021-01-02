@@ -19,7 +19,7 @@ interface AlarmDao{
 
     @Query("SELECT * FROM alarm WHERE id = :id")
     fun getAlarm(id : Int): Maybe<Alarm>
-  
-    @Update
-    fun update(alarm: Alarm): Completable
+
+    @Query("UPDATE ALARM SET `on` = :on WHERE id = :id")
+    fun updateAlarmStatus(alarmId: Int, on: Boolean): Completable
 }

@@ -1,17 +1,20 @@
 package org.prography.lemorning.src.models
 
+import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "alarm")
 data class Alarm (
     @PrimaryKey(autoGenerate = true)
-    var id: Int = 0,
+    val id: Int = 0,
     @ColumnInfo(name = "time")
     var time: String,
     @ColumnInfo(name = "on")
-    var on: Boolean,
+    val on: Boolean,
     @ColumnInfo(name = "week")
     var week: String,
     @ColumnInfo(name = "date")
@@ -22,4 +25,4 @@ data class Alarm (
     var imgUrl: String,
     @ColumnInfo(name = "alarmNote")
     var alarmNote: String
-)
+): Parcelable

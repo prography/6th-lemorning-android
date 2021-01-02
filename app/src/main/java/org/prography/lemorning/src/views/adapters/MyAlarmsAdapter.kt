@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import org.prography.lemorning.R
@@ -17,7 +18,13 @@ import org.prography.lemorning.src.viewmodels.MyAlarmsViewModel
 
 class MyAlarmsAdapter(vm: MyAlarmsViewModel)
     : BaseRecyclerAdapter<Alarm, MyAlarmsViewModel, ItemAlarmBinding>(vm, R.layout.item_alarm) {
-    var flag = false
+
+    var isEditing: Boolean = false
+
+    fun setIsEditing(isEditing: Boolean) {
+        this.isEditing = isEditing
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -26,32 +33,15 @@ class MyAlarmsAdapter(vm: MyAlarmsViewModel)
         DataBindingUtil.inflate(LayoutInflater.from(parent.context), layoutId, parent, false)
     ) {
         override fun initItem(item: Alarm) {
+            binding.checkAlarm.visibility = if (isEditing) View.VISIBLE else View.GONE
+
             binding.alarmRecyclerSwitch.setOnClickListener {
-                if (binding.alarmRecyclerSwitch.isChecked) {
-                    vm.updateOn(item, true)
-                    val context = binding.root.context.applicationContext
-                    val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                    val intent = Intent(context, AlarmReceiver::class.java).apply {
-                        putExtra("id", item.id)
-                        putExtra("songNo", item.songNo)
-                        putExtra("week", item.week)
-                        putExtra("date", item.date)
-                        putExtra("alarmNote", item.alarmNote)
-                    }
-                    val pendingIntent = PendingIntent.getBroadcast(context, item.id, intent, PendingIntent.FLAG_CANCEL_CURRENT)
-                    pendingIntent?.let { vm.setAlarmManager(item, it, alarmManager) }
-                } else {
-                    vm.updateOn(item, false)
-                    vm.cancelAlarm(item)
-                }
+                vm.updateAlarm(item, binding.alarmRecyclerSwitch.isChecked)
             }
 
-            binding.alarmRecyclerCard.setOnLongClickListener{
-                if (flag) {
-                    vm.cancelAlarm(item)
-                    //vm.delete(item) // TODO: vm 분리
-                    true
-                } else false
+            binding.checkAlarm.setOnClickListener {
+                val prev = vm.selectedAlarms.value!!
+                vm.selectedAlarms.value = if (binding.checkAlarm.isChecked) prev.plus(item) else prev.minus(item)
             }
         }
     }

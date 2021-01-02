@@ -13,7 +13,7 @@ import org.prography.lemorning.src.data.local.LemorningDatabase
 class AlarmRepository(application: Application): BaseRepository(application) {
     private val alarmDao: AlarmDao = LemorningDatabase.getInstance(application).alarmDao()
 
-    fun getAll(): Single<List<Alarm>> {
+    fun getAllMyAlarams(): Single<List<Alarm>> {
         return alarmDao.getAll()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -37,8 +37,8 @@ class AlarmRepository(application: Application): BaseRepository(application) {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    fun update(alarm: Alarm): Completable {
-        return alarmDao.update(alarm)
+    fun updateAlarmStatus(alarmId: Int, on: Boolean): Completable {
+        return alarmDao.updateAlarmStatus(alarmId, on)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
