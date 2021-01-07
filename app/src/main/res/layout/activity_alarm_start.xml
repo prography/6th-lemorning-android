@@ -5,8 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.PlayAlarmViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.PlayAlarmViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,12 +25,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="#000000"
             android:foreground="#61000000"
-            bind_img_url_opaque="@{viewmodel.playSong.imgUrl}"
+            bind_img_url_opaque="@{vm.songDetail.imgUrl}"
             tools:src="@drawable/img_album_sample2_kkang"
             tools:scaleType="centerCrop"
             />
 
-        <org.prography.lemorning.utils.components.CircleVisualizerSmooth
+        <org.prography.lemorning.src.utils.components.CircleVisualizerSmooth
             android:id="@+id/alarm_visualizer_play_song"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -56,7 +56,7 @@
 
         <ImageView
             android:id="@+id/alarm_thumbnail_play_song"
-            bind_img_url_circle="@{viewmodel.playSong.imgUrl}"
+            bind_img_url_circle="@{vm.songDetail.imgUrl}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
@@ -103,9 +103,9 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
-            android:text="@{viewmodel.playSong.category}"
+            android:text="@{vm.songDetail.category}"
             tools:text="Morning Breaker"
-            android:fontFamily="@font/timeburnernormal"
+            android:fontFamily="@font/time_normal"
             android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -118,9 +118,9 @@
             android:layout_height="wrap_content"
             android:textSize="24sp"
             android:textColor="#ffffff"
-            android:text="@{viewmodel.playSong.title}"
+            android:text="@{vm.songDetail.title}"
             tools:text="관짝밈"
-            android:fontFamily="@font/timeburnerbold"
+            android:fontFamily="@font/time_bold"
             android:includeFontPadding="false"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/alarm_category_play_song"
@@ -133,7 +133,7 @@
             android:textSize="18sp"
             android:textColor="#ffffff"
             tools:text="우와오아와오아아오아"
-            android:fontFamily="@font/timeburnerbold"
+            android:fontFamily="@font/time_bold"
             android:includeFontPadding="false"
             app:layout_constraintLeft_toRightOf="@id/alarm_title_play_song"
             app:layout_constraintBottom_toBottomOf="@id/alarm_title_play_song"

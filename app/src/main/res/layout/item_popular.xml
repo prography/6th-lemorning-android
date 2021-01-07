@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="org.prography.lemorning.src.models.Popular" />
+            type="org.prography.lemorning.src.models.Song" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,8 +37,8 @@
             android:textSize="10sp"
             android:textColor="#171717"
             tools:text="#1"
-            android:text="@{`#` + String.valueOf(item.no)}"
-            android:fontFamily="@font/timeburnerbold"
+            android:text="@{`#` + String.valueOf(item.id)}"
+            android:fontFamily="@font/time_bold"
             app:layout_constraintStart_toEndOf="@id/iv_thumbnail_item_popular"
             app:layout_constraintTop_toTopOf="@id/iv_thumbnail_item_popular"
             android:layout_marginTop="8dp"
@@ -58,7 +58,7 @@
             android:textColor="#171717"
             android:text="@{item.title}"
             tools:text="관짝밈"
-            android:fontFamily="@font/timeburnerbold"
+            android:fontFamily="@font/time_bold"
             android:includeFontPadding="false"
             android:layout_marginTop="4dp"
             app:layout_constraintStart_toStartOf="@id/tv_rank_item_popular"
@@ -72,7 +72,7 @@
             android:textColor="#bfbfbf"
             android:text="@{!item.tags.empty ? `#` + item.tags[0] : `#None`}"
             tools:text="Morning Breaker"
-            android:fontFamily="@font/timeburnernormal"
+            android:fontFamily="@font/time_normal"
             android:includeFontPadding="false"
             android:layout_marginTop="6dp"
             app:layout_constraintStart_toStartOf="@id/tv_rank_item_popular"

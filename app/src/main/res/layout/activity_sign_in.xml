@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SignInViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SignInViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -54,12 +54,12 @@
                     android:paddingStart="20dp"
                     android:paddingEnd="20dp"
                     android:inputType="textEmailAddress"
-                    android:text="@={viewmodel.email}"
+                    android:text="@={vm.email}"
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
                     android:hint="Enter your Email"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp" />
 
@@ -80,9 +80,9 @@
                     android:textColor="@color/colorPrimaryDark"
                     android:textColorHint="#bbbbbb"
                     android:textSize="12sp"
-                    android:text="@={viewmodel.password}"
+                    android:text="@={vm.password}"
                     android:hint="Enter your Password"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:paddingTop="11dp"
                     android:paddingBottom="11dp" />
 
@@ -95,12 +95,12 @@
                     android:textAllCaps="false"
                     android:letterSpacing="0"
                     android:includeFontPadding="false"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/et_pw_sign_in"
                     app:layout_constraintBottom_toTopOf="@id/mbtn_signup_sign_in"
-                    android:onClick="@{() -> viewmodel.onClickSignIn()}"
+                    android:onClick="@{() -> vm.onClickSignIn()}"
                     android:padding="0dp"
                     app:cornerRadius="4dp"
                     android:insetTop="0dp"
@@ -120,7 +120,7 @@
                     android:textAllCaps="false"
                     android:letterSpacing="0"
                     android:includeFontPadding="false"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/mbtn_signin_sign_in"
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="10sp"
                     android:textColor="#bbbbbb"
-                    android:fontFamily="@font/timeburnernormal"
+                    android:fontFamily="@font/time_normal"
                     android:text="Start with Social Account"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -183,7 +183,7 @@
                     android:textSize="12sp"
                     android:textColor="#bbbbbb"
                     android:gravity="center_horizontal"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:letterSpacing="0"
                     android:text="I&apos;ll sign in later"
                     android:includeFontPadding="false"

@@ -6,8 +6,11 @@
     <data>
         <import type="java.util.Date"/>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.TrendingViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.TrendingViewModel" />
+        <variable
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,7 +39,7 @@
                     android:textColor="#bfbfbf"
                     time="@{System.currentTimeMillis()}"
                     tools:text="30 Apr 2020"
-                    android:fontFamily="@font/timeburnernormal"
+                    android:fontFamily="@font/time_normal"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +53,7 @@
                     android:textSize="24sp"
                     android:textColor="#171717"
                     android:text="For you"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_date_trending"
@@ -96,7 +99,7 @@
                     android:textColor="#171717"
                     android:lineSpacingExtra="5sp"
                     android:text="Popular"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:includeFontPadding="false"
                     app:layout_constraintTop_toBottomOf="@id/rv_foryou_trending"
                     app:layout_constraintStart_toStartOf="parent"
@@ -117,7 +120,7 @@
                     android:textSize="12sp"
                     android:textColor="#bfbfbf"
                     android:text="Weekly"
-                    android:fontFamily="@font/timeburnernormal"
+                    android:fontFamily="@font/time_normal"
                     android:textAllCaps="false"
                     android:includeFontPadding="false"
                     android:letterSpacing="0"
@@ -152,10 +155,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         />
 
-
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_popular_trending"
@@ -170,11 +170,7 @@
                     tools:listitem="@layout/item_popular"
                     tools:itemCount="3" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.core.widget.NestedScrollView>
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

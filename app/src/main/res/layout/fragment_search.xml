@@ -6,8 +6,11 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SearchViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SearchViewModel" />
+        <variable
+            name="pvm"
+            type="org.prography.lemorning.src.viewmodels.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="12sp"
                     android:textColor="#bfbfbf"
-                    android:fontFamily="@font/timeburnernormal"
+                    android:fontFamily="@font/time_normal"
                     android:text="Search"
                     android:includeFontPadding="false"
                     app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="24sp"
                     android:textColor="#171717"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:text="What you want"
                     app:layout_constraintTop_toBottomOf="@id/tv_title_head_search"
                     android:layout_marginStart="30dp"
@@ -107,7 +110,7 @@
                         android:background="@null"
                         android:layout_marginStart="10dp"
                         android:textSize="14sp"
-                        android:fontFamily="@font/timeburnernormal"
+                        android:fontFamily="@font/time_normal"
                         android:textColor="#171717"
                         android:maxLines="1"
                         android:enabled="false"
@@ -126,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#171717"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:text="Popular Category"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cl_search_container"
@@ -146,9 +149,9 @@
                     android:textColor="#bfbfbf"
                     android:insetTop="0dp"
                     android:insetBottom="0dp"
-                    android:visibility="@{viewmodel.categoryList.size() > 6 ? View.VISIBLE : View.GONE}"
+                    android:visibility="@{vm.categoryList.size() > 6 ? View.VISIBLE : View.GONE}"
                     android:text="more"
-                    android:fontFamily="@font/timeburnernormal"
+                    android:fontFamily="@font/time_normal"
                     app:layout_constraintTop_toTopOf="@id/tv_category_search"
                     app:layout_constraintBottom_toBottomOf="@id/tv_category_search"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -171,6 +174,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="21dp"
                     android:layout_marginEnd="21dp"
+                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false" />
 
                 <TextView
@@ -179,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textColor="#171717"
-                    android:fontFamily="@font/timeburnerbold"
+                    android:fontFamily="@font/time_bold"
                     android:text="Recent Search"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/rv_category_search"
@@ -199,13 +203,9 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="30dp"
                     android:layout_marginEnd="30dp"
+                    android:overScrollMode="never"
                     android:nestedScrollingEnabled="false" />
-
-
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

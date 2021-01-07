@@ -1,177 +1,178 @@
 package org.prography.lemorning.src
 
-import android.app.*
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
 import android.os.PowerManager
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import com.orhanobut.logger.Logger
+import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
-import org.prography.lemorning.ApplicationClass
+import org.prography.lemorning.ApplicationClass.Companion.retrofit
 import org.prography.lemorning.R
-import org.prography.lemorning.config.XAccessTokenInterceptor
-import org.prography.lemorning.src.apis.PlaySongApiService
-import org.prography.lemorning.src.models.PlaySong
-import org.prography.lemorning.src.view.AlarmStartActivity
-import org.prography.lemorning.src.view.MainActivity
-import org.prography.lemorning.utils.FirebaseUtils
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.prography.lemorning.src.data.remote.XAccessTokenInterceptor
+import org.prography.lemorning.src.data.remote.apis.SongApi
+import org.prography.lemorning.src.models.Alarm
+import org.prography.lemorning.src.utils.Constants.BASE_URL
+import org.prography.lemorning.src.views.AlarmStartActivity
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class AlarmService: Service() {
+class AlarmService : Service() {
 
-    private val CHANNEL_ID = "Lemorning"
-    private var BASE_URL: String = ""
-    private lateinit var mediaPlayer: MediaPlayer
+  private val CHANNEL_ID = "Lemorning"
+  private lateinit var mediaPlayer: MediaPlayer
 
-    override fun onBind(p0: Intent?): IBinder? {
-        return null
-    }
+  private val rxDisposable = CompositeDisposable()
 
-    override fun onCreate() {
-        super.onCreate()
-        createNotificationChannel(this, NotificationManagerCompat.IMPORTANCE_LOW,
-            false, "Lemorning", "App Notification channel")
-        createNotificationChannel(this, NotificationManagerCompat.IMPORTANCE_HIGH,
-            false, "Lemorning Alarm", "App Notification channel")
+  override fun onBind(p0: Intent?): IBinder? {
+    return null
+  }
 
-        makeFirstAlarmNotification()
-    }
+  override fun onCreate() {
+    super.onCreate()
+    createNotificationChannel(
+      this, NotificationManagerCompat.IMPORTANCE_LOW,
+      false, "Lemorning", "App Notification channel"
+    )
+    createNotificationChannel(
+      this, NotificationManagerCompat.IMPORTANCE_HIGH,
+      false, "Lemorning Alarm", "App Notification channel"
+    )
 
-    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        if(intent?.action == "AlarmStart"){
-            setRetrofit()
-            val alarmNote = intent.getStringExtra("alarmNote")
+    makeFirstAlarmNotification()
+  }
 
-            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+  override fun onDestroy() {
+    super.onDestroy()
+    if (!rxDisposable.isDisposed) rxDisposable.dispose()
+  }
 
-            if(powerManager.isInteractive){
-                val alarmIntent = Intent(this.applicationContext, AlarmService::class.java).apply {
-                    this.action = "AlarmStop"
-                }
-                makeAlarmNotification(alarmIntent, alarmNote)
-                playAlarm(intent.getIntExtra("songNo", -1))
-            }else{
-                val alarmIntent = Intent(this.applicationContext, AlarmStartActivity::class.java).apply {
-                    putExtra("songNo", intent.getIntExtra("songNo", -1))
-                    putExtra("alarmNote", alarmNote)
-                    this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-                }
+  override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+    if (intent?.action == "AlarmStart") {
+      setRetrofit()
+      val alarm: Alarm? = intent.getParcelableExtra("alarm")
 
-                makeAlarmNotification(alarmIntent, alarmNote)
-            }
-        } else if(intent?.action == "AlarmStop"){
-            mediaPlayer.stop()
-            mediaPlayer.release()
+      val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
+
+      if (powerManager.isInteractive) {
+        val alarmIntent = Intent(applicationContext, AlarmService::class.java).apply {
+          this.action = "AlarmStop"
         }
+        makeAlarmNotification(alarmIntent, alarm?.alarmNote ?: "")
+        playAlarm(alarm?.songNo ?: -1)
+      } else {
+        val alarmIntent =
+          Intent(applicationContext, AlarmStartActivity::class.java).apply {
+            putExtra("songNo", alarm?.songNo ?: -1)
+            putExtra("alarmNote", alarm?.alarmNote)
+            setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+          }
 
-        return super.onStartCommand(intent, flags, startId)
+        makeAlarmNotification(alarmIntent, alarm?.alarmNote ?: "")
+      }
+    } else if (intent?.action == "AlarmStop") {
+      mediaPlayer.stop()
+      mediaPlayer.release()
     }
 
-    private fun createNotificationChannel(context: Context, importance: Int, showBadge: Boolean,
-                                          name: String, description: String) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(name, name, importance)
-            channel.description = description
-            channel.setShowBadge(showBadge)
+    return super.onStartCommand(intent, flags, startId)
+  }
 
-            val notificationManager = context.getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
+  private fun createNotificationChannel(
+    context: Context, importance: Int, showBadge: Boolean,
+    name: String, description: String
+  ) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      val channel = NotificationChannel(name, name, importance)
+      channel.description = description
+      channel.setShowBadge(showBadge)
+
+      val notificationManager = context.getSystemService(NotificationManager::class.java)
+      notificationManager.createNotificationChannel(channel)
+    }
+  }
+
+  private fun setRetrofit() {
+    val client: OkHttpClient = OkHttpClient.Builder()
+      .readTimeout(5000, TimeUnit.MILLISECONDS)
+      .connectTimeout(5000, TimeUnit.MILLISECONDS)
+      .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
+      .build()
+
+    retrofit = Retrofit.Builder()
+      .baseUrl(BASE_URL)
+      .client(client)
+      .addConverterFactory(GsonConverterFactory.create())
+      .addCallAdapterFactory(RxJava3CallAdapterFactory.createAsync())
+      .build()
+  }
+
+  fun makeFirstAlarmNotification() {
+    val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+      .setSmallIcon(R.drawable.ic_lemorning)
+      .setContentTitle("Lemorning 알람")
+      .setContentText("알람이 설정되어 있습니다")
+      .setPriority(NotificationCompat.PRIORITY_LOW)
+
+    startForeground(123456, notificationBuilder.build())
+  }
+
+  private fun makeAlarmNotification(alarmIntent: Intent?, alarmNote: String) {
+    val pendingIntent: PendingIntent = if (alarmIntent?.action == "AlarmStop") {
+      PendingIntent.getService(
+        applicationContext,
+        0,
+        alarmIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+      )
+    } else {
+      PendingIntent.getActivity(
+        applicationContext,
+        0,
+        alarmIntent,
+        PendingIntent.FLAG_UPDATE_CURRENT
+      )
+    }
+
+    val notificationBuilder = NotificationCompat.Builder(this, "$CHANNEL_ID Alarm").apply {
+      setSmallIcon(R.drawable.ic_lemorning)
+      setContentTitle("Lemorning 알람")
+      setContentText(if (alarmNote.isNotEmpty()) "$alarmNote\n알람 끄기" else "알람 끄기")
+      if (alarmIntent?.action == "AlarmStop") setContentIntent(pendingIntent)
+      else setFullScreenIntent(pendingIntent, true)
+      priority = NotificationCompat.PRIORITY_HIGH
+      setAutoCancel(true)
+    }
+
+    NotificationManagerCompat.from(this).notify(12345, notificationBuilder.build())
+  }
+
+  private fun playAlarm(songNo: Int) {
+    rxDisposable.add(retrofit.create(SongApi::class.java).getSongDetail(songNo)
+      .observeOn(Schedulers.newThread())
+      .subscribe({
+        mediaPlayer = MediaPlayer().apply {
+          setDataSource(it.musicUrl)
+          setScreenOnWhilePlaying(true)
+          isLooping = true
+          prepareAsync() // might take long! (for buffering, etc)
         }
-    }
-
-    private fun setRetrofit(){
-        val httpLoggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
-            override fun log(message: String) {
-                if (message.startsWith("{") && message.endsWith("}")) {
-                    Logger.t("OKHTTP").json(message)
-                } else {
-                    Log.i("OKHTTP", message)
-                }
-            }
-        }).apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
-
-        val client: OkHttpClient = OkHttpClient.Builder()
-            .readTimeout(5000, TimeUnit.MILLISECONDS)
-            .connectTimeout(5000, TimeUnit.MILLISECONDS)
-            .addNetworkInterceptor(XAccessTokenInterceptor()) // JWT 자동 헤더 전송
-            .addNetworkInterceptor(httpLoggingInterceptor)
-            .build()
-
-        FirebaseUtils.initRemoteConfig({
-            BASE_URL = it.getString(FirebaseUtils.BASE_URL_KEY)
-        }, {
-            BASE_URL = it.getString(FirebaseUtils.BASE_URL_KEY)
-            ApplicationClass.retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-        })
-    }
-
-    fun makeFirstAlarmNotification(){
-        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_lemorning)
-            .setContentTitle("Lemorning 알람")
-            .setContentText("알람이 설정되어 있습니다")
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-
-        startForeground(123456, notificationBuilder.build())
-    }
-
-    private fun makeAlarmNotification(alarmIntent:Intent?, alarmNote:String){
-        val pendingIntent:PendingIntent = if(alarmIntent?.action == "AlarmStop"){
-            PendingIntent.getService(this.applicationContext, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
-        }else{
-            PendingIntent.getActivity(this.applicationContext, 0, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        mediaPlayer.setOnPreparedListener {
+          it.start()
         }
-
-        val notificationBuilder = NotificationCompat.Builder(this, "$CHANNEL_ID Alarm").apply {
-            setSmallIcon(R.drawable.ic_lemorning)
-            setContentTitle("Lemorning 알람")
-            setContentText(if(alarmNote.isNotEmpty()) "$alarmNote\n알람 끄기" else "알람 끄기")
-            if(alarmIntent?.action == "AlarmStop") setContentIntent(pendingIntent)
-            else setFullScreenIntent(pendingIntent, true)
-            priority = NotificationCompat.PRIORITY_HIGH
-            setAutoCancel(true)
-        }
-
-        NotificationManagerCompat.from(this).notify(12345, notificationBuilder.build())
-    }
-
-    private fun playAlarm(songNo:Int){
-        ApplicationClass.retrofit.create(PlaySongApiService::class.java).getPlaySong(songNo).enqueue(object :
-            Callback<PlaySong> {
-            override fun onFailure(call: Call<PlaySong>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-            override fun onResponse(call: Call<PlaySong>, response: Response<PlaySong>) {
-                val playSong : PlaySong = response.body() ?: return
-                mediaPlayer = MediaPlayer().apply {
-                    setDataSource(playSong.musicUrl)
-                    setScreenOnWhilePlaying(true)
-                    isLooping = true
-                    prepareAsync() // might take long! (for buffering, etc)
-                }
-                mediaPlayer.setOnPreparedListener {
-                    it.start()
-                }
-            }
-
-        })
-    }
+      }, {
+        it.printStackTrace()
+      })
+    )
+  }
 }

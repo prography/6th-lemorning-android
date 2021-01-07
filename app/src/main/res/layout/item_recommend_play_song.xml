@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="org.prography.lemorning.src.models.PlaySong" />
+            type="org.prography.lemorning.src.models.SongDetail" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="#bfbfbf"
-            android:fontFamily="@font/timeburnernormal"
+            android:fontFamily="@font/time_normal"
             android:includeFontPadding="false"
             android:text="@{item.tags.empty ? `#` + item.tags[0]: `#None`}"
             tools:text="Morning Breaker"

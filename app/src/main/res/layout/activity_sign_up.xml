@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SignUpViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,25 +1,20 @@
 package org.prography.lemorning.src.models
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
-@Entity(tableName = "alarm")
+
+@Entity(tableName = "Alarm")
 data class Alarm (
-    @PrimaryKey(autoGenerate = true)
-    var id: Int?,
-    @ColumnInfo(name = "time")
-    var time: String,
-    @ColumnInfo(name = "on")
-    var on: Boolean,
-    @ColumnInfo(name = "week")
-    var week: String,
-    @ColumnInfo(name = "date")
-    var date: Long,
-    @ColumnInfo(name = "songNo")
-    var songNo: Int,
-    @ColumnInfo(name = "imgUrl")
-    var imgUrl: String,
-    @ColumnInfo(name = "alarmNote")
-    var alarmNote: String
+  @PrimaryKey(autoGenerate = true)
+  @SerializedName("id")
+  val id: Int = 0,
+  @SerializedName("time") val time: String,
+  @SerializedName("on") val on: Boolean,
+  @SerializedName("week") val week: String,
+  @SerializedName("date") val date: Long,
+  @SerializedName("songNo") val songNo: Int,
+  @SerializedName("imgUrl") val imgUrl: String,
+  @SerializedName("alarmNote") val alarmNote: String
 )

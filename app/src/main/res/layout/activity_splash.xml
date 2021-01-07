@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="viewmodel"
-            type="org.prography.lemorning.src.viewmodel.SplashViewModel" />
+            name="vm"
+            type="org.prography.lemorning.src.viewmodels.SplashViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
